@@ -2,6 +2,10 @@
 /**
 * Helpers for the template file.
 */
+
+/**
+ * Add static entries for use in the template file. 
+ */
 $ze->data['header']       = 'Zelda';
 $ze->data['slogan']       = 'A PHP-based MVC-inspired CMF';
 $ze->data['favicon']      = theme_url('favicon_32x32.png');

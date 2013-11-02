@@ -12,22 +12,29 @@ function get_debug() {
   $html = null;
   
   if(isset($ze->config['debug']['db-num-queries']) && $ze->config['debug']['db-num-queries'] && isset($ze->db)) {
-    $html .= "<p>Database made " . $ze->db->GetNumQueries() . " queries.</p>";
+    $html .= "<div class='info'><p>Databasen gjorde " . $ze->db->GetNumQueries() . " förfrågan / förfrågningar.</p>";
   }    
   if(isset($ze->config['debug']['db-queries']) && $ze->config['debug']['db-queries'] && isset($ze->db)) {
-    $html .= "<p>Database made the following queries.</p><pre>" . implode('<br/><br/>', $ze->db->GetQueries()) . "</pre>";
+    $html .= "<p>Databasen gjorde nedanstående förfrågan:</p><pre class='bigger red'>" . implode('<br/><br/>', $ze->db->GetQueries()) . "</pre>";
   }    
-  if(isset($ze->config['debug']['lydia']) && $ze->config['debug']['lydia']) {
-    $html .= "<hr><h3>Debuginformation</h3><p>The content of CZelda:</p><pre>" . htmlent(print_r($ze, true)) . "</pre>";
-  }    
+  if(isset($ze->config['debug']['zelda']) && $ze->config['debug']['zelda']) {
+    $html .= "<hr><h3>Debuginformation</h3><p>Innehållet i CZelda:</p><pre>" . htmlent(print_r($ze, true)) . "</pre></div>";
+  }      
   return $html;
 }
 
 /**
 * Create a url by prepending the base_url.
 */
-function base_url($url) {
+function base_url($url=null) {
   return CZelda::Instance()->request->base_url . trim($url, '/');
+}
+
+/**
+* Create a url to an internal resource.
+*/
+function create_url($url=null) {
+  return CZelda::Instance()->request->CreateUrl($url);
 }
 
 /**
@@ -43,6 +50,13 @@ function theme_url($url) {
 */
 function current_url() {
   return CZelda::Instance()->request->current_url;
+}
+
+/**
+* Render all views.
+*/
+function render_views() {
+  return CZelda::Instance()->views->Render();
 }
 
 ?>

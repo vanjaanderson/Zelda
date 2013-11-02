@@ -73,7 +73,7 @@ EOD;
   private function Menu() {  
     // Uses $this instead of global variable $ze
     //$ze = CZelda::Instance();
-    $menu = array('developer', 'developer/index', 'developer/links', 'developer/display-object', 'guestbook');
+    $menu = array('index', 'index/index', 'developer', 'developer/index', 'developer/links', 'developer/display-object', 'guestbook');
     
     $html = null;
     foreach($menu as $val) {

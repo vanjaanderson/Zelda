@@ -7,8 +7,8 @@
 class CZelda implements ISingleton {
 
   /**
-   * Members
-   */
+  * Members
+  */
   private static $instance = null;
   public $config = null;
   public $request = null;
@@ -34,6 +34,9 @@ class CZelda implements ISingleton {
     if(isset($this->config['database'][0]['dsn'])) {
       $this->db = new CMDatabase($this->config['database'][0]['dsn']);
     }
+
+    // Create a container for all views and theme data
+    $this->views = new CViewContainer();
   }
 
   /**
@@ -99,9 +102,15 @@ class CZelda implements ISingleton {
   }
 
   /**
-  * ThemeEngineRender, renders the reply of the request.
+  * ThemeEngineRender, renders the reply of the request to HTML or whatever.
   */
   public function ThemeEngineRender() {
+    // Is theme enabled?
+    if(!isset($this->config['theme'])) {
+      return;
+    }
+
+    // Get the paths and settings for the theme
     $themeName    = $this->config['theme']['name'];
     $themePath    = ZELDA_INSTALL_PATH . "/themes/{$themeName}";
     $themeUrl     = $this->request->base_url . "themes/{$themeName}"; // Lägger till base_url före 
@@ -118,7 +127,8 @@ class CZelda implements ISingleton {
     }
 
     // Extract $ze->data to own variables and handover to the template file
-    extract($this->data);      
+    extract($this->data);
+    extract($this->views->GetData());
     include("{$themePath}/default.tpl.php");
   }
 }
