@@ -11,8 +11,14 @@ function get_debug() {
   $ze = CZelda::Instance();
   $html = null;
   
-  if(isset($ze->config['debug']['display-zelda']) && $ze->config['debug']['display-zelda']) {
-    $html = "<hr><h3>Debuginformation</h3><p>The content of CZelda:</p><pre>" . htmlent(print_r($ze, true)) . "</pre>";
+  if(isset($ze->config['debug']['db-num-queries']) && $ze->config['debug']['db-num-queries'] && isset($ze->db)) {
+    $html .= "<p>Database made " . $ze->db->GetNumQueries() . " queries.</p>";
+  }    
+  if(isset($ze->config['debug']['db-queries']) && $ze->config['debug']['db-queries'] && isset($ze->db)) {
+    $html .= "<p>Database made the following queries.</p><pre>" . implode('<br/><br/>', $ze->db->GetQueries()) . "</pre>";
+  }    
+  if(isset($ze->config['debug']['lydia']) && $ze->config['debug']['lydia']) {
+    $html .= "<hr><h3>Debuginformation</h3><p>The content of CZelda:</p><pre>" . htmlent(print_r($ze, true)) . "</pre>";
   }    
   return $html;
 }
