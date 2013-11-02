@@ -6,20 +6,19 @@
 */
 class CCIndex implements IController {
 
-   /**
- 	* Implementing interface IController. All controllers must have an index action.
-	*/
-	public function Index() {	
-    	$this->Menu();
-	}
-
-
-	/**
+    /**
+    * Implementing interface IController. All controllers must have an index action.
+    */
+    public function Index() {
+   		$this->Menu();
+   	}
+    
+    /**
  	* Create a method that shows the menu, same for all methods
 	*/
 	private function Menu() {	
 		$ze = CZelda::Instance();
-		$menu = array('index', 'index/index', 'developer', 'developer/index', 'developer/links');
+		$menu = array('index', 'index/index', 'developer', 'developer/index', 'developer/links', 'developer/display-object');
 		
 		$html = null;
 		foreach($menu as $val) {
@@ -34,7 +33,7 @@ class CCIndex implements IController {
 $html
 </ul>
 EOD;
-  } 
-} 
+  }
+}
 
 ?>

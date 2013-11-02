@@ -11,6 +11,11 @@ error_reporting(-1);
 ini_set('display_errors', 1);
 
 /**
+ * Set what to show as debug or developer information in the get_debug() theme helper.
+ */
+$ze->config['debug']['display-zelda'] = true;
+
+/**
 * What type of urls should be used?
 * 
 * default      = 0      => index.php/controller/method/arg1/arg2/arg3

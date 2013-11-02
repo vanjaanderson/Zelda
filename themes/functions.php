@@ -9,9 +9,10 @@
  */
 function get_debug() {
   $ze = CZelda::Instance();
-  $html = "<h2>Debuginformation</h2><hr><p>The content of the config array:</p><pre>" . htmlentities(print_r($ze->config, true)) . "</pre>";
-  $html .= "<hr><p>The content of the data array:</p><pre>" . htmlentities(print_r($ze->data, true)) . "</pre>";
-  $html .= "<hr><p>The content of the request array:</p><pre>" . htmlentities(print_r($ze->request, true)) . "</pre>";
+  $html = null;
+  if(isset($ze->config['debug']['display-zelda'])) {
+    $html = "<hr><h3>Debuginformation</h3><p>The content of CZelda:</p><pre>" . htmlent(print_r($ze, true)) . "</pre>";
+  }    
   return $html;
 }
 
@@ -19,14 +20,14 @@ function get_debug() {
 * Create a url by prepending the base_url.
 */
 function base_url($url) {
-  return $ze->request->base_url . trim($url, '/');
+  return CZelda::Instance()->request->base_url . trim($url, '/');
 }
 
 /**
 * Return the current url.
 */
 function current_url() {
-  return $ze->request->current_url;
+  return CZelda::Instance()->request->current_url;
 }
 
 ?>
