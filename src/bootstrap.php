@@ -27,3 +27,5 @@ spl_autoload_register('autoload');
 function htmlent($str, $flags = ENT_COMPAT) {
   return htmlentities($str, $flags, CZelda::Instance()->config['character_encoding']);
 }
+
+?>

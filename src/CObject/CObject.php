@@ -19,6 +19,6 @@ class CObject {
     $this->request  = &$ze->request;
     $this->data     = &$ze->data;
   }
-}
 
-?>
+}
+  

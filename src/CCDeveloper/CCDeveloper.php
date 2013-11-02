@@ -71,6 +71,8 @@ EOD;
     * Create a method that shows the menu, same for all methods
    */
   private function Menu() {  
+    // Uses $this instead of global variable $ze
+    //$ze = CZelda::Instance();
     $menu = array('developer', 'developer/index', 'developer/links', 'developer/display-object', 'guestbook');
     
     $html = null;

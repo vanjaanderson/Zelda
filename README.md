@@ -7,6 +7,10 @@ This is my Content Managemant Framework created in the course "php mvc" on Bleki
 History
 -------
 
+v0.1.4 - 28 october 2013
+
+* Gästboken sparar till databas.
+
 v0.1.3 - 27 october 2013
 
 * En controller för en gästbok.

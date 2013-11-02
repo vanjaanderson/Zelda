@@ -55,11 +55,18 @@ class CRequest {
     $scriptPart = $scriptName = $_SERVER['SCRIPT_NAME'];
 
     // Check if url is in format controller/method/arg1/arg2/arg3
-    if(substr_compare($requestUri, $scriptName, 0, strlen($scriptName))) {
+    //if(substr_compare($requestUri, $scriptName, 0, strlen($scriptName))) {
+    if(substr_compare($requestUri, $scriptName, 0)) {
       $scriptPart = dirname($scriptName);
     }
 
-    $query = trim(substr($requestUri, strlen(rtrim($scriptPart, '/'))), '/');    
+    // Set query to be everything after base_url, except the optional querystring
+    $query = trim(substr($requestUri, strlen(rtrim($scriptPart, '/'))), '/');
+    $pos = strcspn($query, '?');
+
+    if($pos) {
+      $query = substr($query, 0, $pos);    
+    }    
     // Check if this looks like a querystring approach link
     if(substr($query, 0, 1) === '?' && isset($_GET['q'])) {
       $query = trim($_GET['q']);

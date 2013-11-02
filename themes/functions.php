@@ -10,6 +10,7 @@
 function get_debug() {
   $ze = CZelda::Instance();
   $html = null;
+  
   if(isset($ze->config['debug']['display-zelda']) && $ze->config['debug']['display-zelda']) {
     $html = "<hr><h3>Debuginformation</h3><p>The content of CZelda:</p><pre>" . htmlent(print_r($ze, true)) . "</pre>";
   }    
@@ -24,8 +25,8 @@ function base_url($url) {
 }
 
 /**
- * Prepend the theme_url, which is the url to the current theme directory.
- */
+* Prepend the theme_url, which is the url to the current theme directory.
+*/
 function theme_url($url) {
   $ze = CZelda::Instance();
   return "{$ze->request->base_url}themes/{$ze->config['theme']['name']}/{$url}";
