@@ -6,6 +6,9 @@ This is my Content Managemant Framework created in the course "php mvc" on Bleki
 
 History
 -------
+v0.1.6 - 28 october 2013
+
+* Separera SQL-satserna från PHP-koden.
 
 v0.1.5 - 28 october 2013
 

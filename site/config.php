@@ -11,16 +11,13 @@ error_reporting(-1);
 ini_set('display_errors', 1);
 
 /**
- * Set what to show as debug or developer information in the get_debug() theme helper.
- */
+* Set what to show as debug or developer information in the get_debug() theme helper.
+*/
+//$ze->config['debug']['display-zelda'] = false;
 $ze->config['debug']['zelda'] = false;
 $ze->config['debug']['db-num-queries'] = true;
 $ze->config['debug']['db-queries'] = true;
 
-/**
- * Set database(s).
- */
-$ze->config['database'][0]['dsn'] = 'sqlite:' . ZELDA_SITE_PATH . '/data/.ht.sqlite';
 
 /**
 * What type of urls should be used?
@@ -78,5 +75,10 @@ $ze->config['theme'] = array(
   // The name of the theme in the theme directory
   'name'    => 'core', 
 );
+
+/**
+* Set database(s).
+*/
+$ze->config['database'][0]['dsn'] = 'sqlite:' . ZELDA_SITE_PATH . '/data/.ht.sqlite';
 
 ?>
