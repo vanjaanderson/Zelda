@@ -5,8 +5,6 @@
  * @package ZeldaCore
  */
 class CCGuestbook extends CObject implements IController, IHasSQL {
-
-  private $pageTitle = 'Zelda gästbok';
   
   /**
   * Constructor
@@ -37,10 +35,10 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
   * Implementing interface IController. All controllers must have an index action.
   */
   public function Index() {        
-    $this->views->SetTitle($this->pageTitle);
+    $this->views->SetTitle('Zelda Gästbok');
     $this->views->AddInclude(__DIR__ . '/index.tpl.php', array(
       'entries'=>$this->ReadAllFromDatabase(), 
-      'formAction'=>$this->request->CreateUrl('guestbook/handler')
+      'formAction'=>$this->request->CreateUrl('', 'handler')
     ));
   }
   
@@ -57,7 +55,7 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
     elseif(isset($_POST['doCreate'])) {
       $this->CreateTableInDatabase();
     }            
-    header('Location: ' . $this->request->CreateUrl('guestbook'));
+    $this->RedirectTo($this->request->CreateUrl($this->request->controller));
   }
 
   /**
@@ -66,6 +64,7 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
   private function CreateTableInDatabase() {
     try {
       $this->db->ExecuteQuery(self::SQL('create table guestbook'));
+      $this->session->AddMessage('notice', 'Databastabell skapad (om den inte redan fanns).');
     } catch(Exception $e) {
       die("$e<br />Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
     }
@@ -76,6 +75,7 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
   */
   private function SaveNewToDatabase($entry) {
     $this->db->ExecuteQuery(self::SQL('insert into guestbook'), array($entry));
+    $this->session->AddMessage('success', 'Meddelande sparat.');
     if($this->db->rowCount() != 1) {
       die('Det gick inte att spara meddelandet i databasen.');
     }
@@ -86,6 +86,7 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
   */
   private function DeleteAllFromDatabase() {
     $this->db->ExecuteQuery(self::SQL('delete from guestbook'));
+    $this->session->AddMessage('info', 'Alla meddelanden raderade.');
   }
 
   /**
@@ -93,7 +94,6 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
   */
   private function ReadAllFromDatabase() {
     try {
-      //$this->db->SetAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
       return $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select * from guestbook'));
     } catch(Exception $e) {
       return array();

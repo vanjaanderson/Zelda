@@ -36,9 +36,6 @@ EOD;
   public function Links() {  
     $this->Menu();
     
-    // Uses $this instead of global variable $ze
-    //$ze = CZelda::Instance();
-    
     $url = 'developer/links';
     $current      = $this->request->CreateUrl($url);
 
@@ -71,8 +68,6 @@ EOD;
     * Create a method that shows the menu, same for all methods
    */
   private function Menu() {  
-    // Uses $this instead of global variable $ze
-    //$ze = CZelda::Instance();
     $menu = array('index', 'index/index', 'developer', 'developer/index', 'developer/links', 'developer/display-object', 'guestbook');
     
     $html = null;

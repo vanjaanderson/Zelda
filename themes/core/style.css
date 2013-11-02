@@ -41,7 +41,6 @@ body{margin:0;padding:0;color:#333;background-color:#fff;
 #main {min-height:300px;}
 #footer {font-size:0.80em;color:#666;background-color:#eee;}
 
-
 /**
  * Banner
  */
@@ -58,7 +57,6 @@ body{margin:0;padding:0;color:#333;background-color:#fff;
 .site-title  {font-size:4em;font-weight:bold;color:rgb(237,32,36);}
 .site-slogan {font-size:1.5em;}
 
-
 /**
  * Links
  */
@@ -69,17 +67,31 @@ a:hover,
 a:focus   {text-decoration:none;color:#5C0A0A;}
 a:active  {}
 
-
 /**
  * Headings
  */
 h1{border-bottom:2px dotted #ccc;padding-bottom:4px;}
 h2{border-bottom:1px dotted #ccc;padding-bottom:4px;}
 
+/**
+ * User feedback message wrappers.
+ */
+.error, .alert, .warning, .notice, .success, .info { 
+padding: 0.8em; margin-bottom: 1em; border: 2px solid #ddd; }
+
+.error, .alert { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; margin-top: 12px; }
+.notice, .warning { background: #fff6bf; color: #514721; border-color: #ffd324; margin-top: 12px; }
+.success       { background: #e6efc2; color: #264409; border-color: #c6d880; margin-top: 12px; }
+.info          { background: #d5edf8; color: #205791; border-color: #92cae4; margin-top: 12px; }
+.error a, .alert a { color: #8a1f11; }
+.notice a, .warning a { color: #514721; }
+.success a         { color: #264409; }
+.info a            { color: #205791; }
+
 
 /**
  * Misc
 */
-.info {margin-top:24px;padding:2px 16px;background:rgb(255,255,255);}
+.infobox {margin-top:24px;padding:2px 16px;background:rgb(255,255,255);}
 .bigger {font-size:1.5em;}
 .red {color:rgb(237,32,36);}

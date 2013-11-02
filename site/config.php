@@ -13,8 +13,9 @@ ini_set('display_errors', 1);
 /**
 * Set what to show as debug or developer information in the get_debug() theme helper.
 */
-//$ze->config['debug']['display-zelda'] = false;
 $ze->config['debug']['zelda'] = false;
+$ze->config['debug']['session'] = false;
+$ze->config['debug']['timer'] = true;
 $ze->config['debug']['db-num-queries'] = true;
 $ze->config['debug']['db-queries'] = true;
 
@@ -41,6 +42,7 @@ $ze->config['base_url'] = null;
 * Define session name
 */
 $ze->config['session_name'] = preg_replace('/[:\.\/-_]/', '', $_SERVER["SERVER_NAME"]);
+$ze->config['session_key']  = 'zelda';
 
 /*
 * Define server timezone

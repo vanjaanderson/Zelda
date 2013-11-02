@@ -9,17 +9,52 @@
  */
 function get_debug() {
   $ze = CZelda::Instance();
-  $html = null;
   
+  if(empty($ze->config['debug'])) {
+    return;
+  }
+  
+  // Get the debug output
+  $html = null;
   if(isset($ze->config['debug']['db-num-queries']) && $ze->config['debug']['db-num-queries'] && isset($ze->db)) {
-    $html .= "<div class='info'><p>Databasen gjorde " . $ze->db->GetNumQueries() . " förfrågan / förfrågningar.</p>";
+    $flash = $ze->session->GetFlash('database_numQueries');
+    $flash = $flash ? "$flash + " : null;
+    $html .= "<div class='infobox'><p>Databasen gjorde $flash" . $ze->db->GetNumQueries() . " förfrågan / förfrågningar.</p>";
   }    
   if(isset($ze->config['debug']['db-queries']) && $ze->config['debug']['db-queries'] && isset($ze->db)) {
-    $html .= "<p>Databasen gjorde nedanstående förfrågan:</p><pre class='bigger red'>" . implode('<br/><br/>', $ze->db->GetQueries()) . "</pre>";
+    $flash = $ze->session->GetFlash('database_queries');
+    $queries = $ze->db->GetQueries();
+    if($flash) {
+      $queries = array_merge($flash, $queries);
+    }
+    $html .= "<p>Databsen gjorde nedanstående förfrågningar:</p><pre class='bigger red'>" . implode('<br/><br/>', $queries) . "</pre>";
+  }    
+  if(isset($ze->config['debug']['timer']) && $ze->config['debug']['timer']) {
+    $html .= "<p>Sidan laddades på " . round(microtime(true) - $ze->timer['first'], 5)*1000 . " msecs.</p>";
   }    
   if(isset($ze->config['debug']['zelda']) && $ze->config['debug']['zelda']) {
-    $html .= "<hr><h3>Debuginformation</h3><p>Innehållet i CZelda:</p><pre>" . htmlent(print_r($ze, true)) . "</pre></div>";
-  }      
+    $html .= "<hr><h3>Debuginformation</h3><p>Innehåll i CZelda:</p><pre>" . htmlent(print_r($ze, true)) . "</pre>";
+  }    
+  if(isset($ze->config['debug']['session']) && $ze->config['debug']['session']) {
+    $html .= "<hr><h3>SESSION</h3><p>Innehåll i CZelda->session:</p><pre>" . htmlent(print_r($ze->session, true)) . "</pre>";
+    $html .= "<p>Innehåll i \$_SESSION:</p><pre>" . htmlent(print_r($_SESSION, true)) . "</pre></div>";
+  }    
+  return $html;
+}
+
+/**
+ * Get messages stored in flash-session.
+ */
+function get_messages_from_session() {
+  $messages = CZelda::Instance()->session->GetMessages();
+  $html = null;
+  if(!empty($messages)) {
+    foreach($messages as $val) {
+      $valid = array('info', 'notice', 'success', 'warning', 'error', 'alert');
+      $class = (in_array($val['type'], $valid)) ? $val['type'] : 'info';
+      $html .= "<div class='$class'>{$val['message']}</div>\n";
+    }
+  }
   return $html;
 }
 
