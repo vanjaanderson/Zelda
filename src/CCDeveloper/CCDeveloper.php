@@ -6,37 +6,38 @@
  */
 class CCDeveloper extends CObject implements IController {
   /**
-    * Constructor
-    */
-    public function __construct() {
-      parent::__construct();
-    } 
-
-    /**
+   * Constructor
+   */
+  public function __construct() {
+    parent::__construct();
+  }
+  /**
   * Implementing interface IController. All controllers must have an index action.
    */
   public function Index() {  
     $this->Menu();
   }
-
   /**
-   * Display all items of the CObject.
-   */
-  public function DisplayObject() { 
-    $this->Menu();
-    
-    $this->data['main'] .= <<<EOD
+    * Display all items of the CObject.
+    */
+   public function DisplayObject() {   
+      $this->Menu();
+      
+      $this->data['main'] .= <<<EOD
 <h2>Dumping content of CDeveloper</h2>
 <p>Here is the content of the controller, including properties from CObject which holds access to common resources in CLydia.</p>
 EOD;
-    $this->data['main'] .= '<pre>' . htmlent(print_r($this, true)) . '</pre>';
-  }
+      $this->data['main'] .= '<pre>' . htmlentities(print_r($this, true)) . '</pre>';
+   }
 
   /**
     * Create a list of links in the supported ways.
    */
   public function Links() {  
     $this->Menu();
+    
+    // Uses $this instead of global variable $ze
+    //$ze = CZelda::Instance();
     
     $url = 'developer/links';
     $current      = $this->request->CreateUrl($url);
@@ -70,7 +71,7 @@ EOD;
     * Create a method that shows the menu, same for all methods
    */
   private function Menu() {  
-    $menu = array('developer', 'developer/index', 'developer/links', 'developer/display-object');
+    $menu = array('developer', 'developer/index', 'developer/links', 'developer/display-object', 'guestbook');
     
     $html = null;
     foreach($menu as $val) {

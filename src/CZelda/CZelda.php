@@ -12,9 +12,16 @@ class CZelda implements ISingleton {
   * Constructor
   */
   protected function __construct() {
-    // include the site specific config.php and create a ref to $ze to be used by config.php
+    // include the site specific config.php and create a ref to $this to be used by config.php
     $ze = &$this;
     require(ZELDA_SITE_PATH.'/config.php');
+
+  // Start a named session
+    session_name($this->config['session_name']);
+    session_start();
+    
+    // Set default date/time-zone
+    date_default_timezone_set($this->config['timezone']);
   }
 
   /**
@@ -57,6 +64,7 @@ class CZelda implements ISingleton {
     if($controllerExists && $controllerEnabled && $classExists) {
       $rc = new ReflectionClass($className);
       if($rc->implementsInterface('IController')) {
+        // För att kunna använda - eller _ som argument i requesten 
         $formattedMethod = str_replace(array('_', '-'), '', $method);
         if($rc->hasMethod($formattedMethod)) {
           $controllerObj = $rc->newInstance();
@@ -84,9 +92,9 @@ class CZelda implements ISingleton {
   public function ThemeEngineRender() {
     $themeName    = $this->config['theme']['name'];
     $themePath    = ZELDA_INSTALL_PATH . "/themes/{$themeName}";
-    $themeUrl  = $this->request->base_url . "themes/{$themeName}"; // Lägger till base_url före 
+    $themeUrl     = $this->request->base_url . "themes/{$themeName}"; // Lägger till base_url före 
     
-    // Add stylesheet path to the $ze->data array
+    // Add stylesheet path to the $this->data array
     $this->data['stylesheet'] = "{$themeUrl}/style.css";
 
     // Include the global functions.php and the functions.php that are part of the theme

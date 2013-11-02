@@ -2,7 +2,12 @@
 /**
 * Helpers for the template file.
 */
-$ze->data['header'] = '<h1>Header: Zelda</h1>';
+$ze->data['header']       = 'Zelda';
+$ze->data['slogan']       = 'A PHP-based MVC-inspired CMF';
+$ze->data['favicon']      = theme_url('favicon_32x32.png');
+$ze->data['logo']         = theme_url('logo_300x260.png');
+$ze->data['logo_width']   = 300;
+$ze->data['logo_height']  = 260;
 $ze->data['footer'] = <<<EOD
 <p>Footer: &copy; 2013 |&nbsp;<a href="http://vanjaanderson.com" target="_blank">Vanja Anderson</a></p>   
     <p>Tools: 

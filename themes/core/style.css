@@ -5,7 +5,7 @@
 /**
 * Structure
 */
-html{}
+/*html{}
 body{
    background-color:#eee;
    font: 1em Verdana, Arial, Helvetica, sans-serif;
@@ -18,4 +18,68 @@ body{
    width:970px;
    background-color:#fff;
    padding: 1em;
-}
+}*/
+
+@import url(http://fonts.googleapis.com/css?family=Mystery+Quest);
+
+html{background-color:#eee;}
+body{margin:0;padding:0;color:#333;background-color:#fff;
+  font: 1em Verdana, Arial, Helvetica, sans-serif;}
+
+#wrap-header {}
+#wrap-main {}
+#wrap-footer {border-top:1px solid #ccc;background-color:#eee;}
+
+#header,
+#main,
+#footer {margin:0 auto;width:970px;padding:8px;}
+#main,
+#footer {margin-bottom:16px;}
+
+#header,
+#main {background-color:#fff;}
+#main {min-height:300px;}
+#footer {font-size:0.80em;color:#666;background-color:#eee;}
+
+
+/**
+ * Banner
+ */
+#banner {display:table;margin-bottom:10px;}
+
+.site-logo,
+.site-title,
+.site-slogan {display:table-cell;width:inherit;vertical-align:middle;text-align:left;}
+
+.site-logo {margin:2em 0 -2em 0;}
+.site-title,
+.site-slogan {font-family:'Mystery Quest',cursive;line-height:0;padding-left:20px;color:#333;
+  text-shadow:#ccc 2px -2px 2px; padding-top:100px;}
+.site-title  {font-size:4em;font-weight:bold;color:rgb(237,32,36);}
+.site-slogan {font-size:1.5em;}
+
+
+/**
+ * Links
+ */
+a         {color:inherit;}
+a:link    {}
+a:visited {}
+a:hover,
+a:focus   {text-decoration:none;color:#5C0A0A;}
+a:active  {}
+
+
+/**
+ * Headings
+ */
+h1{border-bottom:2px dotted #ccc;padding-bottom:4px;}
+h2{border-bottom:1px dotted #ccc;padding-bottom:4px;}
+
+
+/**
+ * Misc
+*/
+.info {margin-top:24px;padding:2px 16px;background:rgb(255,255,255);}
+.bigger {font-size:1.5em;}
+.red {color:rgb(237,32,36);}

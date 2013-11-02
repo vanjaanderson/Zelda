@@ -1,4 +1,12 @@
 <?php
+/**
+ * All requests routed through here. This is an overview of what actaully happens during
+ * a request.
+ *
+ * @package ZeldaCore
+ */
+
+// ---------------------------------------------------------------------------------------
 //
 // PHASE: BOOTSTRAP
 //
@@ -9,11 +17,13 @@ require(ZELDA_INSTALL_PATH.'/src/bootstrap.php');
 
 $ze = CZelda::Instance();
 
+// ---------------------------------------------------------------------------------------
 //
 // PHASE: FRONTCONTROLLER ROUTE
 //
 $ze->FrontControllerRoute();
 
+// ---------------------------------------------------------------------------------------
 //
 // PHASE: THEME ENGINE RENDER
 //

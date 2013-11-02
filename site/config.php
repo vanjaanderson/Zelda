@@ -11,9 +11,10 @@ error_reporting(-1);
 ini_set('display_errors', 1);
 
 /**
- * Set what to show as debug or developer information in the get_debug() theme helper.
- */
-$ze->config['debug']['display-zelda'] = true;
+* Set what to show as debug or developer information in the get_debug() theme helper.
+*/
+$ze->config['debug']['display-zelda'] = false;
+
 
 /**
 * What type of urls should be used?
@@ -61,6 +62,7 @@ $ze->config['language'] = 'en';
 $ze->config['controllers'] = array(
   'index'     => array('enabled' => true,'class' => 'CCIndex'),
   'developer' => array('enabled' => true,'class' => 'CCDeveloper'),
+  'guestbook' => array('enabled' => true,'class' => 'CCGuestbook'),
 );
 
 /**
