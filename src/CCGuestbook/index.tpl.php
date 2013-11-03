@@ -4,7 +4,7 @@
 <form action="<?=$formAction?>" method='POST'>
   <p>
     <label>Meddelande: <br/>
-    <textarea name='newEntry'></textarea></label>
+    <textarea name='newEntry' rows="10" cols="46"></textarea></label>
   </p>
   <p>
     <input type='submit' name='doAdd' value='Spara meddelandet' />

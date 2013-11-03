@@ -30,7 +30,7 @@ function get_debug() {
     $html .= "<p>Databsen gjorde nedanstående förfrågningar:</p><pre class='bigger red'>" . implode('<br/><br/>', $queries) . "</pre>";
   }    
   if(isset($ze->config['debug']['timer']) && $ze->config['debug']['timer']) {
-    $html .= "<p>Sidan laddades på " . round(microtime(true) - $ze->timer['first'], 5)*1000 . " msecs.</p>";
+    $html .= "<p>Sidan laddades på " . round(microtime(true) - $ze->timer['first'], 5)*1000 . " msek.</p>";
   }    
   if(isset($ze->config['debug']['zelda']) && $ze->config['debug']['zelda']) {
     $html .= "<hr><h3>Debuginformation</h3><p>Innehåll i CZelda:</p><pre>" . htmlent(print_r($ze, true)) . "</pre>";

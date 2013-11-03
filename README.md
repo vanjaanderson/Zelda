@@ -6,6 +6,10 @@ This is my Content Managemant Framework created in the course "php mvc" on Bleki
 
 History
 -------
+v0.1.9 - 2 november 2013
+
+* En modell för gästboken.
+
 v0.1.8 - 2 november 2013
 
 * Skicka meddelanden mellan sidanrop via sessionen.
@@ -43,4 +47,4 @@ v0.1.0 - 12 october 2013
 * First version of Zelda inspired by Mikael Roos tutorial Lydia.
 
 ------------------------------------------------------
-Copyright 2013 by Vanja Anderson (vanja@websnabben.s
+Copyright 2013 by Vanja Anderson (vanja@websnabben.se)
