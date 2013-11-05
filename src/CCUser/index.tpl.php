@@ -2,6 +2,7 @@
 <ul>
   <li><a href='<?=create_url(null, 'init')?>'>Initiera databasen, skapa tabeller och skapa förinställd administrator</a>
   <li><a href='<?=create_url(null, 'login', 'root/root')?>'>Logga in som root/root (fungerar)</a>
+    <li><a href='<?=create_url(null, 'login', 'doe/doe')?>'>Logga in som doe/doe (fungerar)</a>
   <li><a href='<?=create_url(null, 'login', 'root@dbwebb.se/root')?>'>Logga in som root@dbwebb.se/root (fungerar)</a>
   <li><a href='<?=create_url(null, 'login', 'admin/root')?>'>Logga in som admin/root (fungerar inte, användarnamnet är fel)</a>
   <li><a href='<?=create_url(null, 'login', 'root/admin')?>'>Logga in som root/admin (fungerar inte, lösenordet är fel)</a>

@@ -27,7 +27,7 @@ function get_debug() {
     if($flash) {
       $queries = array_merge($flash, $queries);
     }
-    $html .= "<p>Databsen gjorde nedanstående förfrågningar:</p><pre class='bigger red'>" . implode('<br/><br/>', $queries) . "</pre>";
+    $html .= "<p>Databasen gjorde nedanstående förfrågningar:</p><pre class='red'>" . implode('<br/><br/>', $queries) . "</pre>";
   }    
   if(isset($ze->config['debug']['timer']) && $ze->config['debug']['timer']) {
     $html .= "<p>Sidan laddades på " . round(microtime(true) - $ze->timer['first'], 5)*1000 . " msek.</p>";
