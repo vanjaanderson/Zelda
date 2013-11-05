@@ -41,7 +41,7 @@ class CMGuestbook extends CObject implements IHasSQL {
     try {
       $this->db->ExecuteQuery(self::SQL('create table guestbook'));
       $this->session->AddMessage('notice', 'Databastabell skapad (om den inte redan fanns).');
-    } catch(Exception$e) {
+    } catch(Exception $e) {
       die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
     }
   }

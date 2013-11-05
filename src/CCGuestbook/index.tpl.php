@@ -7,6 +7,7 @@
     <textarea name='newEntry' rows="10" cols="46"></textarea></label>
   </p>
   <p>
+    <input type='hidden' name='email' />
     <input type='submit' name='doAdd' value='Spara meddelandet' />
     <input type='submit' name='doClear' value='Rensa alla' />
     <input type='submit' name='doCreate' value='Skapa databastabell' />

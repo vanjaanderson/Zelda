@@ -6,6 +6,10 @@ This is my Content Managemant Framework created in the course "php mvc" on Bleki
 
 History
 -------
+v0.2.01 - 5 november 2013
+
+* CMUser, en modell för användare.
+
 v0.1.9 - 2 november 2013
 
 * En modell för gästboken.

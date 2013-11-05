@@ -68,8 +68,8 @@ function base_url($url=null) {
 /**
 * Create a url to an internal resource.
 */
-function create_url($url=null) {
-  return CZelda::Instance()->request->CreateUrl($url);
+function create_url($urlOrController=null, $method=null, $arguments=null) {
+  return CZelda::Instance()->request->CreateUrl($urlOrController, $method, $arguments);
 }
 
 /**
