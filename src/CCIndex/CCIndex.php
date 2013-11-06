@@ -25,7 +25,7 @@ class CCIndex extends CObject implements IController {
 	*/
 	private function Menu() {	
 		$menu = array('index', 'index/index', 'developer', 'developer/index', 'developer/links', 'developer/display-object', 'guestbook', 'user', 'user/login', 'user/logout',
-      'user/profile', 'acp');
+      'user/profile', 'akp');
 		
 		$this->views->SetTitle('Index Controller');
     $this->views->AddInclude(__DIR__ . '/index.tpl.php', array('menu'=>$menu));

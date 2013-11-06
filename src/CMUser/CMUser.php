@@ -88,9 +88,9 @@ class CMUser extends CObject implements IHasSQL {
         }
       }
       $this->session->SetAuthenticatedUser($user);
-      $this->AddMessage('success', "Welcome '{$user['name']}'.");
+      $this->AddMessage('success', "Välkommen '{$user['name']}'.");
     } else {
-      $this->AddMessage('notice', "Could not login, user does not exists or password did not match.");
+      $this->AddMessage('notice', "Det gick inte att logga in, användaren eller lösenordet är fel.");
     }
     return ($user != null);
   }

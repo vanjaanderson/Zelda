@@ -66,7 +66,7 @@ function login_menu() {
   if($ze->user->IsAuthenticated()) {
     $items = "<a href='" . create_url('user/profile') . "'>" . $ze->user->GetAcronym() . "</a> ";
     if($ze->user->IsAdministrator()) {
-      $items .= "<a href='" . create_url('acp') . "'>acp</a> ";
+      $items .= "<a href='" . create_url('akp') . "'>akp</a> ";
     }
     $items .= "<a href='" . create_url('user/logout') . "'>logga ut</a> ";
   } else {

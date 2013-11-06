@@ -1,10 +1,10 @@
-<h1>User Profile</h1>
-<p>Here you should be able to view and edit your profile information.</p>
+<h1>Användarprofil</h1>
+<p>Här kan du se och ändra din profilinformation.</p>
 
 <?php if($is_authenticated): ?>
-  <p>User is authenticated.</p>
+  <p>Användaren är autentiserad.</p>
   <pre><?=print_r($user, true)?></pre>
 <?php else: ?>
-  <p>User is anonymous and not authenticated.</p>
+  <p>Användaren är okänd och inte autentiserad.</p>
 <?php endif; ?>
 

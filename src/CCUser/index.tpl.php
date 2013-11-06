@@ -1,6 +1,8 @@
-<h1>User Controller Index</h1>
-<p>One controller to manage the user actions, mainly login, logout, view and edit profile. Use the menu in 
-the upper right corner to interact with these controller.</p>
+<h1>Användarkontrollerindex</h1>
+<p>
+	En kontroller för för att styra användaraktiviteter, i huvudsak inloggning, utloggning, visa och ändra 
+	användarprofil. Använd menyn längst upp till höger för att använda dessa funktioner.
+</p>
 <ul>
-  <li><a href='<?=create_url('user/init')?>'>Init database, create tables and create default admin user</a>
+  <li><a href='<?=create_url('user/init')?>'>Initiera databasen, skapa tabeller och förinställd admin-använadre</a>
 </ul>

@@ -8,7 +8,7 @@ History
 -------
 v0.2.03 - 6 november 2013
 
-* Användaren som en del av CZelda.
+* Användaren som en del av CLydia
 
 v0.2.02 - 6 november 2013
 

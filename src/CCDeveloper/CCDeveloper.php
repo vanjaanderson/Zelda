@@ -68,7 +68,8 @@ EOD;
     * Create a method that shows the menu, same for all methods
    */
   private function Menu() {  
-    $menu = array('index', 'index/index', 'developer', 'developer/index', 'developer/links', 'developer/display-object', 'guestbook', 'user');
+    $menu = array('index', 'index/index', 'developer', 'developer/index', 'developer/links', 'developer/display-object', 'guestbook', 'user', 'user/login', 'user/logout',
+      'user/profile', 'akp');
     
     $html = null;
     foreach($menu as $val) {
