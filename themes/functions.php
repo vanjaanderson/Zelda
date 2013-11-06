@@ -59,6 +59,23 @@ function get_messages_from_session() {
 }
 
 /**
+ * Login menu. Creates a menu which reflects if user is logged in or not.
+ */
+function login_menu() {
+  $ze = CZelda::Instance();
+  if($ze->user->IsAuthenticated()) {
+    $items = "<a href='" . create_url('user/profile') . "'>" . $ze->user->GetAcronym() . "</a> ";
+    if($ze->user->IsAdministrator()) {
+      $items .= "<a href='" . create_url('acp') . "'>acp</a> ";
+    }
+    $items .= "<a href='" . create_url('user/logout') . "'>logga ut</a> ";
+  } else {
+    $items = "<a href='" . create_url('user/login') . "'>logga in</a> ";
+  }
+  return "<nav>$items</nav>";
+}
+
+/**
 * Create a url by prepending the base_url.
 */
 function base_url($url=null) {

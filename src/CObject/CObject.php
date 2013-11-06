@@ -19,14 +19,17 @@ class CObject {
   /**
   * Constructor
   */
-  protected function __construct() {
-    $ze = CZelda::Instance();
+  protected function __construct($ze=null) {
+    if(!$ze) {
+      $ze = CZelda::Instance();
+    } 
     $this->config   = &$ze->config;
     $this->request  = &$ze->request;
     $this->data     = &$ze->data;
     $this->db       = &$ze->db;
     $this->views    = &$ze->views;
     $this->session  = &$ze->session;
+    $this->user     = &$ze->user;
   }
 
   /**
@@ -55,7 +58,6 @@ class CObject {
     $this->RedirectTo($this->request->controller, $method);
   }
 
-
   /**
    * Redirect to a controller and method. Uses RedirectTo().
    *
@@ -66,6 +68,26 @@ class CObject {
     $controller = is_null($controller) ? $this->request->controller : null;
     $method = is_null($method) ? $this->request->method : null;   
     $this->RedirectTo($this->request->CreateUrl($controller, $method));
+  }
+  /**
+   * Save a message in the session. Uses $this->session->AddMessage()
+   *
+   * @param $type string the type of message, for example: notice, info, success, warning, error.
+   * @param $message string the message.
+   */
+  protected function AddMessage($type, $message) {
+    $this->session->AddMessage($type, $message);
+  }
+
+  /**
+   * Create an url. Uses $this->request->CreateUrl()
+   *
+   * @param $urlOrController string the relative url or the controller
+   * @param $method string the method to use, $url is then the controller or empty for current
+   * @param $arguments string the extra arguments to send to the method
+   */
+  protected function CreateUrl($urlOrController=null, $method=null, $arguments=null) {
+    $this->request->CreateUrl($urlOrController, $method, $arguments);
   }
 }
 
