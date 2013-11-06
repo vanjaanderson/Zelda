@@ -32,6 +32,7 @@ class CCGuestbook extends CObject implements IController {
    * Handle posts from the form and take appropriate action.
    */
   public function Handler() {
+    // spam protection
     if(empty($_POST['email']) && isset($_POST['doAdd'])) {
       $this->guestbookModel->Add(strip_tags($_POST['newEntry']));
     }

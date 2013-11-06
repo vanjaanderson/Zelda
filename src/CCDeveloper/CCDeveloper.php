@@ -21,11 +21,11 @@ class CCDeveloper extends CObject implements IController {
     * Display all items of the CObject.
     */
    public function DisplayObject() {   
-      $this->Menu();
+    $this->Menu();
       
-      $this->data['main'] .= <<<EOD
-<h2>Dumping content of CDeveloper</h2>
-<p>Here is the content of the controller, including properties from CObject which holds access to common resources in CLydia.</p>
+    $this->data['main'] .= <<<EOD
+<h2>Dumpning av innehåll i CDeveloper</h2>
+<p>Här är innehållet i kontrollern CDeveloper.</p>
 EOD;
       $this->data['main'] .= '<pre>' . htmlentities(print_r($this, true)) . '</pre>';
    }
@@ -52,15 +52,14 @@ EOD;
     
     $this->data['main'] .= <<<EOD
 <h2>CRequest::CreateUrl()</h2>
-<p>Here is a list of urls created using above method with various settings. All links should lead to
-this same page.</p>
+<p>Här är en lista på alla urls som skapas med metoden CreateUrl() i kontrollern CRequest.</p>
 <ul>
-<li><a href='$current'>This is the current setting</a>
-<li><a href='$default'>This would be the default url</a>
-<li><a href='$clean'>This should be a clean url</a>
-<li><a href='$querystring'>This should be a querystring like url</a>
+<li><a href='$current'>Aktuell url-inställning</a>
+<li><a href='$default'>Förinställd url-inställning</a>
+<li><a href='$clean'>Enklaste url-utseendet</a>
+<li><a href='$querystring'>Query-string url</a>
 </ul>
-<p>Enables various and flexible url-strategy.</p>
+<p>Här kan du testa olika url-inställningar.</p>
 EOD;
   }
 
@@ -78,8 +77,8 @@ EOD;
     
     $this->data['title'] = "Developer Controller";
     $this->data['main'] = <<<EOD
-<h1>The Developer Controller</h1>
-<p>This is what you can do for now:</p>
+<h1>Developer Controller</h1>
+<p>Detta kan du göra:</p>
 <ul>
 $html
 </ul>

@@ -16,6 +16,7 @@ class CZelda implements ISingleton {
   public $db;
   public $views;
   public $session;
+  public $user;
   public $timer = array();
 
   /**

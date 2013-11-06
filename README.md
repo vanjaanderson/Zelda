@@ -6,9 +6,13 @@ This is my Content Managemant Framework created in the course "php mvc" on Bleki
 
 History
 -------
+v0.2.04 - 6 november 2013
+
+* Visa tillgängliga kontrollers med Reflection
+
 v0.2.03 - 6 november 2013
 
-* Användaren som en del av CLydia
+* Användaren som en del av CZelda
 
 v0.2.02 - 6 november 2013
 

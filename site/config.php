@@ -41,7 +41,7 @@ $ze->config['base_url'] = null;
 /*
 * Define session name
 */
-$ze->config['session_name'] = preg_replace('/[:\.\/-_]/', '', $_SERVER["SERVER_NAME"]);
+$ze->config['session_name'] = preg_replace('/[:\.\/-_]/', '', __DIR__);
 $ze->config['session_key']  = 'zelda';
 
 /*
