@@ -6,6 +6,10 @@ This is my Content Managemant Framework created in the course "php mvc" on Bleki
 
 History
 -------
+v0.2.05 - 6 november 2013
+
+* Stöd för hantering av formulär
+
 v0.2.04 - 6 november 2013
 
 * Visa tillgängliga kontrollers med Reflection
