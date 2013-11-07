@@ -6,6 +6,10 @@ This is my Content Managemant Framework created in the course "php mvc" on Bleki
 
 History
 -------
+v0.2.07 - 7 november 2013
+
+* Integrera med Gravatar
+
 v0.2.06 - 7 november 2013
 
 * Formulär för användarens profil

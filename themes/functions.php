@@ -64,15 +64,22 @@ function get_messages_from_session() {
 function login_menu() {
   $ze = CZelda::Instance();
   if($ze->user['isAuthenticated']) {
-    $items = "<a href='" . create_url('user/profile') . "'>" . $ze->user['acronym'] . "</a> ";
+    $items = "<a href='" . create_url('user/profile') . "'><img class='gravatar' src='" . get_gravatar(20) . "' alt=''> " . $ze->user['acronym'] . "</a> ";
     if($ze->user['hasRoleAdministrator']) {
-      $items .= "<a href='" . create_url('akp') . "'>akp</a> ";
+      $items .= "<a href='" . create_url('acp') . "'>acp</a> ";
     }
-    $items .= "<a href='" . create_url('user/logout') . "'>logga ut</a> ";
+    $items .= "<a href='" . create_url('user/logout') . "'>logout</a> ";
   } else {
-    $items = "<a href='" . create_url('user/login') . "'>logga in</a> ";
+    $items = "<a href='" . create_url('user/login') . "'>login</a> ";
   }
-  return "<nav>$items</nav>";
+  return "<nav id='login-menu'>$items</nav>";
+}
+
+/**
+* Get a gravatar based on the user's email.
+*/
+function get_gravatar($size=null) {
+  return 'http://www.gravatar.com/avatar/' . md5(strtolower(trim(CZelda::Instance()->user['email']))) . '.jpg?r=pg&amp;d=wavatar&amp;' . ($size ? "s=$size" : null);
 }
 
 /**
