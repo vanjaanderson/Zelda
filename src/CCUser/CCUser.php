@@ -13,52 +13,77 @@ class CCUser extends CObject implements IController {
    */
   public function __construct() {
     parent::__construct();
-    //$this->userModel = new CMUser();
   }
 
   /**
    * Show profile information of the user.
    */
   public function Index() {
-    $this->views->SetTitle('User Controller');
-    $this->views->AddInclude(__DIR__ . '/index.tpl.php', array(
-      'is_authenticated'=>$this->user->IsAuthenticated(), 
-      'user'=>$this->user->GetProfile(),
-    ));
+    $this->views->SetTitle('Användarkontroller')
+      ->AddInclude(__DIR__ . '/index.tpl.php', array(
+        'is_authenticated'=>$this->user['isAuthenticated'], 
+        'user'=>$this->user,
+      ));
   }  
 
   /**
    * View and edit user profile.
    */
   public function Profile() {
-    $this->views->SetTitle('User Profile');
-    $this->views->AddInclude(__DIR__ . '/profile.tpl.php', array(
-      'is_authenticated'=>$this->user->IsAuthenticated(), 
-      'user'=>$this->user->GetProfile(),
-    ));
+    $form = new CFormUserProfile($this, $this->user);
+    $form->CheckIfSubmitted();
+
+    $this->views->SetTitle('Användarprofil')
+      ->AddInclude(__DIR__ . '/profile.tpl.php', array(
+        'is_authenticated'=>$this->user['isAuthenticated'], 
+        'user'=>$this->user,
+        'profile_form'=>$form->GetHTML(),
+      ));
   }
 
+  /**
+   * Change the password.
+   */
+  public function DoChangePassword($form) {
+    if($form['password']['value'] != $form['password1']['value'] || empty($form['password']['value']) || empty($form['password1']['value'])) {
+      $this->AddMessage('error', 'Lösenordet är tomt eller matchar inte.');
+    } else {
+      $ret = $this->user->ChangePassword($form['password']['value']);
+      $this->AddMessage($ret, 'Nytt lösenord sparat.', 'Uppdatering av lösenordet misslyckades.');
+    }
+    $this->RedirectToController('profile');
+  } 
+
+  /**
+   * Save updates to profile information.
+   */
+  public function DoProfileSave($form) {
+    $this->user['name'] = $form['name']['value'];
+    $this->user['email'] = $form['email']['value'];
+    $ret = $this->user->Save();
+    $this->AddMessage($ret, 'Profil sparad.', 'Uppdatering av profil misslyckades.');
+    $this->RedirectToController('profile');
+  }
+  
   /**
    * Authenticate and login a user.
    */
   public function Login() {
-    $form = new CForm();
-    $form->AddElement('acronym', array('label'=>'Användarnamn eller e-post:', 'type'=>'text'));
-    $form->AddElement('password', array('label'=>'Lösenord:', 'type'=>'password'));
-    $form->AddElement('doLogin', array('value'=>'Logga in', 'type'=>'submit', 'callback'=>array($this, 'DoLogin')));
+    $form = new CFormUserLogin($this);
     $form->CheckIfSubmitted();
-
-    $this->views->SetTitle('Login');
-    $this->views->AddInclude(__DIR__ . '/login.tpl.php', array('login_form'=>$form->GetHTML()));     
+    $this->views->SetTitle('Logga in')
+      ->AddInclude(__DIR__ . '/login.tpl.php', array('login_form'=>$form->GetHTML()));     
   }
   
   /**
    * Perform a login of the user as callback on a submitted form.
    */
   public function DoLogin($form) {
-    if($this->user->Login($form->GetValue('acronym'), $form->GetValue('password'))) {
+    if($this->user->Login($form['acronym']['value'], $form['password']['value'])) {
+      $this->AddMessage('success', "Välkommen {$this->user['name']}.");
       $this->RedirectToController('profile');
     } else {
+      $this->AddMessage('notice', "Inloggningen misslyckades, eftersom användarnamnet  eller lösenordet är fel.");
       $this->RedirectToController('login');      
     }
   }
@@ -69,8 +94,8 @@ class CCUser extends CObject implements IController {
   public function Logout() {
     $this->user->Logout();
     $this->RedirectToController();
-  } 
-
+  }
+  
   /**
    * Init the user database.
    */

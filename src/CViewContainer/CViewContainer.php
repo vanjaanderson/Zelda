@@ -28,7 +28,7 @@ class CViewContainer {
   * @param $value string to be set as title.
   */
   public function SetTitle($value) {
-    $this->SetVariable('title', $value);
+    return $this->SetVariable('title', $value);
   }
 
 
@@ -39,6 +39,7 @@ class CViewContainer {
   */
   public function SetVariable($key, $value) {
     $this->data[$key] = $value;
+    return $this;
   }
 
   /**
@@ -49,6 +50,7 @@ class CViewContainer {
   */
   public function AddInclude($file, $variables=array()) {
     $this->views[] = array('type' => 'include', 'file' => $file, 'variables' => $variables);
+    return $this;
   }
 
   /**

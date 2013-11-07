@@ -2,8 +2,14 @@
 <p>Här kan du se och ändra din profilinformation.</p>
 
 <?php if($is_authenticated): ?>
-  <p>Användaren är autentiserad.</p>
-  <pre><?=print_r($user, true)?></pre>
+  <?=$profile_form?>
+  <p>Din profil skapades <?=$user['created']?> och är senast uppdaterad <?=$user['updated']?>.</p>
+  <p>Du är medlem i <?=count($user['groups'])?> grupp/grupper:</p>
+  <ul>
+  <?php foreach($user['groups'] as $group): ?>
+    <li><?=$group['name']?>
+  <?php endforeach; ?>
+  </ul>
 <?php else: ?>
   <p>Användaren är okänd och inte autentiserad.</p>
 <?php endif; ?>

@@ -63,9 +63,9 @@ function get_messages_from_session() {
  */
 function login_menu() {
   $ze = CZelda::Instance();
-  if($ze->user->IsAuthenticated()) {
-    $items = "<a href='" . create_url('user/profile') . "'>" . $ze->user->GetAcronym() . "</a> ";
-    if($ze->user->IsAdministrator()) {
+  if($ze->user['isAuthenticated']) {
+    $items = "<a href='" . create_url('user/profile') . "'>" . $ze->user['acronym'] . "</a> ";
+    if($ze->user['hasRoleAdministrator']) {
       $items .= "<a href='" . create_url('akp') . "'>akp</a> ";
     }
     $items .= "<a href='" . create_url('user/logout') . "'>logga ut</a> ";

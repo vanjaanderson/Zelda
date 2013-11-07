@@ -13,7 +13,6 @@ class CSession {
 	private $data = array();
 	private $flash = null;
 	
-
 	/**
 	 * Constructor
 	 */
@@ -21,14 +20,12 @@ class CSession {
     $this->key = $key;
   }
 
-
 	/**
 	 * Set values
 	 */
 	public function __set($key, $value) {
     $this->data[$key] = $value;
   }
-
 
 	/**
 	 * Get values
@@ -51,14 +48,12 @@ class CSession {
     $this->data['flash'][$key] = $value;
   }
 
-
   /**
    * Get flash values, if any.
    */
   public function GetFlash($key) {
     return isset($this->flash[$key]) ? $this->flash[$key] : null;
   }
-
 
   /**
    * Add message to be displayed to user on next pageload. Store in flash.
@@ -70,7 +65,6 @@ class CSession {
     $this->data['flash']['messages'][] = array('type' => $type, 'message' => $message);
   }
 
-
 	/**
 	 * Get messages, if any. Each message is composed of a key and value. Use the key for styling.
 	 *
@@ -80,14 +74,12 @@ class CSession {
     return isset($this->flash['messages']) ? $this->flash['messages'] : null;
   }
 
-
   /**
    * Store values into session.
    */
   public function StoreInSession() {
     $_SESSION[$this->key] = $this->data;
   }
-
 
   /**
    * Store values from this object into the session.

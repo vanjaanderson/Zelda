@@ -4,14 +4,30 @@
 * 
 * @package ZeldaCore
 */
-class CMUser extends CObject implements IHasSQL {
+class CMUser extends CObject implements IHasSQL, ArrayAccess {
+
+  /**
+   * Properties
+   */
+  public $profile = array();
 
   /**
    * Constructor
    */
   public function __construct($ze=null) {
     parent::__construct($ze);
+    $profile = $this->session->GetAuthenticatedUser();
+    $this->profile = is_null($profile) ? array() : $profile;
+    $this['isAuthenticated'] = is_null($profile) ? false : true;
   }
+
+  /**
+   * Implementing ArrayAccess for $this->profile
+   */
+  public function offsetSet($offset, $value) { if (is_null($offset)) { $this->profile[] = $value; } else { $this->profile[$offset] = $value; }}
+  public function offsetExists($offset) { return isset($this->profile[$offset]); }
+  public function offsetUnset($offset) { unset($this->profile[$offset]); }
+  public function offsetGet($offset) { return isset($this->profile[$offset]) ? $this->profile[$offset] : null; }
 
   /**
    * Implementing interface IHasSQL. Encapsulate all SQL used by this class.
@@ -23,14 +39,16 @@ class CMUser extends CObject implements IHasSQL {
       'drop table user'         => "DROP TABLE IF EXISTS User;",
       'drop table group'        => "DROP TABLE IF EXISTS Groups;",
       'drop table user2group'   => "DROP TABLE IF EXISTS User2Groups;",
-      'create table user'       => "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, email TEXT, password TEXT, created DATETIME default (datetime('now')));",
-      'create table group'      => "CREATE TABLE IF NOT EXISTS Groups (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, created DATETIME default (datetime('now')));",
+      'create table user'       => "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, email TEXT, password TEXT, created DATETIME default (datetime('now')), updated DATETIME default NULL);",
+      'create table group'      => "CREATE TABLE IF NOT EXISTS Groups (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, created DATETIME default (datetime('now')), updated DATETIME default NULL);",
       'create table user2group' => "CREATE TABLE IF NOT EXISTS User2Groups (idUser INTEGER, idGroups INTEGER, created DATETIME default (datetime('now')), PRIMARY KEY(idUser, idGroups));",
       'insert into user'        => 'INSERT INTO User (acronym,name,email,password) VALUES (?,?,?,?);',
       'insert into group'       => 'INSERT INTO Groups (acronym,name) VALUES (?,?);',
       'insert into user2group'  => 'INSERT INTO User2Groups (idUser,idGroups) VALUES (?,?);',
       'check user password'     => 'SELECT * FROM User WHERE password=? AND (acronym=? OR email=?);',
       'get group memberships'   => 'SELECT * FROM Groups AS g INNER JOIN User2Groups AS ug ON g.id=ug.idGroups WHERE ug.idUser=?;',
+      'update profile'          => "UPDATE User SET name=?, email=?, updated=datetime('now') WHERE id=?;",
+      'update password'         => "UPDATE User SET password=?, updated=datetime('now') WHERE id=?;",
      );
     if(!isset($queries[$key])) {
       throw new Exception("No such SQL query, key '$key' was not found.");
@@ -49,18 +67,18 @@ class CMUser extends CObject implements IHasSQL {
       $this->db->ExecuteQuery(self::SQL('create table user'));
       $this->db->ExecuteQuery(self::SQL('create table group'));
       $this->db->ExecuteQuery(self::SQL('create table user2group'));
-      $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'Administrator', 'root@dbwebb.se', 'root'));
+      $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'Administratör', 'root@dbwebb.se', 'root'));
       $idRootUser = $this->db->LastInsertId();
       $this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John/Jane Doe', 'doe@dbwebb.se', 'doe'));
       $idDoeUser = $this->db->LastInsertId();
-      $this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'The Administrator Group'));
+      $this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'Administratörsgruppen'));
       $idAdminGroup = $this->db->LastInsertId();
-      $this->db->ExecuteQuery(self::SQL('insert into group'), array('user', 'The User Group'));
+      $this->db->ExecuteQuery(self::SQL('insert into group'), array('user', 'Användargruppen'));
       $idUserGroup = $this->db->LastInsertId();
       $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idAdminGroup));
       $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idUserGroup));
       $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idDoeUser, $idUserGroup));
-      $this->session->AddMessage('notice', 'Databastabell skapades med användare root, lösenord root, och användare doe, lösenord doe.');
+      $this->AddMessage('success', 'Databastabell skapades med användare root, lösenord root, och användare doe, lösenord doe.');
     } catch(Exception$e) {
       die("$e<br/>Failed to open database: " . $this->config['database'][0]['dsn']);
     }
@@ -78,6 +96,7 @@ class CMUser extends CObject implements IHasSQL {
     $user = (isset($user[0])) ? $user[0] : null;
     unset($user['password']);
     if($user) {
+      $user['isAuthenticated'] = true;
       $user['groups'] = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get group memberships'), array($user['id']));
       foreach($user['groups'] as $val) {
         if($val['id'] == 1) {
@@ -87,10 +106,8 @@ class CMUser extends CObject implements IHasSQL {
           $user['hasRoleUser'] = true;
         }
       }
-      $this->session->SetAuthenticatedUser($user);
-      $this->AddMessage('success', "Välkommen '{$user['name']}'.");
-    } else {
-      $this->AddMessage('notice', "Det gick inte att logga in, användaren eller lösenordet är fel.");
+      $this->profile = $user;
+      $this->session->SetAuthenticatedUser($this->profile);
     }
     return ($user != null);
   }
@@ -100,45 +117,30 @@ class CMUser extends CObject implements IHasSQL {
    */
   public function Logout() {
     $this->session->UnsetAuthenticatedUser();
+    $this->profile = array();
     $this->AddMessage('success', "Du är nu utloggad.");
   }
   
   /**
-   * Does the session contain an authenticated user?
+   * Save user profile to database and update user profile in session.
    *
-   * @returns boolen true or false.
+   * @returns boolean true if success else false.
    */
-  public function IsAuthenticated() {
-    return ($this->session->GetAuthenticatedUser() != false);
+  public function Save() {
+    $this->db->ExecuteQuery(self::SQL('update profile'), array($this['name'], $this['email'], $this['id']));
+    $this->session->SetAuthenticatedUser($this->profile);
+    return $this->db->RowCount() === 1;
   }
-  
+    
   /**
-   * Does the user have the admin role?
+   * Change user password.
    *
-   * @returns boolen true or false.
+   * @param $password string the new password
+   * @returns boolean true if success else false.
    */
-  public function IsAdministrator() {
-    $profile = $this->GetProfile();
-    return isset($profile['hasRoleAdmin']) ? $profile['hasRoleAdmin'] : null;
-  }
-   
-  /**
-   * Get profile information on user.
-   *
-   * @returns array with user profile or null if anonymous user.
-   */
-  public function GetProfile() {
-    return $this->session->GetAuthenticatedUser();
-  }
-   
-  /**
-   * Get the user acronym.
-   *
-   * @returns string with user acronym or null
-   */
-  public function GetAcronym() {
-    $profile = $this->GetProfile();
-    return isset($profile['acronym']) ? $profile['acronym'] : null;
+  public function ChangePassword($password) {
+    $this->db->ExecuteQuery(self::SQL('update password'), array($password, $this['id']));
+    return $this->db->RowCount() === 1;
   }
 }
 
