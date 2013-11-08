@@ -70,9 +70,12 @@ class CCUser extends CObject implements IController {
    */
   public function Login() {
     $form = new CFormUserLogin($this);
-    $form->CheckIfSubmitted();
-    $this->views->SetTitle('Logga in')
-      ->AddInclude(__DIR__ . '/login.tpl.php', array('login_form'=>$form->GetHTML()));     
+    if($form->Check() === false) {
+      $this->AddMessage('notice', 'Formuläret kunde inte skickas eftersom vissa fält ej är ifyllda.');
+      $this->RedirectToController('login');
+    }
+    $this->views->SetTitle('Login')
+                ->AddInclude(__DIR__ . '/login.tpl.php', array('login_form'=>$form->GetHTML()));         
   }
   
   /**

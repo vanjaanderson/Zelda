@@ -30,25 +30,36 @@ class CFormElement implements ArrayAccess {
   public function offsetUnset($offset) { unset($this->attributes[$offset]); }
   public function offsetGet($offset) { return isset($this->attributes[$offset]) ? $this->attributes[$offset] : null; }
   
-  /**
+    /**
    * Get HTML code for a element. 
    *
    * @returns HTML code for the element.
    */
   public function GetHTML() {
     $id = isset($this['id']) ? $this['id'] : 'form-element-' . $this['name'];
-    $class = isset($this['class']) ? " class='{$this['class']}'" : null;
+    $class = isset($this['class']) ? " {$this['class']}" : null;
+    $validates = (isset($this['validation-pass']) && $this['validation-pass'] === false) ? ' validation-failed' : null;
+    $class = (isset($class) || isset($validates)) ? " class='{$class}{$validates}'" : null;
     $name = " name='{$this['name']}'";
     $label = isset($this['label']) ? ($this['label'] . (isset($this['required']) && $this['required'] ? "<span class='form-element-required'>*</span>" : null)) : null;
     $autofocus = isset($this['autofocus']) && $this['autofocus'] ? " autofocus='autofocus'" : null;    
     $readonly = isset($this['readonly']) && $this['readonly'] ? " readonly='readonly'" : null;    
-    $type   = isset($this['type']) ? " type='{$this['type']}'" : null;
-    $value  = isset($this['value']) ? " value='{$this['value']}'" : null;
+    $type    = isset($this['type']) ? " type='{$this['type']}'" : null;
+    $value    = isset($this['value']) ? " value='{$this['value']}'" : null;
+
+    $messages = null;
+    if(isset($this['validation_messages'])) {
+      $message = null;
+      foreach($this['validation_messages'] as $val) {
+        $message .= "<li>{$val}</li>\n";
+      }
+      $messages = "<ul class='validation-message'>\n{$message}</ul>\n";
+    }
     
     if($type && $this['type'] == 'submit') {
-      return "<p><input id='$id'{$type}{$class}{$name}{$value}{$autofocus}{$readonly} /></p>\n";  
+      return "<p><input id='$id'{$type}{$class}{$name}{$value}{$autofocus}{$readonly} /></p>\n";   
     } else {
-      return "<p><label for='$id'>$label</label><br><input id='$id'{$type}{$class}{$name}{$value}{$autofocus}{$readonly} /></p>\n";       
+      return "<p><label for='$id'>$label</label><br><input id='$id'{$type}{$class}{$name}{$value}{$autofocus}{$readonly} />{$messages}</p>\n";           
     }
   }
  
@@ -68,6 +79,42 @@ class CFormElement implements ArrayAccess {
     if(!isset($this['value'])) {
       $this['value'] = ucfirst(strtolower(str_replace(array('-','_'), ' ', $this['name'])));
     }
+  }
+
+    /**
+   * Validate the form element value according a ruleset.
+   *
+   * @param $rules array of validation rules.
+   * returns boolean true if all rules pass, else false.
+   */
+  public function Validate($rules) {
+    $tests = array(
+      'fail' => array(
+        'message' => 'Kommer alltid att misslyckas.', 
+        'test' => 'return false;',
+      ),
+      'pass' => array(
+        'message' => 'Kommer alltid att validera.', 
+        'test' => 'return true;',
+      ),
+      'not_empty' => array(
+        'message' => 'Får inte vara tomt.', 
+        'test' => 'return $value != "";',
+      ),
+    );
+    $pass = true;
+    $messages = array();
+    $value = $this['value'];
+    foreach($rules as $key => $val) {
+      $rule = is_numeric($key) ? $val : $key;
+      if(!isset($tests[$rule])) throw new Exception('Validering av formuläret misslyckades, valideringsregel saknas.');
+      if(eval($tests[$rule]['test']) === false) {
+        $messages[] = $tests[$rule]['message'];
+        $pass = false;
+      }
+    }
+    if(!empty($messages)) $this['validation_messages'] = $messages;
+    return $pass;
   }
 }
 
@@ -127,6 +174,64 @@ class CForm implements ArrayAccess {
   public function __construct($form=array(), $elements=array()) {
     $this->form = $form;
     $this->elements = $elements;
+  }
+
+    /**
+   * Set validation to a form element
+   *
+   * @param $element string the name of the formelement to add validation rules to.
+   * @param $rules array of validation rules.
+   * @returns $this CForm
+   */
+  public function SetValidation($element, $rules) {
+    $this[$element]['validation'] = $rules;
+    return $this;
+  }
+
+  /**
+   * Check if a form was submitted and perform validation and call callbacks.
+   *
+   * The form is stored in the session if validation fails. The page should then be redirected
+   * to the original form page, the form will populate from the session and should then be 
+   * rendered again.
+   *
+   * @returns boolean true if validates, false if not validate, null if not submitted.
+   */
+  public function Check() {
+    $validates = null;
+    $values = array();
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+      unset($_SESSION['form-validation-failed']);
+      $validates = true;
+      foreach($this->elements as $element) {
+        if(isset($_POST[$element['name']])) {
+          $values[$element['name']]['value'] = $element['value'] = $_POST[$element['name']];
+          if(isset($element['validation'])) {
+            $element['validation-pass'] = $element->Validate($element['validation']);
+            if($element['validation-pass'] === false) {
+              $values[$element['name']] = array('value'=>$element['value'], 'validation_messages'=>$element['validation_messages']);
+              $validates = false;
+            }
+          }
+          if(isset($element['callback']) && $validates) {
+             call_user_func($element['callback'], $this);
+          }
+        }
+      }
+    } else if(isset($_SESSION['form-validation-failed'])) {
+      foreach($_SESSION['form-validation-failed'] as $key => $val) {
+        $this[$key]['value'] = $val['value'];
+        if(isset($val['validation_messages'])) {
+          $this[$key]['validation_messages'] = $val['validation_messages'];
+          $this[$key]['validation-pass'] = false;
+        }
+      }
+      unset($_SESSION['form-validation-failed']);
+    }
+    if($validates === false) {
+      $_SESSION['form-validation-failed'] = $values;
+    }
+    return $validates;
   }
 
   /**

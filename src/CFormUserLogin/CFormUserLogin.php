@@ -14,7 +14,9 @@ class CFormUserLogin extends CForm {
     $this->AddElement(new CFormElementText('acronym', array('label'=>'Användarnamn:')))
          ->AddElement(new CFormElementPassword('password', array('label'=>'Lösenord:')))
          ->AddElement(new CFormElementSubmit('login', array('value'=>'Logga in', 'callback'=>array($object, 'DoLogin'))));
-  } 
+  	$this->SetValidation('acronym', array('not_empty'))
+         ->SetValidation('password', array('not_empty'));
+  }
 }
 
 ?>

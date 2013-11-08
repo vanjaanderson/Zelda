@@ -73,7 +73,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
       $password = $this->CreatePassword('doe');
       $this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John/Jane Doe', 'doe@dbwebb.se', $password['algorithm'], $password['salt'], $password['password']));
       $idDoeUser = $this->db->LastInsertId();
-      $this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'Administartörsgruppen'));
+      $this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'Administratörsgruppen'));
       $idAdminGroup = $this->db->LastInsertId();
       $this->db->ExecuteQuery(self::SQL('insert into group'), array('user', 'Användargruppen'));
       $idUserGroup = $this->db->LastInsertId();
