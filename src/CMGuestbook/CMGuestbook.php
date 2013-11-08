@@ -28,7 +28,7 @@ class CMGuestbook extends CObject implements IHasSQL {
       'delete from guestbook'   => 'DELETE FROM Guestbook;',
      );
     if(!isset($queries[$key])) {
-      throw new Exception("No such SQL query, key '$key' was not found.");
+      throw new Exception("SQL-frågan, '$key' hittades inte.");
     }
     return $queries[$key];
   }

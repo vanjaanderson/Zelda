@@ -68,9 +68,9 @@ function login_menu() {
     if($ze->user['hasRoleAdministrator']) {
       $items .= "<a href='" . create_url('acp') . "'>acp</a> ";
     }
-    $items .= "<a href='" . create_url('user/logout') . "'>logout</a> ";
+    $items .= " <span class='grey'>|</span> <a href='" . create_url('user/logout') . "'>logga ut</a> ";
   } else {
-    $items = "<a href='" . create_url('user/login') . "'>login</a> ";
+    $items = "<a href='" . create_url('user/login') . "'>logga in</a> ";
   }
   return "<nav id='login-menu'>$items</nav>";
 }

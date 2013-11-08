@@ -1,4 +1,4 @@
-<h1>Index Controller</h1>
+<h1>Indexkontroller</h1>
 <p>Detta kan du göra.</p>
 
 <?php foreach($menu as $val): ?>

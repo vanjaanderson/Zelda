@@ -75,9 +75,9 @@ EOD;
       $html .= "<li><a href='" . $this->request->CreateUrl($val) . "'>$val</a>";  
     }
     
-    $this->data['title'] = "Developer Controller";
+    $this->data['title'] = "Utvecklarkontroller";
     $this->data['main'] = <<<EOD
-<h1>Developer Controller</h1>
+<h1>Utvecklarkontroller</h1>
 <p>Detta kan du göra:</p>
 <ul>
 $html
