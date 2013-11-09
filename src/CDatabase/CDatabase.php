@@ -4,7 +4,7 @@
 *
 * @package ZeldaCore
 */
-class CMDatabase {
+class CDatabase {
 
   /**
   * Members

@@ -20,25 +20,28 @@ class CCUser extends CObject implements IController {
    */
   public function Index() {
     $this->views->SetTitle('Användarkontroller')
-      ->AddInclude(__DIR__ . '/index.tpl.php', array(
-        'is_authenticated'=>$this->user['isAuthenticated'], 
-        'user'=>$this->user,
-      ));
-  }  
+                ->AddInclude(__DIR__ . '/index.tpl.php', array(
+                  'is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,
+                ));
+  }
 
   /**
    * View and edit user profile.
    */
-  public function Profile() {
+  public function Profile() {    
     $form = new CFormUserProfile($this, $this->user);
-    $form->CheckIfSubmitted();
+    if($form->Check() === false) {
+      $this->AddMessage('notice', 'Formuläret kunde inte skickas, eftersom vissa fält ej är ifyllda.');
+      $this->RedirectToController('profile');
+    }
 
     $this->views->SetTitle('Användarprofil')
-      ->AddInclude(__DIR__ . '/profile.tpl.php', array(
-        'is_authenticated'=>$this->user['isAuthenticated'], 
-        'user'=>$this->user,
-        'profile_form'=>$form->GetHTML(),
-      ));
+                ->AddInclude(__DIR__ . '/profile.tpl.php', array(
+                  'is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,
+                  'profile_form'=>$form->GetHTML(),
+                ));
   }
 
   /**
@@ -52,7 +55,7 @@ class CCUser extends CObject implements IController {
       $this->AddMessage($ret, 'Nytt lösenord sparat.', 'Uppdatering av lösenordet misslyckades.');
     }
     $this->RedirectToController('profile');
-  } 
+  }
 
   /**
    * Save updates to profile information.
@@ -64,18 +67,25 @@ class CCUser extends CObject implements IController {
     $this->AddMessage($ret, 'Profil sparad.', 'Uppdatering av profil misslyckades.');
     $this->RedirectToController('profile');
   }
-  
+
   /**
+   * Authenticate and login a user.
+   */
+    /**
    * Authenticate and login a user.
    */
   public function Login() {
     $form = new CFormUserLogin($this);
     if($form->Check() === false) {
-      $this->AddMessage('notice', 'Formuläret kunde inte skickas eftersom vissa fält ej är ifyllda.');
+      $this->AddMessage('notice', 'Du måste fylla i användarnamn och lösenord.');
       $this->RedirectToController('login');
     }
-    $this->views->SetTitle('Login')
-                ->AddInclude(__DIR__ . '/login.tpl.php', array('login_form'=>$form->GetHTML()));         
+    $this->views->SetTitle('Logga in')
+                ->AddInclude(__DIR__ . '/login.tpl.php', array(
+                  'login_form' => $form,
+                  'allow_create_user' => CZelda::Instance()->config['create_new_users'],
+                  'create_user_url' => $this->CreateUrl(null, 'create'),
+                ));
   }
   
   /**
@@ -86,7 +96,7 @@ class CCUser extends CObject implements IController {
       $this->AddMessage('success', "Välkommen {$this->user['name']}.");
       $this->RedirectToController('profile');
     } else {
-      $this->AddMessage('notice', "Inloggningen misslyckades, eftersom användarnamnet  eller lösenordet är fel.");
+      $this->AddMessage('notice', "Inloggningen misslyckades, eftersom användarnamnet eller lösenordet är fel.");
       $this->RedirectToController('login');      
     }
   }
@@ -96,9 +106,45 @@ class CCUser extends CObject implements IController {
    */
   public function Logout() {
     $this->user->Logout();
-    $this->RedirectToController();
+    $this->RedirectToController('login');
   }
-  
+
+  /**
+   * Create a new user.
+   */
+  public function Create() {
+    $form = new CFormUserCreate($this);
+    if($form->Check() === false) {
+      $this->AddMessage('notice', 'Du måste fylla i alla fält.');
+      $this->RedirectToController('Create');
+    }
+    $this->views->SetTitle('Create user')
+                ->AddInclude(__DIR__ . '/create.tpl.php', array('form' => $form->GetHTML()));     
+  }
+
+  /**
+   * Perform a creation of a user as callback on a submitted form.
+   *
+   * @param $form CForm the form that was submitted
+   */
+  public function DoCreate($form) { 
+    if($form['password']['value'] != $form['password1']['value'] || empty($form['password']['value']) || empty($form['password1']['value'])) {
+      $this->AddMessage('error', 'Lösenordet är tomt eller matchar inte.');
+      $this->RedirectToController('create');
+    } else if($this->user->Create($form['acronym']['value'], 
+                           $form['password']['value'],
+                           $form['name']['value'],
+                           $form['email']['value']
+                           )) {
+      $this->AddMessage('success', "Välkommen {$this->user['name']}. Du har nu skapat en ny användare.");
+      $this->user->Login($form['acronym']['value'], $form['password']['value']);
+      $this->RedirectToController('profile');
+    } else {
+      $this->AddMessage('notice', "Du misslyckades med att skapa ny användare.");
+      $this->RedirectToController('create');
+    }
+  }
+ 
   /**
    * Init the user database.
    */

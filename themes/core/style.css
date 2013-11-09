@@ -60,10 +60,12 @@ body{margin:0;padding:0;color:#333;background-color:#fff;
 /**
  * Login menu
  */
-#login-menu{float:right;font-size:smaller;}
+#login-menu{width:150px;margin:12px 50%;font-size:smaller;padding-left:336px;text-align:right;}
 #login-menu img.gravatar{vertical-align:middle;}
-#login-menu a{text-decoration:none;}
-#login-menu a:hover{text-decoration:underline;}
+#login-menu a{text-decoration:none;color:rgb(255,255,255);}
+#login-menu a:hover{text-decoration:underline;color:rgb(206,206,206);}
+/*#login-div{font-size:smaller;position:absolute;top:0px;left:0px;width:100%;height:41px;background-color:rgb(235,36,46);}*/
+#login-div{font-size:smaller;position:absolute;top:0px;left:0px;width:100%;height:41px;background-color:rgb(51,51,51);} /* #333 */
 
 /**
  * Links
@@ -74,6 +76,7 @@ a:visited {}
 a:hover,
 a:focus   {text-decoration:none;color:#5C0A0A;}
 a:active  {}
+p.form-action-link {font-size:smaller;}
 
 /**
  * Headings

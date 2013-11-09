@@ -9,13 +9,13 @@ class CObject {
   /**
   * Members
   */
-  public $config;
-  public $request;
-  public $data;
-  public $db;
-  public $views;
-  public $session;
-  public $user;
+  protected $config;
+  protected $request;
+  protected $data;
+  protected $db;
+  protected $views;
+  protected $session;
+  protected $user;
 
   /**
   * Constructor
@@ -38,13 +38,13 @@ class CObject {
   */
   protected function RedirectTo($urlOrController=null, $method=null) {
     $ze = CZelda::Instance();
-    if(isset($ze->config['debug']['db-num-queries']) && $ze->config['debug']['db-num-queries'] && isset($ze->db)) {
+    if(isset($this->config['debug']['db-num-queries']) && $this->config['debug']['db-num-queries'] && isset($this->db)) {
       $this->session->SetFlash('database_numQueries', $this->db->GetNumQueries());
     }    
-    if(isset($ze->config['debug']['db-queries']) && $ze->config['debug']['db-queries'] && isset($ze->db)) {
+    if(isset($this->config['debug']['db-queries']) && $this->config['debug']['db-queries'] && isset($this->db)) {
       $this->session->SetFlash('database_queries', $this->db->GetQueries());
     }    
-    if(isset($ze->config['debug']['timer']) && $ze->config['debug']['timer']) {
+    if(isset($this->config['debug']['timer']) && $this->config['debug']['timer']) {
       $this->session->SetFlash('timer', $ze->timer);
     }    
     $this->session->StoreInSession();
@@ -94,7 +94,7 @@ class CObject {
    * @param $arguments string the extra arguments to send to the method
    */
   protected function CreateUrl($urlOrController=null, $method=null, $arguments=null) {
-    $this->request->CreateUrl($urlOrController, $method, $arguments);
+    return $this->request->CreateUrl($urlOrController, $method, $arguments);
   }
 }
 

@@ -41,7 +41,7 @@ class CZelda implements ISingleton {
 
     // Create a database object.
     if(isset($this->config['database'][0]['dsn'])) {
-      $this->db = new CMDatabase($this->config['database'][0]['dsn']);
+      $this->db = new CDatabase($this->config['database'][0]['dsn']);
     }
 
     // Create a container for all views and theme data
@@ -99,17 +99,17 @@ class CZelda implements ISingleton {
           if($methodObj->isPublic()) {
             $methodObj->invokeArgs($controllerObj, $arguments);
           } else {
-            die("404. " . get_class() . ' error: Controller method not public.');          
+            die("404. " . get_class() . ' fel: Controller method not public.');          
           }
         } else {
-          die("404. " . get_class() . ' error: Controller does not contain method.');
+          die("404. " . get_class() . ' fel: Controller does not contain method.');
         }
       } else {
-        die('404. ' . get_class() . ' error: Controller does not implement interface IController.');
+        die('404. ' . get_class() . ' fel: Controller does not implement interface IController.');
       }
     } 
     else { 
-      die('404. Page is not found.');
+      die('404. Sidan finns inte.');
     }
   }
 

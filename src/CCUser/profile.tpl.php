@@ -13,4 +13,3 @@
 <?php else: ?>
   <p>Användaren är okänd och inte autentiserad.</p>
 <?php endif; ?>
-

@@ -43,6 +43,11 @@ $ze->config['base_url'] = null;
 */
 $ze->config['hashing_algorithm'] = 'sha1salt';
 
+/**
+* Allow or disallow creation of new user accounts.
+*/
+$ze->config['create_new_users'] = true;
+
 /*
 * Define session name
 */

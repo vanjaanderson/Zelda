@@ -86,7 +86,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
     }
   }
 
-    /**
+  /**
    * Login by autenticate the user and password. Store user information in session if success.
    *
    * @param string $akronymOrEmail the emailadress or user akronym.
@@ -121,7 +121,35 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
     return ($user != null);
   }
 
-/**
+  /**
+   * Logout.
+   */
+  public function Logout() {
+    $this->session->UnsetAuthenticatedUser();
+    $this->profile = array();
+    $this->AddMessage('success', "Du är nu utloggad.");
+  }
+
+  /**
+   * Create new user.
+   *
+   * @param $acronym string the acronym.
+   * @param $password string the password plain text to use as base. 
+   * @param $name string the user full name.
+   * @param $email string the user email.
+   * @returns boolean true if user was created or else false and sets failure message in session.
+   */
+  public function Create($acronym, $password, $name, $email) {
+    $pwd = $this->CreatePassword($password);
+    $this->db->ExecuteQuery(self::SQL('insert into user'), array($acronym, $name, $email, $pwd['algorithm'], $pwd['salt'], $pwd['password']));
+    if($this->db->RowCount() == 0) {
+      $this->AddMessage('error', "Du misslyckades med att skapa ny användare.");
+      return false;
+    }
+    return true;
+  }
+
+  /**
    * Create password.
    *
    * @param $plain string the password plain text to use as base.
@@ -136,7 +164,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
     );
     switch($password['algorithm']) {
       case 'sha1salt':  $password['salt']     = sha1(microtime()); $password['password']  = sha1($password['salt'].$plain); break;
-      case 'md5salt':   $password['salt']     = md5(microtime()); $password['password']    = md5($password['salt'].$plain); break;
+      case 'md5salt':   $password['salt']     = md5(microtime()); $password['password']   = md5($password['salt'].$plain); break;
       case 'sha1':      $password['password'] = sha1($plain); break;
       case 'md5':       $password['password'] = md5($plain); break;
       case 'plain':     $password['password'] = $plain; break;
@@ -144,7 +172,6 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
     }
     return $password;
   }
-  
 
   /**
    * Check if password matches.
@@ -167,15 +194,6 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
   }
   
   /**
-   * Logout.
-   */
-  public function Logout() {
-    $this->session->UnsetAuthenticatedUser();
-    $this->profile = array();
-    $this->AddMessage('success', "Du är nu utloggad.");
-  }
-  
-  /**
    * Save user profile to database and update user profile in session.
    *
    * @returns boolean true if success else false.
@@ -189,11 +207,12 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
   /**
    * Change user password.
    *
-   * @param $password string the new password
+   * @param $plain string plaintext of the new password
    * @returns boolean true if success else false.
    */
-  public function ChangePassword($password) {
-    $this->db->ExecuteQuery(self::SQL('update password'), array($password['algoritm'], $password['salt'], $password['password'], $this['id']));
+  public function ChangePassword($plain) {
+    $password = $this->CreatePassword($plain);
+    $this->db->ExecuteQuery(self::SQL('update password'), array($password['algorithm'], $password['salt'], $password['password'], $this['id']));
     return $this->db->RowCount() === 1;
   }
 }
