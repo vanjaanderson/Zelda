@@ -5,20 +5,6 @@
 /**
 * Structure
 */
-/*html{}
-body{
-   background-color:#eee;
-   font: 1em Verdana, Arial, Helvetica, sans-serif;
-}
-
-#header,
-#main,
-#footer {
-   margin:0 auto;
-   width:970px;
-   background-color:#fff;
-   padding: 1em;
-}*/
 
 @import url(http://fonts.googleapis.com/css?family=Mystery+Quest);
 
@@ -103,14 +89,21 @@ padding: 0.8em; margin-bottom: 1em; border: 2px solid #ddd; }
  * Validation of input in form
  */
 .validation-failed{border:2px solid red;}
-.validation-message{color:red;font-size:smaller;}
+.validation-message{color:red;font-size:smaller;font-style:italic;list-style-type:none;margin-top:-16px;margin-left:-40px;}
 
+/**
+ * Forms
+ */
+.form-element-data {}
+textarea { width:50%; height: 250px; margin-top:3px; }
+#form-element-title, #form-element-key, #form-element-acronym, #form-element-password, 
+#form-element-password1, #form-element-name, #form-element-email { width:50%; }
 
 /**
  * Misc
 */
 .infobox {margin-top:24px;padding:2px 16px;background:rgb(255,255,255);}
 .bigger {font-size:1.5em;}
-.smaller {font-size:0.8em;}
+.smaller, .smaller-text {font-size:0.8em;}
 .red {color:rgb(237,32,36);}
 .grey {color:rgb(206,206,206);}

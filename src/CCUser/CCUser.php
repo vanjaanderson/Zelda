@@ -118,7 +118,7 @@ class CCUser extends CObject implements IController {
       $this->AddMessage('notice', 'Du måste fylla i alla fält.');
       $this->RedirectToController('Create');
     }
-    $this->views->SetTitle('Create user')
+    $this->views->SetTitle('Skapa användare')
                 ->AddInclude(__DIR__ . '/create.tpl.php', array('form' => $form->GetHTML()));     
   }
 
