@@ -11,14 +11,17 @@
 
 <p class='smaller-text'><em>
 <?php if($content['created']): ?>
-  Innehållet skapades av <?=$content['owner']?>, <?=$content['created']?>.
+  Innehållet skapades av <?=$content['owner']?>, <?=time_diff($content['created'])?>.
 <?php else: ?>
   Innehållet är inte sparat än.
 <?php endif; ?>
 
 <?php if(isset($content['updated'])):?>
-  Senast uppdaterat <?=$content['updated']?>.
+  Senast uppdaterat <?=time_diff($content['updated'])?>.
 <?php endif; ?>
 </em></p>
 
-<a href='<?=create_url('content')?>'>Visa allt innehåll</a>
+<p>
+	<a href='<?=create_url("content")?>'>Visa allt innehåll</a>
+	<a href='<?=create_url("content")?>'>visa allt</a>
+</p>

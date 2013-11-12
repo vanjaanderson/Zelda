@@ -36,13 +36,16 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
    *
    * @param string $key the string that is the key of the wanted SQL-entry in the array.
    */
-  public static function SQL($key=null) {
+  public static function SQL($key=null, $args=null) {
+    $order_order  = isset($args['order-order']) ? $args['order-order'] : 'ASC';
+    $order_by     = isset($args['order-by'])    ? $args['order-by'] : 'id';    
     $queries = array(
       'drop table content'      => "DROP TABLE IF EXISTS Content;",
       'create table content'    => "CREATE TABLE IF NOT EXISTS Content (id INTEGER PRIMARY KEY, key TEXT KEY, type TEXT, title TEXT, data TEXT, idUser INT, created DATETIME default (datetime('now')), updated DATETIME default NULL, deleted DATETIME default NULL, FOREIGN KEY(idUser) REFERENCES User(id));",
       'insert content'          => 'INSERT INTO Content (key,type,title,data,idUser) VALUES (?,?,?,?,?);',
       'select * by id'          => 'SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.id=?;',
       'select * by key'         => 'SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.key=?;',
+      'select * by type'        => "SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE type=? ORDER BY {$order_by} {$order_order};",
       'select *'                => 'SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id;',
       'update content'          => "UPDATE Content SET key=?, type=?, title=?, data=?, updated=datetime('now') WHERE id=?;",
      );
@@ -59,7 +62,12 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
     try {
       $this->db->ExecuteQuery(self::SQL('drop table content'));
       $this->db->ExecuteQuery(self::SQL('create table content'));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world', 'post', 'Hej världen', 'Detta är ett demonstrationsinlägg.', $this->user['id']));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world', 'post', 'Hej världen', 'Detta är ett demoinlägg.', $this->user['id']));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-again', 'post', 'Hej igen, världen', 'Detta är ett annat demoinlägg.', $this->user['id']));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-once-more', 'post', 'Hej världen, återigen', 'Ytterligare ett demoinlägg.', $this->user['id']));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('home', 'page', 'Home page', 'Detta är en demosida, det skulle kunna vara din personliga startsida.', $this->user['id']));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('about', 'page', 'About page', 'Detta är en demosida, det skulle kunna vara din personliga om-sida.', $this->user['id']));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('download', 'page', 'Download page', 'Detta är en demosida, det skulle kunna vara din personliga nedladdningssida.', $this->user['id']));
       $this->AddMessage('success', 'Databastabeller och inlägg "Hej världen" skapades, med dig som författare.');
     } catch(Exception$e) {
       die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
@@ -110,12 +118,18 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
   /**
    * List all content.
    *
+   * @param $args array with various settings for the request. Default is null.
    * @returns array with listing or null if empty.
    */
-  public function ListAll() {
+  public function ListAll($args=null) {    
     try {
-      return $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select *'));
-    } catch(Exception$e) {
+      if(isset($args) && isset($args['type'])) {
+        return $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select * by type', $args), array($args['type']));
+      } else {
+        return $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select *', $args));
+      }
+    } catch(Exception $e) {
+      echo $e;
       return null;
     }
   } 

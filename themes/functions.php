@@ -8,8 +8,7 @@
 * Print debuginformation from the framework.
  */
 function get_debug() {
-  $ze = CZelda::Instance();
-  
+  $ze = CZelda::Instance(); 
   if(empty($ze->config['debug'])) {
     return;
   }
@@ -66,7 +65,7 @@ function login_menu() {
   if($ze->user['isAuthenticated']) {
     $items = "<a href='" . create_url('user/profile') . "'><img class='gravatar' src='" . get_gravatar(20) . "' alt=''> " . $ze->user['acronym'] . "</a> ";
     if($ze->user['hasRoleAdministrator']) {
-      $items .= "<a href='" . create_url('acp') . "'>acp</a> ";
+      $items .= "<a href='" . create_url('akp') . "'>akp</a> ";
     }
     $items .= " <span class='grey'>|</span> <a href='" . create_url('user/logout') . "'>logga ut</a> ";
   } else {
@@ -80,6 +79,23 @@ function login_menu() {
 */
 function get_gravatar($size=null) {
   return 'http://www.gravatar.com/avatar/' . md5(strtolower(trim(CZelda::Instance()->user['email']))) . '.jpg?r=pg&amp;d=wavatar&amp;' . ($size ? "s=$size" : null);
+}
+
+/**
+ * Escape data to make it safe to write in the browser.
+ */
+function esc($str) {
+  return htmlEnt($str);
+}
+
+/**
+ * Display diff of time between now and a datetime. 
+ *
+ * @param $start datetime|string
+ * @returns string
+ */
+function time_diff($start) {
+  return formatDateTimeDiff($start);
 }
 
 /**

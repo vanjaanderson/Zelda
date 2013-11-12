@@ -42,18 +42,10 @@ class CSession {
   public function GetAuthenticatedUser() { return $this->authenticated_user; }
 
   /**
-   * Set flash values, to be remembered one page request
+   * Set or get flash values, to be remembered one page request
    */
-  public function SetFlash($key, $value) {
-    $this->data['flash'][$key] = $value;
-  }
-
-  /**
-   * Get flash values, if any.
-   */
-  public function GetFlash($key) {
-    return isset($this->flash[$key]) ? $this->flash[$key] : null;
-  }
+  public function SetFlash($key, $value) { $this->data['flash'][$key] = $value; }
+  public function GetFlash($key) { return isset($this->flash[$key]) ? $this->flash[$key] : null; }
 
   /**
    * Add message to be displayed to user on next pageload. Store in flash.

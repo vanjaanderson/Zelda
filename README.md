@@ -6,6 +6,10 @@ This is my Content Managemant Framework created in the course "php mvc" on Bleki
 
 History
 -------
+v0.2.12 - 11 november 2013
+
+* Presentera innehållet som sida och blogg
+
 v0.2.11 - 10 november 2013
 
 * Hantera innehållet på en webbplats, dess "content"

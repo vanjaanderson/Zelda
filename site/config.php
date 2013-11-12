@@ -83,6 +83,8 @@ $ze->config['controllers'] = array(
   'developer' => array('enabled' => true,'class' => 'CCDeveloper'),
   'guestbook' => array('enabled' => true,'class' => 'CCGuestbook'),
   'content'   => array('enabled' => true,'class' => 'CCContent'),
+  'blog'      => array('enabled' => true,'class' => 'CCBlog'),
+  'page'      => array('enabled' => true,'class' => 'CCPage'),
   'user'      => array('enabled' => true,'class' => 'CCUser'),
   'akp'       => array('enabled' => true,'class' => 'CCAdminControlPanel'),
 );

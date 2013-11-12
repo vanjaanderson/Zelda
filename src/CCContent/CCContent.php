@@ -38,7 +38,7 @@ class CCContent extends CObject implements IController {
       $this->RedirectToController('edit', $content['id']);
     }
     
-    $title = isset($id) ? 'Edit' : 'Create';
+    $title = isset($id) ? 'Ändra' : 'Skapa';
     $this->views->SetTitle("$title innehåll: $id")
                 ->AddInclude(__DIR__ . '/edit.tpl.php', array(
                   'user'=>$this->user, 
