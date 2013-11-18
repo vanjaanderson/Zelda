@@ -39,7 +39,7 @@ class CCContent extends CObject implements IController {
     }
     
     $title = isset($id) ? 'Ändra' : 'Skapa';
-    $this->views->SetTitle("$title innehåll: $id")
+    $this->views->SetTitle("$title innehåll: ".htmlEnt($content['title']))
                 ->AddInclude(__DIR__ . '/edit.tpl.php', array(
                   'user'=>$this->user, 
                   'content'=>$content, 

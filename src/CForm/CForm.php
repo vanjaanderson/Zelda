@@ -50,9 +50,9 @@ class CFormElement implements ArrayAccess {
     $label = isset($this['label']) ? ($this['label'] . (isset($this['required']) && $this['required'] ? "<span class='form-element-required'>*</span>" : null)) : null;
     $autofocus = isset($this['autofocus']) && $this['autofocus'] ? " autofocus='autofocus'" : null;    
     $readonly = isset($this['readonly']) && $this['readonly'] ? " readonly='readonly'" : null;    
-    $type    = isset($this['type']) ? " type='{$this['type']}'" : null;
+    $type   = isset($this['type']) ? " type='{$this['type']}'" : null;
     $onlyValue  = isset($this['value']) ? htmlentities($this['value'], ENT_COMPAT, $this->characterEncoding) : null;
-    $value    = isset($this['value']) ? " value='{$this['value']}'" : null;
+    $value  = isset($this['value']) ? " value='{$onlyValue}'" : null;
 
     $messages = null;
     if(isset($this['validation-messages'])) {

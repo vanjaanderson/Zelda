@@ -8,6 +8,7 @@
 * Print debuginformation from the framework.
  */
 function get_debug() {
+  // Only if debug is wanted.
   $ze = CZelda::Instance(); 
   if(empty($ze->config['debug'])) {
     return;
@@ -86,6 +87,17 @@ function get_gravatar($size=null) {
  */
 function esc($str) {
   return htmlEnt($str);
+}
+
+/**
+ * Filter data according to a filter. Uses CMContent::Filter()
+ *
+ * @param $data string the data-string to filter.
+ * @param $filter string the filter to use.
+ * @returns string the filtered string.
+ */
+function filter_data($data, $filter) {
+  return CMContent::Filter($data, $filter);
 }
 
 /**

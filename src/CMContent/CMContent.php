@@ -41,13 +41,13 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
     $order_by     = isset($args['order-by'])    ? $args['order-by'] : 'id';    
     $queries = array(
       'drop table content'      => "DROP TABLE IF EXISTS Content;",
-      'create table content'    => "CREATE TABLE IF NOT EXISTS Content (id INTEGER PRIMARY KEY, key TEXT KEY, type TEXT, title TEXT, data TEXT, idUser INT, created DATETIME default (datetime('now')), updated DATETIME default NULL, deleted DATETIME default NULL, FOREIGN KEY(idUser) REFERENCES User(id));",
-      'insert content'          => 'INSERT INTO Content (key,type,title,data,idUser) VALUES (?,?,?,?,?);',
+      'create table content'    => "CREATE TABLE IF NOT EXISTS Content (id INTEGER PRIMARY KEY, key TEXT KEY, type TEXT, title TEXT, data TEXT, filter TEXT, idUser INT, created DATETIME default (datetime('now')), updated DATETIME default NULL, deleted DATETIME default NULL, FOREIGN KEY(idUser) REFERENCES User(id));",
+      'insert content'          => 'INSERT INTO Content (key,type,title,data,filter,idUser) VALUES (?,?,?,?,?,?);',
       'select * by id'          => 'SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.id=?;',
       'select * by key'         => 'SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.key=?;',
       'select * by type'        => "SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE type=? ORDER BY {$order_by} {$order_order};",
       'select *'                => 'SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id;',
-      'update content'          => "UPDATE Content SET key=?, type=?, title=?, data=?, updated=datetime('now') WHERE id=?;",
+      'update content'          => "UPDATE Content SET key=?, type=?, title=?, data=?, filter=?, updated=datetime('now') WHERE id=?;",
      );
     if(!isset($queries[$key])) {
       throw new Exception("SQL-frågan, '$key' hittades ej.");
@@ -62,12 +62,12 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
     try {
       $this->db->ExecuteQuery(self::SQL('drop table content'));
       $this->db->ExecuteQuery(self::SQL('create table content'));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world', 'post', 'Hej världen', 'Detta är ett demoinlägg.', $this->user['id']));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-again', 'post', 'Hej igen, världen', 'Detta är ett annat demoinlägg.', $this->user['id']));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-once-more', 'post', 'Hej världen, återigen', 'Ytterligare ett demoinlägg.', $this->user['id']));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('home', 'page', 'Home page', 'Detta är en demosida, det skulle kunna vara din personliga startsida.', $this->user['id']));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('about', 'page', 'About page', 'Detta är en demosida, det skulle kunna vara din personliga om-sida.', $this->user['id']));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('download', 'page', 'Download page', 'Detta är en demosida, det skulle kunna vara din personliga nedladdningssida.', $this->user['id']));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world', 'post', 'Hej världen', 'Detta är ett demoinlägg.', 'plain', $this->user['id']));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-again', 'post', 'Hej igen, världen', 'Detta är ett annat demoinlägg.', 'plain', $this->user['id']));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-once-more', 'post', 'Hej världen, återigen', 'Ytterligare ett demoinlägg.', 'plain', $this->user['id']));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('home', 'page', 'Home page', 'Detta är en demosida, det skulle kunna vara din personliga startsida.', 'plain', $this->user['id']));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('about', 'page', 'About page', 'Detta är en demosida, det skulle kunna vara din personliga om-sida.', 'plain', $this->user['id']));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('download', 'page', 'Download page', 'Detta är en demosida, det skulle kunna vara din personliga nedladdningssida.', 'plain', $this->user['id']));
       $this->AddMessage('success', 'Databastabeller och inlägg "Hej världen" skapades, med dig som författare.');
     } catch(Exception$e) {
       die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
@@ -132,7 +132,32 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
       echo $e;
       return null;
     }
-  } 
+  }
+
+  /**
+   * Filter content according to a filter.
+   *
+   * @param $data string of text to filter and format according its filter settings.
+   * @returns string with the filtered data.
+   */
+  public static function Filter($data, $filter) {
+    switch($filter) {
+      /*case 'php': $data = nl2br(makeClickable(eval('?>'.$data))); break;
+      case 'html': $data = nl2br(makeClickable($data)); break;*/
+      case 'plain': 
+      default: $data = nl2br(makeClickable(htmlEnt($data))); break;
+    }
+    return $data;
+  }
+   
+  /**
+   * Get the filtered content.
+   *
+   * @returns string with the filtered data.
+   */
+  public function GetFilteredData() {
+    return $this->Filter($this['data'], $this['filter']);
+  }
 }
 
 ?>

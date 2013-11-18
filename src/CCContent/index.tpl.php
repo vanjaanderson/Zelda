@@ -1,5 +1,5 @@
-<h1>Innehållskontroller Index</h1>
-<p>En kontroller för att administrera allt innehåll: lista, skapa, redigera, ta bort och visa innehåll.</p>
+<h1>Innehåll</h1>
+<p>Skapa, redigera och visa innehåll.</p>
 
 <h2>Allt innehåll</h2>
 <?php if($contents != null):?>

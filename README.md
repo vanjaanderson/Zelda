@@ -6,7 +6,11 @@ This is my Content Managemant Framework created in the course "php mvc" on Bleki
 
 History
 -------
-v0.2.12 - 11 november 2013
+v0.2.13 - 18 november 2013
+
+* Spara allt, filtrera och formattera vid utskrift
+
+v0.2.12 - 10 november 2013
 
 * Presentera innehållet som sida och blogg
 

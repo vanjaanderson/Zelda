@@ -49,6 +49,20 @@ function htmlent($str, $flags = ENT_COMPAT) {
 }
 
 /**
+ * Helper, make clickable links from URLs in text.
+ */
+function makeClickable($text) {
+  return preg_replace_callback(
+    '#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#', 
+    create_function(
+      '$matches',
+      'return "<a href=\'{$matches[0]}\'>{$matches[0]}</a>";'
+    ),
+    $text
+  );
+}
+
+/**
  * Helper, interval formatting of times. Needs PHP5.3. 
  *
  * All times in database is UTC so this function assumes the starttime to be in UTC, if not otherwise
@@ -98,38 +112,38 @@ function formatDateTimeDiff($start, $startTimeZone=null, $end=null, $endTimeZone
   
   $format = array();
   if($interval->y !== 0) {
-    $format[] = "%y ".$doPlural($interval->y, "year");
+    $format[] = "%y ".$doPlural($interval->y, "år");
   }
   if($interval->m !== 0) {
-    $format[] = "%m ".$doPlural($interval->m, "month");
+    $format[] = "%m ".$doPlural($interval->m, "månad");
   }
   if($interval->d !== 0) {
-    $format[] = "%d ".$doPlural($interval->d, "day");
+    $format[] = "%d ".$doPlural($interval->d, "dag");
   }
   if($interval->h !== 0) {
-    $format[] = "%h ".$doPlural($interval->h, "hour");
+    $format[] = "%h ".$doPlural($interval->h, "timme");
   }
   if($interval->i !== 0) {
-    $format[] = "%i ".$doPlural($interval->i, "minute");
+    $format[] = "%i ".$doPlural($interval->i, "minut");
   }
   if(!count($format)) {
-      return "less than a minute";
+      return "mindre än en minut";
   }
   if($interval->s !== 0) {
-    $format[] = "%s ".$doPlural($interval->s, "second");
+    $format[] = "%s ".$doPlural($interval->s, "sekund");
   }
   
   if($interval->s !== 0) {
       if(!count($format)) {
-          return "less than a minute";
+          return "mindre än en minut";
       } else {
-          $format[] = "%s ".$doPlural($interval->s, "second");
+          $format[] = "%s ".$doPlural($interval->s, "sekund");
       }
   }
   
   // We use the two biggest parts
   if(count($format) > 1) {
-      $format = array_shift($format)." and ".array_shift($format);
+      $format = array_shift($format)." och ".array_shift($format);
   } else {
       $format = array_pop($format);
   }
