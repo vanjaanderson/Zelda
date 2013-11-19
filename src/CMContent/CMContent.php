@@ -68,8 +68,8 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
       $this->db->ExecuteQuery(self::SQL('insert content'), array('home', 'page', 'Hemsidan', 'Detta är en demosida, det skulle kunna vara din personliga startsida.', 'plain', $this->user['id']));
       $this->db->ExecuteQuery(self::SQL('insert content'), array('about', 'page', 'Om-sida', 'Detta är en demosida, det skulle kunna vara din personliga om-sida.', 'plain', $this->user['id']));
       $this->db->ExecuteQuery(self::SQL('insert content'), array('download', 'page', 'Nedladdningssida', 'Detta är en demosida, det skulle kunna vara din personliga nedladdningssida.', 'plain', $this->user['id']));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('bbcode', 'page', 'Sida med BBCode', "Detta är en sida med BBCode-formattering.\n\n[b]Fet text[/b] och [i]kursiv text[/i] och [url=http://dbwebb.se]länk till dbwebb.se[/url]. 
-        Du kan även infoga bilder, såsom Zelda favicon: [img]http://www.student.bth.se/~vaan12/phpmvc/kmom04/zelda/themes/core/favicon_32x32.png[/img]", 'bbcode', $this->user['id']));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('bbcode', 'page', 'Sida med BBCode', "Detta är en sida med BBCode-formattering.\n\n[b]Fet text[/b] och [i]kursiv text[/i] och [url=http://dbwebb.se]länk till dbwebb.se[/url]. Du kan även infoga bilder, såsom Zelda favicon: [img]http://www.student.bth.se/~vaan12/phpmvc/kmom04/zelda/themes/core/favicon_32x32.png[/img]", 'bbcode', $this->user['id']));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('htmlpurify', 'page', 'Sida med HTMLPurifier', "Detta är en demosida med HTML-kod som körs igenom <a href='http://htmlpurifier.org/'>HTMLPurify</a>. Ändra texten, skriv in lite HTML-kod för att kontrollera att det fungerar.\n\n<b>Fet text</b> och <i>kursiv text</i> och <a href='http://dbwebb.se'>en länk till dbwebb.se</a>. JavaScript: <javascript>alert('hej');</javascript> kommer att tas bort.", 'htmlpurify', $this->user['id']));
       $this->AddMessage('success', 'Databastabeller och inlägg "Hej världen" skapades, med dig som författare.');
     } catch(Exception$e) {
       die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
@@ -146,6 +146,7 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
     switch($filter) {
       /*case 'php': $data = nl2br(makeClickable(eval('?>'.$data))); break;
       case 'html': $data = nl2br(makeClickable($data)); break;*/
+      case 'htmlpurify': $data = nl2br(CHTMLPurifier::Purify($data)); break;
       case 'bbcode': $data = nl2br(bbcode2html(htmlEnt($data))); break;
       case 'plain':
       default: $data = nl2br(makeClickable(htmlEnt($data))); break;
