@@ -23,10 +23,10 @@ spl_autoload_register('autoload');
 /**
 * Set a default exception handler and enable logging in it.
 */
-function exceptionHandler($e) {
+function exception_handler($e) {
   echo "Zelda: Uncaught exception: <p>" . $e->getMessage() . "</p><pre>" . $e->getTraceAsString(), "</pre>";
 }
-set_exception_handler('exceptionHandler');
+set_exception_handler('exception_handler');
 
 /**
 * Helper, include a file and store it in a string. Make $vars available to the included file.
@@ -51,9 +51,10 @@ function htmlent($str, $flags = ENT_COMPAT) {
 /**
  * Helper, make clickable links from URLs in text.
  */
-function makeClickable($text) {
+function make_clickable($text) {
   return preg_replace_callback(
-    '#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#', 
+    '#\b(?<![href|src]=[\'"])https?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#',
+    //'#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#', 
     create_function(
       '$matches',
       'return "<a href=\'{$matches[0]}\'>{$matches[0]}</a>";'
@@ -107,7 +108,7 @@ function formatDateTimeDiff($start, $startTimeZone=null, $end=null, $endTimeZone
   }
   
   $interval = $end->diff($start);
-  $doPlural = function($nb,$str){return $nb>1?$str.'s':$str;}; // adds plurals
+  $doPlural = function($nb,$str){return $nb>1?$str.'er':$str;}; // adds plurals
   //$doPlural = create_function('$nb,$str', 'return $nb>1?$str."s":$str;'); // adds plurals
   
   $format = array();
@@ -159,7 +160,8 @@ function formatDateTimeDiff($start, $startTimeZone=null, $end=null, $endTimeZone
  * @returns string the formatted text.
  */
 function bbcode2html($text) {
-  $search = array( 
+  $search = array(
+    '/\[h2\](.*?)\[\/h2\]/is',
     '/\[b\](.*?)\[\/b\]/is', 
     '/\[i\](.*?)\[\/i\]/is', 
     '/\[u\](.*?)\[\/u\]/is',
@@ -167,7 +169,8 @@ function bbcode2html($text) {
     '/\[url\](https?.*?)\[\/url\]/is', 
     '/\[url=(https?.*?)\](.*?)\[\/url\]/is' 
     );   
-  $replace = array( 
+  $replace = array(
+    '<h2>$1</h2>',
     '<strong>$1</strong>', 
     '<em>$1</em>', 
     '<u>$1</u>',

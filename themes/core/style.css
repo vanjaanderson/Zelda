@@ -100,6 +100,14 @@ textarea { width:50%; height: 250px; margin-top:3px; }
 #form-element-password1, #form-element-name, #form-element-email { width:50%; }
 
 /**
+ * Tables
+ */
+table { border-collapse: collapse; }
+table td { border: 1px solid #ddd; padding: 4px 8px; }
+table th { background: #ddd; border-right: 1px solid #fff; padding: 6px 8px; }
+table th:last-child { border-right: 1px solid #ddd; }
+
+/**
  * Misc
 */
 .infobox {margin-top:24px;padding:2px 16px;background:rgb(255,255,255);}

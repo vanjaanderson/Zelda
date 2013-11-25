@@ -5,7 +5,7 @@
 <?php if($contents != null):?>
   <ul>
   <?php foreach($contents as $val):?>
-    <li><?=$val['id']?>, <?=esc($val['title'])?>, av <?=$val['owner']?> <a href='<?=create_url("content/edit/{$val['id']}")?>'>redigera</a> <a href='<?=create_url("page/view/{$val['id']}")?>'>visa</a>
+    <li><?=$val['id']?>, <?=esc($val['title'])?>, av <?=$val['owner']?> | <a class='smaller' href='<?=create_url("content/edit/{$val['id']}")?>'>Redigera</a> | <a class='smaller' href='<?=create_url("page/view/{$val['id']}")?>'>Visa</a>
   <?php endforeach; ?>
   </ul>
 <?php else:?>

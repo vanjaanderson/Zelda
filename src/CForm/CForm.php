@@ -51,7 +51,7 @@ class CFormElement implements ArrayAccess {
     $autofocus = isset($this['autofocus']) && $this['autofocus'] ? " autofocus='autofocus'" : null;    
     $readonly = isset($this['readonly']) && $this['readonly'] ? " readonly='readonly'" : null;    
     $type   = isset($this['type']) ? " type='{$this['type']}'" : null;
-    $onlyValue  = isset($this['value']) ? htmlentities($this['value'], ENT_COMPAT, $this->characterEncoding) : null;
+    $onlyValue  = isset($this['value']) ? htmlent($this['value'], ENT_COMPAT, $this->characterEncoding) : null;
     $value  = isset($this['value']) ? " value='{$onlyValue}'" : null;
 
     $messages = null;
@@ -68,7 +68,17 @@ class CFormElement implements ArrayAccess {
     } else if($type && $this['type'] == 'textarea') {
         return "<p><label for='$id'>$label</label><br><textarea id='$id'{$type}{$class}{$name}{$autofocus}{$readonly}>{$onlyValue}</textarea></p>\n"; 
     } else if($type && $this['type'] == 'hidden') {
-        return "<input id='$id'{$type}{$class}{$name}{$value} />\n"; 
+        return "<input id='$id'{$type}{$class}{$name}{$value} />\n";
+    } else if($type && $this['type'] == 'select') {
+        return "<p><label for='$id'>$label</label><br><select id='$id'{$type}{$class}{$name}{$value}>
+          <option value='{$type}{$class}{$name}{$value} selected'>{$onlyValue}</option>
+          <option value='plain'>Plain</option>
+          <option value='htmlpurify'>HTML Purify</option>
+          <option value='bbcode'>BB Code</option>
+          <option value='make_clickable'>Make Clickable</option>
+          <option value='markdownextra'>Markdown</option>
+          <option value='smartypants'>Smarty Pants</option>
+        </select></p>\n"; 
     } else {
       return "<p><label for='$id'>$label</label><br><input id='$id'{$type}{$class}{$name}{$value}{$autofocus}{$readonly} />{$messages}</p>\n";        
     }
@@ -194,6 +204,21 @@ class CFormElementSubmit extends CFormElement {
   public function __construct($name, $attributes=array()) {
     parent::__construct($name, $attributes);
     $this['type'] = 'submit';
+    $this->UseNameAsDefaultValue();
+  }
+}
+
+/* Select/option list*/
+class CFormElementSelect extends CFormElement {
+  /**
+   * Constructor
+   *
+   * @param string name of the element.
+   * @param array attributes to set to the element. Default is an empty array.
+   */
+  public function __construct($name, $attributes=array()) {
+    parent::__construct($name, $attributes);
+    $this['type'] = 'select';
     $this->UseNameAsDefaultValue();
   }
 }
