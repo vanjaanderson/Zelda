@@ -6,7 +6,7 @@
 /**
  * Add static entries for use in the template file. 
  */
-$ze->data['header']       = 'Zelda Core';
+$ze->data['header']       = 'Zelda Grid';
 $ze->data['slogan']       = 'A PHP-based MVC-inspired CMF';
 $ze->data['favicon']      = theme_url('favicon_32x32.png');
 $ze->data['logo']         = theme_url('logo_300x260.png');
@@ -20,7 +20,8 @@ $ze->data['footer'] = <<<EOD
       <a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css21">css21</a>
       <a href="http://validator.w3.org/unicorn/check?ucn_uri=referer&amp;ucn_task=conformance">unicorn</a>
       <a href="http://validator.w3.org/checklink?uri={$ze->request->current_url}">links</a>
-      <a href="http://validator.w3.org/i18n-checker/check?uri={$ze->request->current_url}">i18n</a>
+      <!--<a href="http://validator.w3.org/i18n-checker/check?uri={$ze->request->current_url}">i18n</a>-->
+      <a href="http://qa-dev.w3.org/i18n-checker/index?async=false&amp;docAddr={$ze->request->current_url}">i18n</a>
       <a href="http://csslint.net/">css-lint</a>
       <a href="http://jslint.com/">js-lint</a>
       <a href="http://jsperf.com/">js-perf</a>

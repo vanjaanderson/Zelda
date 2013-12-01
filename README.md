@@ -6,6 +6,10 @@ This is my Content Managemant Framework created in the course "php mvc" on Bleki
 
 History
 -------
+v0.2.16 - 01 december 2013
+
+* Nytt tema baserat på LESS
+
 v0.2.15 - 19 november 2013
 
 * Filtrera innehåll med HTMLPurifier

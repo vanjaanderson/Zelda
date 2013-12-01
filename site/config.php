@@ -87,6 +87,7 @@ $ze->config['controllers'] = array(
   'page'      => array('enabled' => true,'class' => 'CCPage'),
   'user'      => array('enabled' => true,'class' => 'CCUser'),
   'akp'       => array('enabled' => true,'class' => 'CCAdminControlPanel'),
+  'theme'     => array('enabled' => true,'class' => 'CCTheme'),
 );
 
 /**
@@ -94,7 +95,9 @@ $ze->config['controllers'] = array(
 */
 $ze->config['theme'] = array(
   // The name of the theme in the theme directory
-  'name'    => 'core', 
+  //'name'    => 'core',
+  'name'    => 'grid',
+  'stylesheet'  => 'style.php',
 );
 
 ?>

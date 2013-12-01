@@ -68,7 +68,8 @@ class CZelda implements ISingleton {
   public function FrontControllerRoute() {
     // Step 1
     // Take current url and divide it in controller, method and parameters
-    $this->request = new CRequest($this->config['url_type']);
+    //$this->request = new CRequest($this->config['url_type']);
+    $this->request = new CRequest();
     $this->request->Init($this->config['base_url']);
     $controller = $this->request->controller;
     $method     = $this->request->method;
@@ -130,7 +131,7 @@ class CZelda implements ISingleton {
     $themeUrl     = $this->request->base_url . "themes/{$themeName}"; // Lägger till base_url före 
     
     // Add stylesheet path to the $this->data array
-    $this->data['stylesheet'] = "{$themeUrl}/style.css";
+    $this->data['stylesheet'] = "{$themeUrl}/".$this->config['theme']['stylesheet'];
 
     // Include the global functions.php and the functions.php that are part of the theme
     $ze = &$this;
