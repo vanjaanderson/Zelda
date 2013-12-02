@@ -96,8 +96,9 @@ $ze->config['controllers'] = array(
 $ze->config['theme'] = array(
   // The name of the theme in the theme directory
   //'name'    => 'core',
-  'name'    => 'grid',
-  'stylesheet'  => 'style.php',
+  'name'            => 'grid',
+  'stylesheet'      => 'style.php',
+  'template_file'   => 'index.tpl.php',   // Default template file, else use default.tpl.php
 );
 
 ?>

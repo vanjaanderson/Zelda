@@ -6,6 +6,10 @@ This is my Content Managemant Framework created in the course "php mvc" on Bleki
 
 History
 -------
+v0.2.17 - 02 december 2013
+
+* Grid och layout regioner
+
 v0.2.16 - 01 december 2013
 
 * Nytt tema baserat på LESS
