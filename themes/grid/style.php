@@ -37,7 +37,6 @@ if(is_file($configFile)) {
 }
 include($config['path']);
 
-
 /**
  * Compile less to css. Creates a cache-file of the last compiled less-file.
  *
@@ -90,8 +89,6 @@ function autoCompileLess($inputFile, $outputFile, $config) {
   }
 }
 
-
-
 //
 // Compile and output the resulting css-file, use caching whenever suitable.
 //
@@ -100,8 +97,6 @@ $css  = 'style.css';
 $changed = autoCompileLess($less, $css, $config);
 $time = filemtime($css);
 $gmdate = gmdate("D, d M Y H:i:s", $time);
-
-
 
 //
 // Write it out and leave a response, use gzip if available
@@ -115,3 +110,4 @@ if(isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime($_SERVER['HTTP_IF_MODI
   readfile($css);  
 }
 
+?>

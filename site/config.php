@@ -99,6 +99,12 @@ $ze->config['theme'] = array(
   'name'            => 'grid',
   'stylesheet'      => 'style.php',
   'template_file'   => 'index.tpl.php',   // Default template file, else use default.tpl.php
+  // A list of valid theme regions
+  'regions' => array('flash','featured-first','featured-middle','featured-last',
+    'primary','sidebar','triptych-first','triptych-middle','triptych-last',
+    'footer-column-one','footer-column-two','footer-column-three','footer-column-four',
+    'footer',
+  ),
 );
 
 ?>
