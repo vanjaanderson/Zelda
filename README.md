@@ -6,6 +6,10 @@ This is my Content Managemant Framework created in the course "php mvc" on Bleki
 
 History
 -------
+v0.2.19 - 03 december 2013
+
+* Vertikalt grid med typografi
+
 v0.2.18 - 02 december 2013
 
 * Koppla innehåll till regioner
