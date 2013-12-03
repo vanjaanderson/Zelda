@@ -105,6 +105,16 @@ $ze->config['theme'] = array(
     'footer-column-one','footer-column-two','footer-column-three','footer-column-four',
     'footer',
   ),
+  // Add static entries for use in the template file. 
+  'data'          => array(
+    'header'      => 'Zelda Grid',
+    'slogan'      => 'A PHP-based MVC-inspired CMF',
+    'favicon'     => 'favicon_32x32.png',
+    'logo'        => 'logo_300x260.png',
+    'logo_width'  => 300,
+    'logo_height' => 260,
+    'footer'      => '<p>Footer: &copy; 2013 |&nbsp;<a href="http://vanjaanderson.com" target="_blank">Vanja Anderson</a></p>',
+  ),
 );
 
 ?>

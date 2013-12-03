@@ -3,7 +3,7 @@
   <head>
     <meta charset='utf-8'/>
     <title><?=$title?></title>
-    <link rel='shortcut icon' href='<?=$favicon?>'/>
+    <link rel='shortcut icon' href='<?=theme_url($favicon)?>'/>
     <link rel='stylesheet' href='<?=$stylesheet?>'/>
     <?php if(isset($inline_style)): ?><style><?=$inline_style?></style><?php endif; ?>
   </head>
@@ -13,7 +13,7 @@
         <div id='header'>
           <div id='login-div'><?=login_menu()?></div>
           <div id='banner'>
-            <a href='<?=base_url()?>'><img id='site-logo' src='<?=$logo?>' alt='logo' width='<?=$logo_width?>' height='<?=$logo_height?>' /></a>
+            <a href='<?=base_url()?>'><img id='site-logo' src='<?=theme_url($logo)?>' alt='logo' width='<?=$logo_width?>' height='<?=$logo_height?>' /></a>
             <span id='site-title'><?=$header?></span>
             <span id='site-slogan'><?=$slogan?></span>
           </div>
