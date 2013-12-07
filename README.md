@@ -8,7 +8,7 @@ History
 -------
 v0.2.21 - 07 december 2013
 
-* Färdigställ och produktifiera ramverket
+* En modulhanterare till Zelda
 
 v0.2.20 - 03 december 2013
 
