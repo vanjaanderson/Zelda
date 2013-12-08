@@ -4,8 +4,7 @@
 * 
 * @package ZeldaCore
 */
-class CMGuestbook extends CObject implements IHasSQL {
-
+class CMGuestbook extends CObject implements IHasSQL, IModule {
 
   /**
    * Constructor
@@ -13,7 +12,6 @@ class CMGuestbook extends CObject implements IHasSQL {
   public function __construct() {
     parent::__construct();
   }
-
 
   /**
    * Implementing interface IHasSQL. Encapsulate all SQL used by this class.
@@ -33,20 +31,26 @@ class CMGuestbook extends CObject implements IHasSQL {
     return $queries[$key];
   }
 
-
   /**
-   * Init the guestbook and create appropriate tables.
+   * Implementing interface IModule. Manage install/update/deinstall and equal actions.
    */
-  public function Init() {
-    try {
-      $this->db->ExecuteQuery(self::SQL('create table guestbook'));
-      $this->session->AddMessage('notice', 'Databastabell skapad (om den inte redan fanns).');
-    } catch(Exception$e) {
-      die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
+  public function Manage($action=null) {
+    switch($action) {
+      case 'install': 
+        try {
+          $this->db->ExecuteQuery(self::SQL('create table guestbook'));
+          $this->session->AddMessage('notice', 'Databastabell skapad (om den inte redan fanns).');
+        } catch(Exception$e) {
+          die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
+        }
+      break;
+      
+      default:
+        throw new Exception('Otillåten aktivitet för denna modul.');
+      break;
     }
   }
   
-
   /**
    * Add a new entry to the guestbook and save to database.
    */
@@ -58,7 +62,6 @@ class CMGuestbook extends CObject implements IHasSQL {
     }
   }
   
-
   /**
    * Delete all entries from the guestbook and database.
    */
@@ -66,8 +69,7 @@ class CMGuestbook extends CObject implements IHasSQL {
     $this->db->ExecuteQuery(self::SQL('delete from guestbook'));
     $this->session->AddMessage('info', 'Alla meddelanden raderade.');
   }
-  
-  
+    
   /**
    * Read all entries from the guestbook & database.
    */

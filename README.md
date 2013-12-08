@@ -6,9 +6,13 @@ This is my Content Managemant Framework created in the course "php mvc" on Bleki
 
 History
 -------
+v0.2.22 - 08 december 2013
+
+* Installationsfasen 
+
 v0.2.21 - 07 december 2013
 
-* En modulhanterare till Zelda
+* En modulhanterare till Zelda 
 
 v0.2.20 - 03 december 2013
 

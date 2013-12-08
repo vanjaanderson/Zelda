@@ -7,6 +7,15 @@
 	egen mapp i <code>src</code>-mappen.
 </p>
 
+<h2>Hantera Zeldas moduler</h2>
+<p>
+	En modul kan implementera interfacet <code>IModule</code> som gör den hanterbar. Zelda erbjuder ett administrationsgränssnitt för dessa. 
+	Du kan administrera moduler med nedanstående interface:
+</p>
+<ul>
+  <li><a href='<?=create_url('module/install')?>'>installera</a></li>
+</ul>
+
 <h2>Aktiverade controllers</h2>
 <p>
 	Controllerna skapar det lokala API:t för denna webbplats. Här är en lista över alla aktiva controllers och deras metoder. Du aktiverar och/eller inaktiverar controllers i  

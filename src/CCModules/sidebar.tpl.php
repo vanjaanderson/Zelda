@@ -57,6 +57,18 @@
 </div>
 
 <div class='box'>
+<h4>Hanterbara moduler</h4>
+<p><em>Implemenerar interfacet <code>IModule</code>:</em></p>
+<ul>
+<?php foreach($modules as $module): ?>
+  <?php if($module['isManageable']): ?>
+  <li><?=$module['name']?></li>
+  <?php endif; ?>
+<?php endforeach; ?>
+</ul>
+</div>
+
+<div class='box'>
 <h4>Innehåller SQL</h4>
 <p><em>Implementerar interfacet <code>IHasSQL</code>:</em></p>
   <ul>

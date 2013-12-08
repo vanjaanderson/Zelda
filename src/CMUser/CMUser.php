@@ -4,7 +4,7 @@
 * 
 * @package ZeldaCore
 */
-class CMUser extends CObject implements IHasSQL, ArrayAccess {
+class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
 
   /**
    * Properties
@@ -58,6 +58,45 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
       throw new Exception("SQL-frågan, '$key' hittades ej.");
     }
     return $queries[$key];
+  }
+
+  /**
+   * Init the database and create appropriate tables.
+   */
+  public function Manage($action=null) {
+    switch($action) {
+      case 'install': 
+        try {
+          $this->db->ExecuteQuery(self::SQL('drop table user2group'));
+          $this->db->ExecuteQuery(self::SQL('drop table group'));
+          $this->db->ExecuteQuery(self::SQL('drop table user'));
+          $this->db->ExecuteQuery(self::SQL('create table user'));
+          $this->db->ExecuteQuery(self::SQL('create table group'));
+          $this->db->ExecuteQuery(self::SQL('create table user2group'));
+          $this->db->ExecuteQuery(self::SQL('insert into user'), array('Anonym', 'Anonym användare, inte autentiserad', null, 'plain', null, null));
+          $password = $this->CreatePassword('root');
+          $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'Administrator', 'root@dbwebb.se', $password['algorithm'], $password['salt'], $password['password']));
+          $idRootUser = $this->db->LastInsertId();
+          $password = $this->CreatePassword('doe');
+          $this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John/Jane Doe', 'doe@dbwebb.se', $password['algorithm'], $password['salt'], $password['password']));
+          $idDoeUser = $this->db->LastInsertId();
+          $this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'Administratorgruppen'));
+          $idAdminGroup = $this->db->LastInsertId();
+          $this->db->ExecuteQuery(self::SQL('insert into group'), array('user', 'Användargruppen'));
+          $idUserGroup = $this->db->LastInsertId();
+          $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idAdminGroup));
+          $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idUserGroup));
+          $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idDoeUser, $idUserGroup));
+          $this->AddMessage('success', 'Databastabell skapades med användare root, lösenord root, och användare doe, lösenord doe.');
+        } catch(Exception$e) {
+          die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
+        }
+      break;
+      
+      default:
+        throw new Exception('Otillåten aktivitet för denna modul.');
+      break;
+    }
   }
 
   /**

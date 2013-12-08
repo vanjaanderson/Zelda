@@ -88,7 +88,7 @@ $ze->config['controllers'] = array(
   'user'      => array('enabled' => true,'class' => 'CCUser'),
   'akp'       => array('enabled' => true,'class' => 'CCAdminControlPanel'),
   'theme'     => array('enabled' => true,'class' => 'CCTheme'),
-  'module'   => array('enabled' => true,'class' => 'CCModules'),
+  'module'    => array('enabled' => true,'class' => 'CCModules'),
 );
 
 /**
