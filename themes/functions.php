@@ -164,8 +164,17 @@ function create_url($urlOrController=null, $method=null, $arguments=null) {
 * Prepend the theme_url, which is the url to the current theme directory.
 */
 function theme_url($url) {
-  $ze = CZelda::Instance();
-  return "{$ze->request->base_url}themes/{$ze->config['theme']['name']}/{$url}";
+  return create_url(CZelda::Instance()->themeUrl . "/{$url}");
+}
+
+/**
+ * Prepend the theme_parent_url, which is the url to the parent theme directory.
+ *
+ * @param $url string the url-part to prepend.
+ * @returns string the absolute url.
+ */
+function theme_parent_url($url) {
+  return create_url(CZelda::Instance()->themeParentUrl . "/{$url}");
 }
 
 /**

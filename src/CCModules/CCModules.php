@@ -19,7 +19,7 @@ class CCModules extends CObject implements IController {
     $modules = new CMModules();
     $controllers = $modules->AvailableControllers();
     $allModules = $modules->ReadAndAnalyse();
-    $this->views->SetTitle('Hantera Moduler')
+    $this->views->SetTitle('Hantera moduler')
                 ->AddInclude(__DIR__ . '/index.tpl.php', array('controllers'=>$controllers), 'primary')
                 ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('modules'=>$allModules), 'sidebar');
   }
@@ -31,8 +31,22 @@ class CCModules extends CObject implements IController {
     $modules = new CMModules();
     $results = $modules->Install();
     $allModules = $modules->ReadAndAnalyse();
-    $this->views->SetTitle('Install Modules')
+    $this->views->SetTitle('Installera moduler')
                 ->AddInclude(__DIR__ . '/install.tpl.php', array('modules'=>$results), 'primary')
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('modules'=>$allModules), 'sidebar');
+  }
+
+  /**
+   * Show a module and its parts.
+   */
+  public function View($module) {
+    if(!preg_match('/^C[a-zA-Z]+$/', $module)) {throw new Exception('Ogiltiga tecken i modulnamnet.');}
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
+    $allModules = $modules->ReadAndAnalyse();
+    $aModule = $modules->ReadAndAnalyseModule($module);
+    $this->views->SetTitle('Hantera moduler')
+                ->AddInclude(__DIR__ . '/view.tpl.php', array('module'=>$aModule), 'primary')
                 ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('modules'=>$allModules), 'sidebar');
   }
 }

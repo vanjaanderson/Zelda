@@ -3,7 +3,7 @@
 <p><em>Alla Zeldas moduler:</em></p>
   <ul>
     <?php foreach($modules as $module): ?>
-      <li><?=$module['name']?></li>
+      <li><a href='<?=create_url("module/view/{$module['name']}")?>'><?=$module['name']?></a></li>
     <?php endforeach; ?>
   </ul>
 </div>
@@ -14,7 +14,7 @@
   <ul>
     <?php foreach($modules as $module): ?>
       <?php if($module['isZeldaCore']): ?>
-      <li><?=$module['name']?></li>
+      <li><a href='<?=create_url("module/view/{$module['name']}")?>'><?=$module['name']?></a></li>
       <?php endif; ?>
     <?php endforeach; ?>
   </ul>
@@ -26,7 +26,7 @@
   <ul>
     <?php foreach($modules as $module): ?>
       <?php if($module['isZeldaCMF']): ?>
-      <li><?=$module['name']?></li>
+      <li><a href='<?=create_url("module/view/{$module['name']}")?>'><?=$module['name']?></a></li>
       <?php endif; ?>
     <?php endforeach; ?>
   </ul>
@@ -38,7 +38,7 @@
   <ul>
     <?php foreach($modules as $module): ?>
       <?php if($module['isModel']): ?>
-      <li><?=$module['name']?></li>
+      <li><a href='<?=create_url("module/view/{$module['name']}")?>'><?=$module['name']?></a></li>
       <?php endif; ?>
     <?php endforeach; ?>
   </ul>
@@ -50,7 +50,7 @@
   <ul>
     <?php foreach($modules as $module): ?>
       <?php if($module['isController']): ?>
-      <li><?=$module['name']?></li>
+      <li><a href='<?=create_url("module/view/{$module['name']}")?>'><?=$module['name']?></a></li>
       <?php endif; ?>
     <?php endforeach; ?>
   </ul>
@@ -62,7 +62,7 @@
 <ul>
 <?php foreach($modules as $module): ?>
   <?php if($module['isManageable']): ?>
-  <li><?=$module['name']?></li>
+  <li><a href='<?=create_url("module/view/{$module['name']}")?>'><?=$module['name']?></a></li>
   <?php endif; ?>
 <?php endforeach; ?>
 </ul>
@@ -74,7 +74,7 @@
   <ul>
     <?php foreach($modules as $module): ?>
       <?php if($module['hasSQL']): ?>
-      <li><?=$module['name']?></li>
+      <li><a href='<?=create_url("module/view/{$module['name']}")?>'><?=$module['name']?></a></li>
       <?php endif; ?>
     <?php endforeach; ?>
   </ul>
@@ -86,7 +86,7 @@
   <ul>
     <?php foreach($modules as $module): ?>
       <?php if(!($module['isController'] || $module['isZeldaCore'] || $module['isZeldaCMF'])): ?>
-      <li><?=$module['name']?></li>
+      <li><a href='<?=create_url("module/view/{$module['name']}")?>'><?=$module['name']?></a></li>
       <?php endif; ?>
     <?php endforeach; ?>
   </ul>

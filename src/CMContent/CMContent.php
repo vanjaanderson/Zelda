@@ -48,6 +48,7 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess, IModule {
       'select * by type'        => "SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE type=? ORDER BY {$order_by} {$order_order};",
       'select *'                => 'SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id;',
       'update content'          => "UPDATE Content SET key=?, type=?, filter=?, title=?, data=?, updated=datetime('now') WHERE id=?;",
+      'update content as deleted' => "UPDATE Content SET deleted=datetime('now') WHERE id=?;",
      );
     if(!isset($queries[$key])) {
       throw new Exception("SQL-frågan, '$key' hittades ej.");
@@ -67,10 +68,7 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess, IModule {
           $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world',             'post', 'plain',          'Hej världen',                      "Detta är ett demoinlägg.", $this->user['id']));
           $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-again',       'post', 'plain',          'Hej igen, världen',                "Detta är ett annat demoinlägg.", $this->user['id']));
           $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-once-more',   'post', 'plain',          'Hej världen, återigen',            "Ytterligare ett demoinlägg.", $this->user['id']));
-          /*$this->db->ExecuteQuery(self::SQL('insert content'), array('home',                    'page', 'plain',          'Hemsidan',                         "Detta är en demosida, det skulle kunna vara din personliga startsida.", $this->user['id']));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('about',                   'page', 'plain',          'Om-sida',                          "Detta är en demosida, det skulle kunna vara din personliga om-sida.", $this->user['id']));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('download',                'page', 'plain',          'Nedladdningssida',                 "Detta är en demosida, det skulle kunna vara din personliga nedladdningssida.", $this->user['id']));*/
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('Filter test',             'page', 'plain',          'Testsida CTextFilter',             'Här kan du testa olika filter genom att redigera sidan, se längst ner ovanför foten.
+         $this->db->ExecuteQuery(self::SQL('insert content'), array('Filter test',             'page', 'plain',          'Testsida CTextFilter',             'Här kan du testa olika filter genom att redigera sidan, se längst ner ovanför foten.
 
 Med filtret "Plain", som är default, konverteras ingen kod i texten. Men generellt görs en tom rad vid radbrytning med enter. Detta sköter funktionen nl2br() om.
 
@@ -112,10 +110,6 @@ Med filtret "Markdown Extra" kan man formattera **fet text**, *kursiv text* elle
 | Iggy                 | Devon Rex       | Svart smoke        |
 | Sixten               | Huskatt         | Svart/Grå          |
 | Baloo                | Huskatt         | Grå                | ', $this->user['id']));
-          /*$this->db->ExecuteQuery(self::SQL('insert content'), array('bbcode',                  'post', 'bbcode',         'Inlägg med BBCode',                  "Detta är en sida med BBCode-formattering.\n\n[b]Fet text[/b] och [i]kursiv text[/i] och [url=http://dbwebb.se]länk till dbwebb.se[/url]. Du kan även infoga bilder, såsom Zelda favicon: [img]http://www.student.bth.se/~vaan12/phpmvc/kmom04/zelda/themes/core/favicon_32x32.png[/img]", $this->user['id']));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('htmlpurify',              'post', 'htmlpurify',     'Inlägg med HTMLPurifier',            "Detta är en demosida med HTML-kod som körs igenom <a href='http://htmlpurifier.org/'>HTMLPurify</a>. Ändra texten, skriv in lite HTML-kod för att kontrollera att det fungerar.\n\n<b>Fet text</b> och <i>kursiv text</i> och <a href='http://dbwebb.se'>en länk till dbwebb.se</a>. JavaScript: <javascript>alert('hej');</javascript> kommer att tas bort.", $this->user['id']));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('make-clickable',          'post', 'make_clickable',  'Inlägg med make clickable',          "Om man bara använder filtret make_clickable så tillåts ingen html-kod eller bb-kod. Däremot görs länkar som till exempel http://www.dbwebb.se automatiskt klickbara. Skillnaden mot filtret plain är att inga radbrytningar görs när man använder make_clickable.", $this->user['id']));*/
-          
           $this->AddMessage('success', 'Databastabeller och inlägg "Hej världen" skapades, med dig som författare.');
         } catch(Exception$e) {
           die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
@@ -138,9 +132,6 @@ Med filtret "Markdown Extra" kan man formattera **fet text**, *kursiv text* elle
       $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world',             'post', 'plain',          'Hej världen',                      "Detta är ett demoinlägg.", $this->user['id']));
       $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-again',       'post', 'plain',          'Hej igen, världen',                "Detta är ett annat demoinlägg.", $this->user['id']));
       $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-once-more',   'post', 'plain',          'Hej världen, återigen',            "Ytterligare ett demoinlägg.", $this->user['id']));
-      /*$this->db->ExecuteQuery(self::SQL('insert content'), array('home',                    'page', 'plain',          'Hemsidan',                         "Detta är en demosida, det skulle kunna vara din personliga startsida.", $this->user['id']));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('about',                   'page', 'plain',          'Om-sida',                          "Detta är en demosida, det skulle kunna vara din personliga om-sida.", $this->user['id']));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('download',                'page', 'plain',          'Nedladdningssida',                 "Detta är en demosida, det skulle kunna vara din personliga nedladdningssida.", $this->user['id']));*/
       $this->db->ExecuteQuery(self::SQL('insert content'), array('Filter test',             'page', 'plain',          'Testsida CTextFilter',             'Här kan du testa olika filter genom att redigera sidan, se längst ner ovanför foten.
 
 Med filtret "Plain", som är default, konverteras ingen kod i texten. Men generellt görs en tom rad vid radbrytning med enter. Detta sköter funktionen nl2br() om.
@@ -183,10 +174,6 @@ Med filtret "Markdown Extra" kan man formattera **fet text**, *kursiv text* elle
 | Iggy                 | Devon Rex       | Svart smoke        |
 | Sixten               | Huskatt         | Svart/Grå          |
 | Baloo                | Huskatt         | Grå                | ', $this->user['id']));
-      /*$this->db->ExecuteQuery(self::SQL('insert content'), array('bbcode',                  'post', 'bbcode',         'Inlägg med BBCode',                  "Detta är en sida med BBCode-formattering.\n\n[b]Fet text[/b] och [i]kursiv text[/i] och [url=http://dbwebb.se]länk till dbwebb.se[/url]. Du kan även infoga bilder, såsom Zelda favicon: [img]http://www.student.bth.se/~vaan12/phpmvc/kmom04/zelda/themes/core/favicon_32x32.png[/img]", $this->user['id']));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('htmlpurify',              'post', 'htmlpurify',     'Inlägg med HTMLPurifier',            "Detta är en demosida med HTML-kod som körs igenom <a href='http://htmlpurifier.org/'>HTMLPurify</a>. Ändra texten, skriv in lite HTML-kod för att kontrollera att det fungerar.\n\n<b>Fet text</b> och <i>kursiv text</i> och <a href='http://dbwebb.se'>en länk till dbwebb.se</a>. JavaScript: <javascript>alert('hej');</javascript> kommer att tas bort.", $this->user['id']));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('make-clickable',          'post', 'make_clickable',  'Inlägg med make clickable',          "Om man bara använder filtret make_clickable så tillåts ingen html-kod eller bb-kod. Däremot görs länkar som till exempel http://www.dbwebb.se automatiskt klickbara. Skillnaden mot filtret plain är att inga radbrytningar görs när man använder make_clickable.", $this->user['id']));*/
-      
       $this->AddMessage('success', 'Databastabeller och inlägg "Hej världen" skapades, med dig som författare.');
     } catch(Exception$e) {
       die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
@@ -213,6 +200,24 @@ Med filtret "Markdown Extra" kan man formattera **fet text**, *kursiv text* elle
       $this->AddMessage('success', "Innehåll {$msg} '" . htmlEnt($this['key']) . "'.");
     } else {
       $this->AddMessage('error', "Misslyckades att {$msg} innehåll '" . htmlEnt($this['key']) . "'.");
+    }
+    return $rowcount === 1;
+  }
+
+  /**
+   * Delete content. Set its deletion-date to enable wastebasket functionality.
+   *
+   * @returns boolean true if success else false.
+   */
+  public function Delete() {
+    if($this['id']) {
+      $this->db->ExecuteQuery(self::SQL('update content as deleted'), array($this['id']));
+    }
+    $rowcount = $this->db->RowCount();
+    if($rowcount) {
+      $this->AddMessage('success', "Innehåll '" . htmlEnt($this['key']) . "' är satt som borttaget.");
+    } else {
+      $this->AddMessage('error', "Misslyckades med att sätta innehåll '" . htmlEnt($this['key']) . "' som borttaget.");
     }
     return $rowcount === 1;
   }

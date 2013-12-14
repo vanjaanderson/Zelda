@@ -13,8 +13,6 @@ public static $purify = null;
 
 public static function filter($data,$filter) {
     switch($filter) {
-        /*case 'php': $data            = nl2br(make_clickable(eval('?>'.$data))); break;
-        case 'html': $data           = nl2br(make_clickable($data)); break;*/
         case 'htmlpurify': $data     = nl2br(self::purify($data)); break;
         case 'make_clickable': $data = nl2br(make_clickable(htmlEnt($data))); break;
         case 'bbcode': $data         = nl2br(bbcode2html(htmlEnt($data))); break;
@@ -67,18 +65,6 @@ private static function smartyPantsTypographer($text) {
     require_once(__DIR__ . '/PHP-SmartyPants-Typographer-1.0.1/smartypants.php');
     return SmartyPants($text);
 }
-
-/**
- * Format text according to Smartypants Typographer syntax.
- *
- * @param string $text the text that should be formatted.
- * @return string as the formatted html-text.
-
-public static function typographer($text) {
-    require_once(__DIR__ . '/typographer/smartypants.php');
-    return SmartyPants($text);
-}
- */
 
 /**
  * Make clickable links from URLs in text.

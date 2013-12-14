@@ -6,6 +6,14 @@ This is my Content Managemant Framework created in the course "php mvc" on Bleki
 
 History
 -------
+v0.2.24 - 09 december 2013
+
+* Dokumentera koden med phpdoc och modulhanteraren 
+
+v0.2.23 - 08 december 2013
+
+* Skapa en webbplats med Zelda 
+
 v0.2.22 - 08 december 2013
 
 * Installationsfasen 

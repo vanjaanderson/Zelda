@@ -4,9 +4,9 @@
 <h2>Ladda ner</h2>
 <p><em>Du kan ladda ner Zelda från github:</em></p>
 <blockquote>
-	<code>git clone git://github.com/vanjaanderson/zelda.git</code>
+	<code>git clone git://github.com/vanjaanderson/Zelda.git</code>
 </blockquote>
-<p><em>Du kan se källkoden på github:</em> <a href='https://github.com/vanjaanderson/zelda'>https://github.com/vanjaanderson/zelda</a></p>
+<p><em>Du kan se källkoden på github:</em> <a href='https://github.com/vanjaanderson/Zelda'>https://github.com/vanjaanderson/Zelda</a></p>
 
 <h2>Installation</h2>
 <p>
@@ -20,5 +20,5 @@
 	Sedan måste vissa moduler initieras. <em>Detta gör du med nedanstående länk:</em>
 </p>
 <blockquote>
-	<a href='<?=create_url('module/install')?>'>module/install</a>
+	<a class="smaller-text" href='<?=create_url('module/install')?>'>module/install</a>
 </blockquote>

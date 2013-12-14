@@ -36,10 +36,10 @@ class CFormElement implements ArrayAccess {
   public function offsetUnset($offset) { unset($this->attributes[$offset]); }
   public function offsetGet($offset) { return isset($this->attributes[$offset]) ? $this->attributes[$offset] : null; }
   
-    /**
+  /**
    * Get HTML code for a element. 
    *
-   * @returns HTML code for the element.
+   * Returns HTML code for the element.
    */
   public function GetHTML() {
     $id = isset($this['id']) ? $this['id'] : 'form-element-' . $this['name'];
@@ -251,7 +251,7 @@ class CForm implements ArrayAccess {
    * Add a form element
    *
    * @param $element CFormElement the formelement to add.
-   * @returns $this CForm
+   * Returns $this CForm
    */
   public function AddElement($element) {
     $this[$element['name']] = $element;
@@ -263,7 +263,7 @@ class CForm implements ArrayAccess {
    *
    * @param $element string the name of the formelement to add validation rules to.
    * @param $rules array of validation rules.
-   * @returns $this CForm
+   * Returns $this CForm
    */
   public function SetValidation($element, $rules) {
     $this[$element]['validation'] = $rules;
@@ -316,7 +316,7 @@ EOD;
    * to the original form page, the form will populate from the session and should then be 
    * rendered again.
    *
-   * @returns boolean true if validates, false if not validate, null if not submitted.
+   * Returns boolean true if validates, false if not validate, null if not submitted.
    */
   public function Check() {
     $validates = null;
