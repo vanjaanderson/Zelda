@@ -10,8 +10,10 @@ class CCTheme extends CObject implements IController {
   /**
    * Constructor
    */
-  public function __construct() { parent::__construct(); 
-    $this->views->AddStyle('body:hover{background:#fff url('.$this->request->base_url.'themes/grid/grid_12_60_20.png) repeat-y center top;}');
+  public function __construct() { parent::__construct();
+    //if($this->config['theme'] == 'grid') {
+      $this->views->AddStyle('body:hover{background:#fff url('.$this->request->base_url.'themes/grid/grid_12_60_20.png) repeat-y center top;}');
+    //}
   }
 
   /**
@@ -26,21 +28,27 @@ class CCTheme extends CObject implements IController {
       if($method->name != '__construct' && $method->name != '__destruct' && $method->name != 'Index') {
         $items[] = $this->request->controller . '/' . mb_strtolower($method->name);
       }
-   }
+    }
 
-    $this->views->SetTitle('Theme')
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
+    $this->views->SetTitle('Tema')
                 ->AddInclude(__DIR__ . '/index.tpl.php', array(
-                  'theme_name' => $this->config['theme']['name'],
+                  //'theme_name' => $this->config['theme'],
                   'methods' => $items,
-                ));
+                ), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   }
 
   /**
    * Put content in some regions.
    */
   public function SomeRegions() {
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Visa innehåll i några regioner')
-                ->AddString('This is the primary region', array(), 'primary');
+                ->AddString('This is the primary region', array(), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
                 
     if(func_num_args()) {
       foreach(func_get_args() as $val) {
@@ -55,9 +63,16 @@ class CCTheme extends CObject implements IController {
    */
   public function AllRegions() {
     $this->views->SetTitle('Visa innehåll för alla regioner');
+    //foreach($this->config['theme'][$this->config['theme']['name']]['regions'] as $val) {
     foreach($this->config['theme']['regions'] as $val) {
-      $this->views->AddString("This is region: $val", array(), $val)
+      if($val=='navbar') {
+        $this->views->AddString("<div id='navbar' style='margin-top:-2.8em;''></div><div style='height:2em;'>This is region: $val</div>", array(), $val)
                   ->AddStyle('#'.$val.'{background-color:hsla(0,0%,90%,0.5);}');
+      }
+      else {
+        $this->views->AddString("This is region: $val", array(), $val)
+                  ->AddStyle('#'.$val.'{background-color:hsla(0,0%,90%,0.5);}');
+      }
     }
   }
 
@@ -65,8 +80,11 @@ class CCTheme extends CObject implements IController {
    * Display text as h1h6 and paragraphs with some inline formatting.
    */
   public function H1H6() {
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Theme testing headers and paragraphs')
-                ->AddInclude(__DIR__ . '/h1h6.tpl.php', array(), 'primary');
+                ->AddInclude(__DIR__ . '/h1h6.tpl.php', array(), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   }
 }
 

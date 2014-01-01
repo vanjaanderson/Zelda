@@ -402,10 +402,10 @@ body {
   height: 290px;
 }
 #login-menu {
-  width: 150px;
+  width: 250px;
   margin: 12px 48%;
   font-size: smaller;
-  padding-left: 336px;
+  padding-left: 236px;
   text-align: right;
 }
 #login-menu img.gravatar {
@@ -697,4 +697,8 @@ a:focus {
 }
 #primary li {
   margin-left: 1em !important;
+}
+
+.grey {
+  color: #aaa;
 }

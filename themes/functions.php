@@ -96,7 +96,7 @@ function get_messages_from_session() {
 function login_menu() {
   $ze = CZelda::Instance();
   if($ze->user['isAuthenticated']) {
-    $items = "<a href='" . create_url('user/profile') . "'><img class='gravatar' src='" . get_gravatar(20) . "' alt=''> " . $ze->user['acronym'] . "</a> ";
+    $items = " <span class='grey'>Välkommen</span> <img class='gravatar' src='" . get_gravatar(20) . "' alt=''> <a href='" . create_url('user/profile') . "'> " . $ze->user['acronym'] . "</a> ";
     if($ze->user['hasRoleAdministrator']) {
       $items .= "<a href='" . create_url('akp') . "'>akp</a> ";
     }

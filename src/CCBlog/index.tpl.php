@@ -1,4 +1,4 @@
-<h1>Blogg</h1>
+<h1>Min blogg</h1>
 <p>En lista på alla blogginlägg, innehåll av typen "post". <a href='<?=create_url("content")?>'>Visa allt innehåll</a>.</p>
 
 <?php if($contents != null):?>

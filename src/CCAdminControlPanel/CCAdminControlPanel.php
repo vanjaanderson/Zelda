@@ -17,8 +17,11 @@ class CCAdminControlPanel extends CObject implements IController {
    * Show profile information of the user.
    */
   public function Index() {
-    $this->views->SetTitle('AKP: Admin KontrollPanel');
-    $this->views->AddInclude(__DIR__ . '/index.tpl.php');
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
+    $this->views->SetTitle('AKP: Admin KontrollPanel')
+                ->AddInclude(__DIR__ . '/index.tpl.php', array(), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   } 
 }
 

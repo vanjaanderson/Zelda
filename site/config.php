@@ -114,10 +114,12 @@ $ze->config['menus'] = array(
     'content'   => array('label'=>'Innehåll', 'url' =>'content'),
     'guestbook' => array('label'=>'Gästbok', 'url'  =>'guestbook'),
     'blog'      => array('label'=>'Blogg', 'url'    =>'blog'),
+    'akp'       => array('label'=>'Admin', 'url'    =>'akp'),
   ),
   'my-navbar' => array(
-    'home'      => array('label'=>'Testsida', 'url'   =>'my'),
-    'blog'      => array('label'=>'Min blogg', 'url'=>'my/blog'),
+    'home'      => array('label'=>'Start', 'url'        =>'home'),
+    'page'      => array('label'=>'Testsida', 'url'     =>'my'),
+    'blog'      => array('label'=>'Min blogg', 'url'    =>'my/blog'),
     'guestbook' => array('label'=>'Min gästbok', 'url'  =>'my/guestbook'),
   ),
 );
@@ -161,7 +163,7 @@ $ze->config['theme'] = array(
   // Add static entries for use in the template file.
   'menu_to_region' => array('my-navbar'=>'navbar'),
   'data'           => array(
-    'header'       => 'Zelda Grid',
+    'header'       => 'Zelda',
     'slogan'       => 'A PHP-based MVC-inspired CMF',
     'favicon'      => 'favicon_32x32.png',
     'logo'         => 'logo_300x260.png',

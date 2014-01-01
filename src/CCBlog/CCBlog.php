@@ -18,10 +18,13 @@ class CCBlog extends CObject implements IController {
    */
   public function Index() {
     $content = new CMContent();
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Blogg')
                 ->AddInclude(__DIR__ . '/index.tpl.php', array(
                   'contents' => $content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),
-                ));
+                ), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   }
 }
 

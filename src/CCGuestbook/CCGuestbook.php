@@ -21,11 +21,14 @@ class CCGuestbook extends CObject implements IController {
    * Show a standard frontpage for the guestbook.
    */
   public function Index() {
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Zelda Gästbok');
     $this->views->AddInclude(__DIR__ . '/index.tpl.php', array(
       'entries'=>$this->guestbookModel->ReadAll(), 
       'formAction'=>$this->request->CreateUrl('', 'handler')
-    ));
+    ), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   }
   
   /**

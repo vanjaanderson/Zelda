@@ -18,10 +18,13 @@ class CCPage extends CObject implements IController {
    */
   public function Index() {
     $content = new CMContent();
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Sida')
                 ->AddInclude(__DIR__ . '/index.tpl.php', array(
                   'content' => null,
-                ));
+                ), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   }
 
   /**
@@ -31,10 +34,13 @@ class CCPage extends CObject implements IController {
    */
   public function View($id=null) {
     $content = new CMContent($id);
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Sida: '.htmlEnt($content['title']))
                 ->AddInclude(__DIR__ . '/index.tpl.php', array(
                   'content' => $content,
-                ));
+                ), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   }
 }
 

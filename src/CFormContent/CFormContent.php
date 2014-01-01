@@ -18,14 +18,14 @@ class CFormContent extends CForm {
     parent::__construct();
     $this->content = $content;
     $save = isset($content['id']) ? 'save' : 'create';
-    $this->AddElement(new CFormElementHidden('id', array('value'=>$content['id'])))
-         ->AddElement(new CFormElementText('title', array('required'=>true, 'label'=>'Rubrik:', 'value'=>$content['title'])))
-         ->AddElement(new CFormElementText('key', array('required'=>true, 'label'=>'Alias:', 'value'=>$content['key'])))
-         ->AddElement(new CFormElementTextarea('data', array('label'=>'Innehåll:', 'value'=>$content['data'])))
-         ->AddElement(new CFormElementText('type', array('label'=>"Typ av innehåll <em class='smaller'>(post eller page)</em>:", 'value'=>$content['type'])))
-         ->AddElement(new CFormElementSelect('filter', array('label'=>'Filter:', 'value'=>$content['filter'])))
-         ->AddElement(new CFormElementSubmit($save, array('value'=>'Spara', 'callback'=>array($this, 'DoSave'), 'callback-args'=>array($content))))
-         ->AddElement(new CFormElementSubmit('delete', array('callback'=>array($this, 'DoDelete'), 'callback-args'=>array($content))));
+    $this->AddElement(new CFormElementHidden('id',      array('value'=>$content['id'])))
+         ->AddElement(new CFormElementText('title',     array('required'=>true, 'label'=>'Rubrik:', 'value'=>$content['title'])))
+         ->AddElement(new CFormElementText('key',       array('required'=>true, 'label'=>'Alias:', 'value'=>$content['key'])))
+         ->AddElement(new CFormElementTextarea('data',  array('label'=>'Innehåll:', 'value'=>$content['data'])))
+         ->AddElement(new CFormElementText('type',      array('label'=>"Typ av innehåll <em class='smaller'>(post eller page)</em>:", 'value'=>$content['type'])))
+         ->AddElement(new CFormElementSelect('filter',  array('label'=>'Filter:', 'value'=>$content['filter'])))
+         ->AddElement(new CFormElementSubmit($save,     array('value'=>'Spara', 'callback'=>array($this, 'DoSave'), 'callback-args'=>array($content))))
+         ->AddElement(new CFormElementSubmit('delete',  array('value'=>'Radera', 'callback'=>array($this, 'DoDelete'), 'callback-args'=>array($content))));
 
     $this->SetValidation('title', array('not_empty'))
          ->SetValidation('key', array('not_empty'));

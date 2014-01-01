@@ -1,4 +1,4 @@
-<h1>Blogg</h1>
+<h1>Min blogg</h1>
 <p><em>Här är alla mina blogginlägg:</em></p>
 
 <?php if($contents != null):?>

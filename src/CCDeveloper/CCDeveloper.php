@@ -4,6 +4,7 @@
  * 
  * @package ZeldaCore
  */
+
 class CCDeveloper extends CObject implements IController {
   /**
    * Constructor
@@ -11,17 +12,29 @@ class CCDeveloper extends CObject implements IController {
   public function __construct() {
     parent::__construct();
   }
+
   /**
   * Implementing interface IController. All controllers must have an index action.
    */
   public function Index() {  
     $this->Menu();
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
+    $this->views->SetTitle('Utvecklarkontroller')
+                //->AddInclude(__DIR__ . '/index.tpl.php', array(), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   }
+
   /**
     * Display all items of the CObject.
     */
    public function DisplayObject() {   
     $this->Menu();
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
+    $this->views->SetTitle('Utvecklarkontroller')
+                //->AddInclude(__DIR__ . '/index.tpl.php', array(), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
       
     $this->data['main'] .= <<<EOD
 <h2>Dumpning av innehåll i CDeveloper</h2>
@@ -35,6 +48,11 @@ EOD;
    */
   public function Links() {  
     $this->Menu();
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
+    $this->views->SetTitle('Utvecklarkontroller')
+                //->AddInclude(__DIR__ . '/index.tpl.php', array(), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
     
     $url = 'developer/links';
     $current      = $this->request->CreateUrl($url);
@@ -68,6 +86,11 @@ EOD;
    */
   private function Menu() {  
     $menu = array('developer', 'developer/index', 'developer/links', 'developer/display-object');
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
+    $this->views->SetTitle('Utvecklarkontroller')
+                //->AddInclude(__DIR__ . '/index.tpl.php', array(), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
     
     $html = null;
     foreach($menu as $val) {

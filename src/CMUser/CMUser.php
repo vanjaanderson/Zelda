@@ -21,7 +21,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
     $this['isAuthenticated'] = is_null($profile) ? false : true;
     if(!$this['isAuthenticated']) {
       $this['id'] = 1;
-      $this['acronym'] = 'Anonym';      
+      $this['acronym'] = '';      
     }
   }
 
@@ -53,6 +53,8 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
       'get group memberships'   => 'SELECT * FROM Groups AS g INNER JOIN User2Groups AS ug ON g.id=ug.idGroups WHERE ug.idUser=?;',
       'update profile'          => "UPDATE User SET name=?, email=?, updated=datetime('now') WHERE id=?;",
       'update password'         => "UPDATE User SET algorithm=?, salt=?, password=?, updated=datetime('now') WHERE id=?;",
+      'delete from user'        => "DELETE FROM user WHERE id=?;",
+      'delete u from user2groups' => "DELETE FROM user2groups WHERE idUser=?;",
      );
     if(!isset($queries[$key])) {
       throw new Exception("SQL-frågan, '$key' hittades ej.");
@@ -96,37 +98,6 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
       default:
         throw new Exception('Otillåten aktivitet för denna modul.');
       break;
-    }
-  }
-
-  /**
-   * Init the database and create appropriate tables.
-   */
-  public function Init() {
-    try {
-      $this->db->ExecuteQuery(self::SQL('drop table user2group'));
-      $this->db->ExecuteQuery(self::SQL('drop table group'));
-      $this->db->ExecuteQuery(self::SQL('drop table user'));
-      $this->db->ExecuteQuery(self::SQL('create table user'));
-      $this->db->ExecuteQuery(self::SQL('create table group'));
-      $this->db->ExecuteQuery(self::SQL('create table user2group'));
-      $this->db->ExecuteQuery(self::SQL('insert into user'), array('Anonym', 'Anonym användare, inte autentiserad', null, 'plain', null, null));
-      $password = $this->CreatePassword('root');
-      $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'Administrator', 'root@dbwebb.se', $password['algorithm'], $password['salt'], $password['password']));
-      $idRootUser = $this->db->LastInsertId();
-      $password = $this->CreatePassword('doe');
-      $this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John/Jane Doe', 'doe@dbwebb.se', $password['algorithm'], $password['salt'], $password['password']));
-      $idDoeUser = $this->db->LastInsertId();
-      $this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'Administratorgruppen'));
-      $idAdminGroup = $this->db->LastInsertId();
-      $this->db->ExecuteQuery(self::SQL('insert into group'), array('user', 'Användargruppen'));
-      $idUserGroup = $this->db->LastInsertId();
-      $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idAdminGroup));
-      $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idUserGroup));
-      $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idDoeUser, $idUserGroup));
-      $this->AddMessage('success', 'Databastabell skapades med användare root, lösenord root, och användare doe, lösenord doe.');
-    } catch(Exception$e) {
-      die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
     }
   }
 
@@ -215,6 +186,18 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
       default: throw new Exception('Okänd krypteringsmetod');
     }
     return $password;
+  }
+
+    /**
+    * Delete user.
+    *
+    * @param $id int user id.
+    * @returns boolean true if success else false.
+    */
+  public function DeleteUser($id) {
+    $this->db->ExecuteQuery(self::SQL('delete u from user2groups'), array($id));
+    $this->db->ExecuteQuery(self::SQL('delete from user'), array($id));
+    return true;
   }
 
   /**

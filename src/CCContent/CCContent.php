@@ -16,10 +16,13 @@ class CCContent extends CObject implements IController {
    */
   public function Index() {
     $content = new CMContent();
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Innehållskontroller')
                 ->AddInclude(__DIR__ . '/index.tpl.php', array(
                   'contents' => $content->ListAll(),
-                ));
+                ), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   }
   
   /**
@@ -29,6 +32,8 @@ class CCContent extends CObject implements IController {
    */
   public function Edit($id=null) {
     $content = new CMContent($id);
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
     $form = new CFormContent($content);
     $status = $form->Check();
     if($status === false) {
@@ -44,7 +49,8 @@ class CCContent extends CObject implements IController {
                   'user'=>$this->user, 
                   'content'=>$content, 
                   'form'=>$form,
-                ));
+                ), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   }
   
   /**
@@ -62,6 +68,12 @@ class CCContent extends CObject implements IController {
     $content->Init();
     $this->RedirectToController();
   }
+  
+  /*public function Manage() {
+    $content = new CMContent();
+    $content->Manage('install');
+    $this->RedirectToController();
+  }*/
 }
 
 ?>

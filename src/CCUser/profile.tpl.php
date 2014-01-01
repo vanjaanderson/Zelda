@@ -5,11 +5,15 @@
   <?=$profile_form?>
   <p>Din profil skapades <?=$user['created']?> och är senast uppdaterad <?=$user['updated']?>.</p>
   <p>Du är medlem i <?=count($user['groups'])?> grupp/grupper:</p>
-  <ul>
-	  <?php foreach($user['groups'] as $group): ?>
-	    <li><?=$group['name']?>
-	  <?php endforeach; ?>
-  </ul>
+
+  <?php if($user['groups']>0): ?>
+	  <ul>
+		  <?php foreach($user['groups'] as $group): ?>
+		    <li><?=$group['name']?>
+		  <?php endforeach; ?>
+	  </ul>
+  <?php endif; ?>
+  
 <?php else: ?>
-  <p>Användaren är okänd och inte autentiserad.</p>
+  <p>Logga in för att se din profil.</p>
 <?php endif; ?>

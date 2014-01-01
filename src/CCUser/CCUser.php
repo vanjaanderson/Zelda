@@ -19,11 +19,14 @@ class CCUser extends CObject implements IController {
    * Show profile information of the user.
    */
   public function Index() {
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Användarkontroller')
                 ->AddInclude(__DIR__ . '/index.tpl.php', array(
                   'is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,
-                ));
+                ), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   }
 
   /**
@@ -36,12 +39,15 @@ class CCUser extends CObject implements IController {
       $this->RedirectToController('profile');
     }
 
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Användarprofil')
                 ->AddInclude(__DIR__ . '/profile.tpl.php', array(
                   'is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,
                   'profile_form'=>$form->GetHTML(),
-                ));
+                ), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   }
 
   /**
@@ -80,12 +86,15 @@ class CCUser extends CObject implements IController {
       $this->AddMessage('notice', 'Du måste fylla i användarnamn och lösenord.');
       $this->RedirectToController('login');
     }
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Logga in')
                 ->AddInclude(__DIR__ . '/login.tpl.php', array(
                   'login_form' => $form,
                   'allow_create_user' => CZelda::Instance()->config['create_new_users'],
                   'create_user_url' => $this->CreateUrl(null, 'create'),
-                ));
+                ), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   }
   
   /**
@@ -118,10 +127,13 @@ class CCUser extends CObject implements IController {
       $this->AddMessage('notice', 'Du måste fylla i alla fält.');
       $this->RedirectToController('Create');
     }
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Skapa användare')
-                ->AddInclude(__DIR__ . '/create.tpl.php', array('form' => $form->GetHTML()));     
+                ->AddInclude(__DIR__ . '/create.tpl.php', array('form' => $form->GetHTML()), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   }
-
+  
   /**
    * Perform a creation of a user as callback on a submitted form.
    *
