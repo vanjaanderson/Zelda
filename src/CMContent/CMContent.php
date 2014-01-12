@@ -68,9 +68,9 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess, IModule {
           $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world',             'post', 'plain',          'Hej världen',                      "Detta är ett demoinlägg.", $this->user['id']));
           $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-again',       'post', 'plain',          'Hej igen, världen',                "Detta är ett annat demoinlägg.", $this->user['id']));
           $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-once-more',   'post', 'plain',          'Hej världen, återigen',            "Ytterligare ett demoinlägg.", $this->user['id']));
-         $this->db->ExecuteQuery(self::SQL('insert content'), array('Filter test',             'page', 'plain',          'Testsida CTextFilter',             'Här kan du testa olika filter genom att redigera sidan, se längst ner ovanför foten.
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('Filter test',             'page', 'plain',          'Testsida CTextFilter',             'Här kan du testa olika filter genom att redigera sidan, se längst ner ovanför foten.
 
-Med filtret "Plain", som är default, konverteras ingen kod i texten. Men generellt görs en tom rad vid radbrytning med enter. Detta sköter funktionen nl2br() om.
+Med filtret "Plain", som är default, konverteras ingen kod i texten. Men generellt görs en tom rad vid radbrytning med enter. Detta sköter funktionen nl2p() om.
 
 Med filtret "Make Clickable" så görs textsträngar med http://xxx eller https://xxx automatiskt klickbara.
 
@@ -110,73 +110,15 @@ Med filtret "Markdown Extra" kan man formattera **fet text**, *kursiv text* elle
 | Iggy                 | Devon Rex       | Svart smoke        |
 | Sixten               | Huskatt         | Svart/Grå          |
 | Baloo                | Huskatt         | Grå                | ', $this->user['id']));
-          $this->AddMessage('success', 'Databastabeller och inlägg "Hej världen" skapades, med dig som författare.');
-        } catch(Exception$e) {
-          die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
+      return array('notice', 'Databastabeller och inlägg "Hej världen" skapades, med dig som författare.');
+    } catch(Exception$e) {
+      die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
         }
       break;
       
       default:
         throw new Exception('Otillåten aktivitet för denna modul.');
       break;
-    }
-  }
-
-  /**
-   * Init the database and create appropriate tables.
-   */
-  public function Init() {
-    try {
-      $this->db->ExecuteQuery(self::SQL('drop table content'));
-      $this->db->ExecuteQuery(self::SQL('create table content'));   
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world',             'post', 'plain',          'Hej världen',                      "Detta är ett demoinlägg.", $this->user['id']));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-again',       'post', 'plain',          'Hej igen, världen',                "Detta är ett annat demoinlägg.", $this->user['id']));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-once-more',   'post', 'plain',          'Hej världen, återigen',            "Ytterligare ett demoinlägg.", $this->user['id']));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('Filter test',             'page', 'plain',          'Testsida CTextFilter',             'Här kan du testa olika filter genom att redigera sidan, se längst ner ovanför foten.
-
-Med filtret "Plain", som är default, konverteras ingen kod i texten. Men generellt görs en tom rad vid radbrytning med enter. Detta sköter funktionen nl2br() om.
-
-Med filtret "Make Clickable" så görs textsträngar med http://xxx eller https://xxx automatiskt klickbara.
-
-Med filtret "Smarty Pants (Typographer)" konverteras texten till typografiskt riktiga tecken. Bland annat blir citattecken och tankstreck (två bindestreck) snyggare. Tusentalsavgränsare blir icke brytande mellanslag. Exempel: 20 000 000 000 000 000 000 000 000 000 000 000 000 -- 100 000 000 000 000 000 000 000 000 000 000 000 000 kommer ej att radbrytas mellan siffergrupperna och får ett snyggt från -- till tecken (m dash).
-
-[h2]BBCode[/h2]
-Med filtret "BBCode" kan du formattera [b]fet text[/b], [i]kursiv text[/i] eller länk till [url=http://vanjaanderson.com]vanjaanderson.com[/url].
-Du kan även infoga bilder, såsom Zelda favicon: [img]http://www.student.bth.se/~vaan12/phpmvc/kmom04/zelda/themes/core/favicon_32x32.png[/img]
-
-<h2>HTML Purifier</h2>
-Med filtret "HMTL Purifier" kan du formattera <b>fet text</b>, <i>kursiv text</i> eller länk till <a href="http://vanjaanderson.com">vanjaanderson.com</a>. 
-JavaScript-taggar: <javascript>alert("hej");</javascript> kommer att tas bort.
-
-Markdown (Extra)
-------------------
-Med filtret "Markdown Extra" kan man formattera **fet text**, *kursiv text* eller länk till [vanjaanderson.com](http://vanjaanderson.com) på ett enkelt sätt. Vanliga HTML-taggar fungerar också, vilket gör att html-taggarna i HTML Purifier-stycket även fungerar med detta filter.
-
-###Onumrerad lista
-* Gordon
-* Iggy
-* Sixten
-* Baloo
-
-###Numrerad lista
-1. Gordon
-2. Iggy
-3. Sixten
-4. Baloo
-
-###Blockcitat
-> Katter är sköna typer!
-
-###Tabell
-| Namn (vänsterställd) | Ras (centrerad) | Färg (högerställd) |
-|:---------------------|:---------------:|-------------------:|
-| Gordon               | Devon Rex       | Rödspotted         |
-| Iggy                 | Devon Rex       | Svart smoke        |
-| Sixten               | Huskatt         | Svart/Grå          |
-| Baloo                | Huskatt         | Grå                | ', $this->user['id']));
-      $this->AddMessage('success', 'Databastabeller och inlägg "Hej världen" skapades, med dig som författare.');
-    } catch(Exception$e) {
-      die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
     }
   }
   

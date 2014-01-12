@@ -4,20 +4,42 @@
  */
 class CCMycontroller extends CObject implements IController {
 
+  
   /**
    * Constructor
    */
   public function __construct() { parent::__construct(); }
   
   /**
-   * The page about me
+   * Index page
    */
   public function Index() {
-    $content = new CMContent(4);
-    $this->views->SetTitle('Testsida '.htmlEnt($content['title']))
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
+    $this->views->SetTitle('Välkommen')
+                ->AddInclude(__DIR__ . '/index.tpl.php', array(
+                  'is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,
+                ), 'primary')
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
+  }
+
+  /**
+   * The page about me
+   */
+  public function Page() {
+    $content = new CMContent(1);
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
+    $this->views->SetTitle('Exempelsida')
                 ->AddInclude(__DIR__ . '/page.tpl.php', array(
+                  'is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,
                   'content' => $content,
-                ));
+                ), 'primary')
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
 
   /**
@@ -25,10 +47,16 @@ class CCMycontroller extends CObject implements IController {
    */
   public function Blog() {
     $content = new CMContent();
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Min blogg')
                 ->AddInclude(__DIR__ . '/blog.tpl.php', array(
-                  'contents' => $content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),
-                ));
+                  'is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,
+                  'contents' => $content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'ASC')),
+                  ), 'primary')
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
 
   /**
@@ -45,11 +73,17 @@ class CCMycontroller extends CObject implements IController {
       $this->RedirectToControllerMethod();
     }
     
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Min Gästbok')
          ->AddInclude(__DIR__ . '/guestbook.tpl.php', array(
+            'is_authenticated'=>$this->user['isAuthenticated'], 
+            'user'=>$this->user,
             'entries'=>$guestbook->ReadAll(), 
             'form'=>$form,
-         ));
+         ), 'primary')
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
 } 
 

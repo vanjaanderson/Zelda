@@ -8,17 +8,24 @@
     <?php if(isset($inline_style)): ?><style><?=$inline_style?></style><?php endif; ?>
   </head>
   <body>
+    <div id="login-outer-div">
+      <div id="login-inner-div">
+        <?php if(region_has_content('adminmenu')): ?>
+          <nav id='admin'><?=render_views('adminmenu')?></nav>
+        <?php endif; ?>
+        <nav id='login-menu'><?=login_menu()?></nav>
+      </div>
+    </div>
     <div id='outer-wrap-header'>
       <div id='inner-wrap-header'>
-        <div id='header'>
-          <div id='login-div'><?=login_menu()?></div>
+        <div id='header'>         
           <div id='banner'>
-            <a href='<?=base_url()?>'><img id='site-logo' src='<?=theme_url($logo)?>' alt='logo' width='<?=$logo_width?>' height='<?=$logo_height?>' /></a>
+            <a href='<?=base_url()?>'><img id='site-logo' src='<?=theme_url($logo)?>' alt='logo' height='260' /></a>
             <span id='site-title'><?=$header?></span>
             <span id='site-slogan'><?=$slogan?></span>
           </div>
           <?php if(region_has_content('navbar')): ?>
-          <div id='navbar'><?=render_views('navbar')?></div>
+            <div id='navbar'><?=render_views('navbar')?></div>
           <?php endif; ?>
         </div>
       </div>

@@ -3,7 +3,7 @@
 * Site configuration, this file is changed by user per site.
 *
 */
-
+ob_start();
 /*
 * Set level of error reporting
 */
@@ -101,26 +101,28 @@ $ze->config['routing'] = array(
   'home' => array('enabled' => true, 'url' => 'index/index'),
 );
 
-
 /**
- * Define menus.
+ * Define menus. Variables in my-navbar are defined in theme folder: site/mytheme/my_config.php
  *
- * Create hardcoded menus and map them to a theme region through $ly->config['theme'].
+ * Create hardcoded menus and map them to a theme region through $ze->config['theme'].
  */
 $ze->config['menus'] = array(
   'navbar' => array(
-    'home'      => array('label'=>'Hem', 'url'      =>'home'),
-    'modules'   => array('label'=>'Moduler', 'url'  =>'module'),
-    'content'   => array('label'=>'Innehåll', 'url' =>'content'),
-    'guestbook' => array('label'=>'Gästbok', 'url'  =>'guestbook'),
-    'blog'      => array('label'=>'Blogg', 'url'    =>'blog'),
-    'akp'       => array('label'=>'Admin', 'url'    =>'akp'),
+    'home'      => array('label' => 'Hem', 'url'      => 'home'),
+    'modules'   => array('label' => 'Moduler', 'url'  => 'module'),
+    'content'   => array('label' => 'Innehåll', 'url' => 'content'),
+    'guestbook' => array('label' => 'Gästbok', 'url'  => 'guestbook'),
+    'blog'      => array('label' => 'Blogg', 'url'    => 'blog'),
+    'akp'       => array('label' => 'Admin', 'url'    => 'akp'),
+  ),
+  'admin' => array(
+    'modules'   => array('label' => 'Modulhanterare', 'url' => 'module'),
   ),
   'my-navbar' => array(
-    'home'      => array('label'=>'Start', 'url'        =>'home'),
-    'page'      => array('label'=>'Testsida', 'url'     =>'my'),
-    'blog'      => array('label'=>'Min blogg', 'url'    =>'my/blog'),
-    'guestbook' => array('label'=>'Min gästbok', 'url'  =>'my/guestbook'),
+    'home'      => array('label' => $home, 'url'      => 'my'),
+    'page'      => array('label' => $page, 'url'      => 'my/page'),
+    'blog'      => array('label' => $blog, 'url'      => 'my/blog'),
+    'guestbook' => array('label' => $guestbook, 'url' => 'my/guestbook'),
   ),
 );
 
@@ -151,7 +153,9 @@ $ze->config['menus'] = array(
 $ze->config['theme'] = array(
   // The name of the theme in the themes directory
   'path'            => 'site/themes/mytheme',
-  'parent'          => 'themes/grid',
+  //'path'          => 'themes/core',
+  //'path'            => 'themes/grid',
+  'parent'          => 'themes/core',
   'stylesheet'      => 'style.css',
   'template_file'   => 'index.tpl.php',   // Default template file, else use default.tpl.php
   // A list of valid theme regions
@@ -160,16 +164,16 @@ $ze->config['theme'] = array(
     'footer-column-one','footer-column-two','footer-column-three','footer-column-four',
     'footer',
   ),
-  // Add static entries for use in the template file.
-  'menu_to_region' => array('my-navbar'=>'navbar'),
+  // Add static entries for use in the template file. Variables is defined in my_config.php in site/themes/mytheme.
+  'menu_to_region' => array('my-navbar'=>'navbar', 'admin'=>'adminmenu'),
   'data'           => array(
-    'header'       => 'Zelda',
-    'slogan'       => 'A PHP-based MVC-inspired CMF',
-    'favicon'      => 'favicon_32x32.png',
-    'logo'         => 'logo_300x260.png',
-    'logo_width'   => 300,
-    'logo_height'  => 260,
-    'footer'       => '<p>Footer: &copy; 2013 |&nbsp;<a href="http://vanjaanderson.com" target="_blank">Vanja Anderson</a></p>',
+    'header'          => $header,
+    'slogan'          => $slogan,
+    'favicon'         => 'favicon.png',
+    'logo'            => 'logo.png',
+    'logo_width'      => $logo_width,
+    'logo_height'     => $logo_height,
+    'footer'          => '<p>Copyright &copy; '.date('Y').' <span class="darker">|</span> '.$name.' <span class="darker">|</span> <a href="http://'.$linkurl.'" target="_blank">'.$linktext.'</a> <span class="darker">|</span> <a href="mailto:'.$email.'">'.$emailtext.'</a> <span class="darker">|</span> '.$footertext.'</p>',
   ),
 );
 

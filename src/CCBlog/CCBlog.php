@@ -26,6 +26,23 @@ class CCBlog extends CObject implements IController {
                 ), 'primary')
                 ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   }
+
+  /**
+   * Display a blog.
+   *
+   * @param $id integer the id of the page.
+   */
+  public function View($id=null) {
+    $content = new CMContent($id);
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
+    $this->views->SetTitle(htmlEnt($content['title']))
+                ->AddInclude(__DIR__ . '/index.tpl.php', array(
+                  'contents' => $content,
+                ), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
+  }
+
 }
 
 ?>

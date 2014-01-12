@@ -36,9 +36,25 @@ class CCPage extends CObject implements IController {
     $content = new CMContent($id);
     $modules = new CMModules();
     $controllers = $modules->AvailableControllers();
-    $this->views->SetTitle('Sida: '.htmlEnt($content['title']))
+    $this->views->SetTitle(htmlEnt($content['title']))
                 ->AddInclude(__DIR__ . '/index.tpl.php', array(
                   'content' => $content,
+                ), 'primary')
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
+  }
+
+  /**
+   * Display a page.
+   *
+   * @param $id integer the id of the page.
+   */
+  public function ViewAll() {
+    $content = new CMContent();
+    $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
+    $this->views->SetTitle('Sidor')
+                ->AddInclude(__DIR__ . '/view.tpl.php', array(
+                  'content' => $content->ListAll(array('type'=>'page', 'order-by'=>'title', 'order-order'=>'DESC')),
                 ), 'primary')
                 ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   }

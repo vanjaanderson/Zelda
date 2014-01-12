@@ -28,6 +28,11 @@ class CZelda implements ISingleton {
 
     // include the site specific config.php and create a ref to $this to be used by config.php
     $ze = &$this;
+
+    // Include theme specific config-file
+    require(ZELDA_SITE_PATH.'/themes/mytheme/my_config.php');
+    
+    // Include main config-file
     require(ZELDA_SITE_PATH.'/config.php');
 
     // Start a named session
@@ -140,7 +145,7 @@ class CZelda implements ISingleton {
     // Make the theme urls available as part of $ze
     $this->themeUrl = $themeUrl;
     $this->themeParentUrl = $parentUrl;
-    
+
     // Map menu to region if defined
     if(is_array($this->config['theme']['menu_to_region'])) {
       foreach($this->config['theme']['menu_to_region'] as $key => $val) {
@@ -177,7 +182,7 @@ class CZelda implements ISingleton {
     } else if(is_file("{$parentPath}/{$templateFile}")) {
       include("{$parentPath}/{$templateFile}");
     } else {
-      throw new Exception('No such template file.');
+      throw new Exception('Templaten finns inte.');
     }
   }
 
@@ -261,14 +266,23 @@ class CZelda implements ISingleton {
 
 
   /**
-   * Draw HTML for a menu defined in $ze->config['menus'].
+   * Draw HTML for a menu defined in $ze->config['menus'] or $ze->config['my_menu'] in themes my_navbar.php.
    *
    * @param $menu string then key to the menu in the config-array.
    * @returns string with the HTML representing the menu.
    */
   public function DrawMenu($menu) {
     $items = null;
-    if(isset($this->config['menus'][$menu])) {
+    if(isset($this->config['my_menu'][$menu])) {
+      foreach($this->config['my_menu'][$menu] as $val) {
+        $selected = null;
+        if($val['url'] == $this->request->request || $val['url'] == $this->request->routed_from) {
+          $selected = " class='selected'";
+        }
+        $items .= "<li><a {$selected} href='" . $this->CreateUrl($val['url']) . "'>{$val['label']}</a></li>\n";
+      }
+    }
+    else if(isset($this->config['menus'][$menu])) {
       foreach($this->config['menus'][$menu] as $val) {
         $selected = null;
         if($val['url'] == $this->request->request || $val['url'] == $this->request->routed_from) {
@@ -276,7 +290,8 @@ class CZelda implements ISingleton {
         }
         $items .= "<li><a {$selected} href='" . $this->CreateUrl($val['url']) . "'>{$val['label']}</a></li>\n";
       }
-    } else {
+    }
+    else {
       throw new Exception('Menyn finns inte.');
     }     
     return "<ul class='menu {$menu}'>\n{$items}</ul>\n";

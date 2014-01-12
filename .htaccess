@@ -1,4 +1,6 @@
 <IfModule mod_rewrite.c>
+  # Provide Specific Index Page (Set the default handler)
+  DirectoryIndex index.php
   RewriteEngine on
   # Must use RewriteBase on www.student.bth.se, Rewritebase for url /~mos/test is /~mos/test/
   #RewriteBase /change/this/to/site/base/url/if/needed/

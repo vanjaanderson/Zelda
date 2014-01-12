@@ -18,9 +18,11 @@ class CCContent extends CObject implements IController {
     $content = new CMContent();
     $modules = new CMModules();
     $controllers = $modules->AvailableControllers();
-    $this->views->SetTitle('Innehållskontroller')
+    $this->views->SetTitle('Allt innehåll')
                 ->AddInclude(__DIR__ . '/index.tpl.php', array(
-                  'contents' => $content->ListAll(),
+                  //'contents' => $content->ListAll(),
+                  'pages' => $content->ListAll(array('type'=>'page', 'order-by'=>'title', 'order-order'=>'DESC')),
+                  'posts' => $content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),
                 ), 'primary')
                 ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
   }
@@ -63,17 +65,17 @@ class CCContent extends CObject implements IController {
   /**
    * Init the content database.
    */
-  public function Init() {
+  /*public function Init() {
     $content = new CMContent();
     $content->Init();
     $this->RedirectToController();
-  }
+  }*/
   
-  /*public function Manage() {
+  public function Manage() {
     $content = new CMContent();
     $content->Manage('install');
     $this->RedirectToController();
-  }*/
+  }
 }
 
 ?>

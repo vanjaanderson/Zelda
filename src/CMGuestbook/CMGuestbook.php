@@ -22,7 +22,7 @@ class CMGuestbook extends CObject implements IHasSQL, IModule {
     $queries = array(
       'create table guestbook'  => "CREATE TABLE IF NOT EXISTS Guestbook (id INTEGER PRIMARY KEY, entry TEXT, created DATETIME default (datetime('now')));",
       'insert into guestbook'   => 'INSERT INTO Guestbook (entry) VALUES (?);',
-      'select * from guestbook' => 'SELECT * FROM Guestbook ORDER BY id DESC;',
+      'select * from guestbook' => 'SELECT * FROM Guestbook ORDER BY id ASC;',
       'delete from guestbook'   => 'DELETE FROM Guestbook;',
      );
     if(!isset($queries[$key])) {
@@ -39,7 +39,7 @@ class CMGuestbook extends CObject implements IHasSQL, IModule {
       case 'install': 
         try {
           $this->db->ExecuteQuery(self::SQL('create table guestbook'));
-          $this->session->AddMessage('notice', 'Databastabell skapad (om den inte redan fanns).');
+          return array('notice', 'Databastabell skapad (om den inte redan fanns).');
         } catch(Exception$e) {
           die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
         }
@@ -54,14 +54,14 @@ class CMGuestbook extends CObject implements IHasSQL, IModule {
   /**
    * Init the guestbook and create appropriate tables.
    */
-  public function Init() {
+  /*public function Init() {
     try {
       $this->db->ExecuteQuery(self::SQL('create table guestbook'));
       $this->session->AddMessage('notice', 'Databastabell skapad (om den inte redan fanns).');
     } catch(Exception$e) {
       die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
     }
-  }
+  }*/
   
   /**
    * Add a new entry to the guestbook and save to database.

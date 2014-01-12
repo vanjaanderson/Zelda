@@ -40,9 +40,9 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
    */
   public static function SQL($key=null) {
     $queries = array(
-      'drop table user'         => "DROP TABLE IF EXISTS User;",
-      'drop table group'        => "DROP TABLE IF EXISTS Groups;",
-      'drop table user2group'   => "DROP TABLE IF EXISTS User2Groups;",
+      //'drop table user'         => "DROP TABLE IF EXISTS User;",
+      //'drop table group'        => "DROP TABLE IF EXISTS Groups;",
+      //'drop table user2group'   => "DROP TABLE IF EXISTS User2Groups;",
       'create table user'       => "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, email TEXT, algorithm TEXT, salt TEXT, password TEXT, created DATETIME default (datetime('now')), updated DATETIME default NULL);",
       'create table group'      => "CREATE TABLE IF NOT EXISTS Groups (id INTEGER PRIMARY KEY, acronym TEXT KEY, name TEXT, created DATETIME default (datetime('now')), updated DATETIME default NULL);",
       'create table user2group' => "CREATE TABLE IF NOT EXISTS User2Groups (idUser INTEGER, idGroups INTEGER, created DATETIME default (datetime('now')), PRIMARY KEY(idUser, idGroups));",
@@ -65,13 +65,44 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
   /**
    * Init the database and create appropriate tables.
    */
+  /*public function Init() {
+    try {
+      $this->db->ExecuteQuery(self::SQL('drop table user2group'));
+      $this->db->ExecuteQuery(self::SQL('drop table group'));
+      $this->db->ExecuteQuery(self::SQL('drop table user'));
+      $this->db->ExecuteQuery(self::SQL('create table user'));
+      $this->db->ExecuteQuery(self::SQL('create table group'));
+      $this->db->ExecuteQuery(self::SQL('create table user2group'));
+      $this->db->ExecuteQuery(self::SQL('insert into user'), array('Anonym', 'Anonym användare, inte autentiserad', null, 'plain', null, null));
+      $password = $this->CreatePassword('root');
+      $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'Administrator', 'root@dbwebb.se', $password['algorithm'], $password['salt'], $password['password']));
+      $idRootUser = $this->db->LastInsertId();
+      $password = $this->CreatePassword('doe');
+      $this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John/Jane Doe', 'doe@dbwebb.se', $password['algorithm'], $password['salt'], $password['password']));
+      $idDoeUser = $this->db->LastInsertId();
+      $this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'Administratorgruppen'));
+      $idAdminGroup = $this->db->LastInsertId();
+      $this->db->ExecuteQuery(self::SQL('insert into group'), array('user', 'Användargruppen'));
+      $idUserGroup = $this->db->LastInsertId();
+      $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idAdminGroup));
+      $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idUserGroup));
+      $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idDoeUser, $idUserGroup));
+      return array('success', 'Databastabell skapades med användare root, lösenord root, och användare doe, lösenord doe.');
+    } catch(Exception$e) {
+      die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
+    }
+  }*/
+
+  /**
+   * Init the database and create appropriate tables.
+   */
   public function Manage($action=null) {
     switch($action) {
       case 'install': 
         try {
-          $this->db->ExecuteQuery(self::SQL('drop table user2group'));
-          $this->db->ExecuteQuery(self::SQL('drop table group'));
-          $this->db->ExecuteQuery(self::SQL('drop table user'));
+          //$this->db->ExecuteQuery(self::SQL('drop table user2group'));
+          //$this->db->ExecuteQuery(self::SQL('drop table group'));
+          //$this->db->ExecuteQuery(self::SQL('drop table user'));
           $this->db->ExecuteQuery(self::SQL('create table user'));
           $this->db->ExecuteQuery(self::SQL('create table group'));
           $this->db->ExecuteQuery(self::SQL('create table user2group'));
@@ -89,7 +120,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
           $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idAdminGroup));
           $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idUserGroup));
           $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idDoeUser, $idUserGroup));
-          $this->AddMessage('success', 'Databastabell skapades med användare root, lösenord root, och användare doe, lösenord doe.');
+          return array('notice', 'Databastabell skapades med användare root, lösenord root, och användare doe, lösenord doe.');
         } catch(Exception$e) {
           die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
         }
@@ -239,7 +270,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
    */
   public function ChangePassword($plain) {
     $password = $this->CreatePassword($plain);
-    $this->db->ExecuteQuery(self::SQL('update password'), array($password['algoritm'], $password['salt'], $password['password'], $this['id']));
+    $this->db->ExecuteQuery(self::SQL('update password'), array($password['algorithm'], $password['salt'], $password['password'], $this['id']));
     return $this->db->RowCount() === 1;
   }
 }

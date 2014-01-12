@@ -89,7 +89,7 @@ video {
   vertical-align: baseline;
 }
 body {
-  line-height: 1;
+  line-height: 150% !important;
 }
 ol,
 ul {
@@ -343,9 +343,9 @@ body {
   background-color: #fff;
   font: 1em Verdana, Arial, Helvetica, sans-serif;
 }
-/*body:hover {
-  background: #fff url(grid_12_60_20.png) repeat-y center top;
-}*/
+body:hover {
+  /*background: #fff url(grid_12_60_20.png) repeat-y center top;*/ /* Annoying background-image :( */;
+}
 #navbar {margin-left:270px; margin-top:-0.8em;}
 #navbar ul.menu {
   list-style-type:none;
@@ -378,7 +378,6 @@ body {
   color: rgb(68,99,11);
 }
 #outer-wrap-header {
-  margin-top: 11px;
   margin-bottom: 7.33333333333px;
 }
 #inner-wrap-header {
@@ -394,20 +393,6 @@ body {
 #inner-wrap-header:after {
   clear: both;
 }
-#header {
-  display: inline;
-  float: left;
-  width: 940px;
-  margin: 0 10px;
-  height: 290px;
-}
-#login-menu {
-  width: 250px;
-  margin: 12px 48%;
-  font-size: smaller;
-  padding-left: 236px;
-  text-align: right;
-}
 #login-menu img.gravatar {
   vertical-align: middle;
 }
@@ -419,35 +404,25 @@ body {
   text-decoration: underline;
   color: #cecece;
 }
-#login-div {
-  font-size: smaller;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 41px;
-  background-color: #333333;
-}
 #banner {
   display: table;
-  margin-bottom: 11px;
+  min-height: 150px;
+  clear: both;
 }
 #banner #site-logo {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
-  margin: 1.8em 0 -1.8em -0.95em;
 }
 #banner #site-title {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
   font-size: 4em;
-  padding-left: 0.32em;
+  padding-left:0em;
   text-shadow: #ccc 2px -2px 2px;
   font-family: 'Chewy', cursive;
   color: #ed2024;
-  padding-top: 1.32em;
 }
 #banner #site-title a {
   text-decoration: none;
@@ -457,10 +432,9 @@ body {
   vertical-align: middle;
   text-align: center;
   font-size: 1.5em;
-  padding-left: 10px;
+  padding-left: 0.5em;
   font-family: 'Mystery Quest', cursive;
-  padding-left: 0.85em;
-  padding-top: 3.9em;
+  padding-top: 0.5em;
   text-shadow: #ccc 2px -2px 2px;
 }
 #inner-wrap-flash {
@@ -702,3 +676,53 @@ a:focus {
 .grey {
   color: #aaa;
 }
+html{background-color:#FFE2B3;}
+body{background-color:#D0DCE1;}
+#outer-wrap-header{background-color: #FFE2B3;
+border-bottom: 2px solid #FFCE80;}
+#outer-wrap-footer{background-color:#FFE2B3}
+a{color:#436370}
+#navbar ul.menu li a.selected{background-color:#D0DCE1;border-bottom:none;}
+
+#login-outer-div {
+  padding: 0.5em 0;
+  background-color: #333333;
+}
+#login-inner-div {
+  width: 960px;
+  margin:0 auto;
+  font-size:11px;
+}
+nav#login-menu, nav#admin {
+  display:inline-block;
+}
+nav#login-menu {
+  float:right;
+  padding-top:3px;
+}
+nav#login-menu img.gravatar {
+  vertical-align: middle;
+}
+nav#login-menu a, nav#admin a {
+  text-decoration: none;
+  color: #ffffff;
+}
+nav#login-menu a:hover, nav#admin a:hover {
+  text-decoration: underline;
+  color: #cecece;
+}
+nav#admin ul.menu {
+  list-style-type:none;
+  margin:0;
+  padding:0;
+}
+nav#admin ul.menu li {
+  display:inline;
+}
+nav#admin ul.menu li a.selected {
+  color: rgba(255,128,128,1);
+}
+nav#admin, nav#login-menu {
+  font: 1.25em Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+

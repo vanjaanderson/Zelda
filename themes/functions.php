@@ -51,7 +51,7 @@ function get_debug() {
   if(isset($ze->config['debug']['db-num-queries']) && $ze->config['debug']['db-num-queries'] && isset($ze->db)) {
     $flash = $ze->session->GetFlash('database_numQueries');
     $flash = $flash ? "$flash + " : null;
-    $html .= "<div class='infobox'><p>Databasen gjorde $flash" . $ze->db->GetNumQueries() . " förfrågan / förfrågningar.</p>";
+    $html .= "<div id='debug'><p>Databasen gjorde $flash" . $ze->db->GetNumQueries() . " förfrågan / förfrågningar.</p>";
   }    
   if(isset($ze->config['debug']['db-queries']) && $ze->config['debug']['db-queries'] && isset($ze->db)) {
     $flash = $ze->session->GetFlash('database_queries');
@@ -97,14 +97,11 @@ function login_menu() {
   $ze = CZelda::Instance();
   if($ze->user['isAuthenticated']) {
     $items = " <span class='grey'>Välkommen</span> <img class='gravatar' src='" . get_gravatar(20) . "' alt=''> <a href='" . create_url('user/profile') . "'> " . $ze->user['acronym'] . "</a> ";
-    if($ze->user['hasRoleAdministrator']) {
-      $items .= "<a href='" . create_url('akp') . "'>akp</a> ";
-    }
     $items .= " <span class='grey'>|</span> <a href='" . create_url('user/logout') . "'>logga ut</a> ";
   } else {
     $items = "<a href='" . create_url('user/login') . "'>logga in</a> ";
   }
-  return "<nav id='login-menu'>$items</nav>";
+  return "$items";
 }
 
 /**

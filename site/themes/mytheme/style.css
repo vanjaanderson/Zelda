@@ -1,11 +1,58 @@
 /** 
- * Description: Sample theme for site which extends the Lydia grid-theme.
+ * Description: Sample theme for site which extends the Zelda core-theme.
+ * In bottom the selected themes style. Uncomment to use core-theme without changes.
  */
-@import url(../../../themes/grid/style.css);
 
-html{background-color:#FFE2B3;}
-body{background-color:#D0DCE1;}
-#outer-wrap-header{background-color:#FFE2B3;border-bottom:2px solid #FFCE80}
-#outer-wrap-footer{background-color:#FFE2B3}
-a{color:#436370}
-#navbar ul.menu li a.selected{background-color:#D0DCE1;border-bottom:none;}
+@import url(../../../themes/core/style.css);
+
+/**
+* User styles in MyTheme
+*
+* Predefined colors to use: aqua, black, blue, fuchsia, gray, green, lime, maroon, navy, olive, orange, purple, red, silver, teal, white, yellow.
+* You can use hex- or rgb-colors as well.
+*
+* Transparent white: rgba(255,255,255,0.5). Last value (0.5) means 50% transparent value.
+* Transparent black: rgba(0,0,0,0.5). Last value (0.5) means 50% transparent value.
+*
+* Empty values use predefined values from core-theme.
+*/
+
+/* Outside content area */
+html{background-color:  orange  } 					/* Main background-color */
+body{background-color:  rgba(255,255,255,0.6)  } 	/* Background-color in body */
+
+/* Content area */
+#inner-wrap-main{background-color:  rgba(255,255,255,0.8)  } 			/* Background-color in the content area */
+body{color:    } 									/* Text-color in the content area */
+a{color:  teal  } 									/* Content link color */
+a:hover{color:  orange  } 							/* Content hover link color */
+h1,h2,h3,h4,h5 {color:  black  } 					/* Color of the headings */
+
+/* Header area */
+#outer-wrap-header{background-color:  teal  } 		/* Background-color in the header area */
+#site-title{color:  yellow  } 						/* Color of the title */
+#site-slogan{color:  rgba(255,255,255,0.4)  } 						/* Color of the slogan */
+
+/* Navigation bar */
+#navbar ul.menu li a{background-color:    }			/* Background-color on tabs in navigation bar */
+#navbar ul.menu li a{color:  yellow  }				/* Text-color on tabs in navigation bar */
+
+#navbar ul.menu li a:hover{background-color:  rgba(0,0,0,0.2)  }		/* Background-color on hovered tab in navigation bar */
+#navbar ul.menu li a:hover{color:  yellow  }							/* Text-color on hovered tab in navigation bar */
+
+#navbar ul.menu li a.selected{background-color:  #FFF8EE } 				/* Background-color on selected tab in navigation bar */
+#navbar ul.menu li a.selected{color:  black  } 							/* Text-color on selected tab in navigation bar */
+
+#navbar ul.menu li a.selected:hover{background-color:  } 				/* Hovered background-color on selected tab in navigation bar */
+#navbar ul.menu li a.selected:hover{color:  orange  } 					/* Hovered text-color on selected tab in navigation bar */
+
+/* Footer area */
+#outer-wrap-footer{background-color:  teal  } 		/* Background-color in the footer area */
+#footer{color:  white  } 							/* Text-color in the footer area */
+#footer a{color:  yellow  } 						/* Link-color in the footer area */
+#footer a:hover{color:  orange  } 					/* Hover link-color in the footer area */
+
+/* Debug info in footer */
+#debug {display:  none  }			/* To hide debug info, change display: block to display: none or vice versa */
+
+blockquote:before {color:  teal  } 	/* Color of quotationmark in blockquote */
