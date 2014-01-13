@@ -2,12 +2,20 @@ Zelda, a PHP-based, MVC-inspired Content Management Framework
 =============================================================
 This is a Content Managemant Framework created in the course "php mvc" on Blekinge Tekniska Högskola (Blekinge Institute of Technology), Sweden.
 
-Instructions for installation
-=============================
-1) Download framework from git hub: [https://github.com/vanjaanderson/Zelda](https://github.com/vanjaanderson/Zelda).
+Installation
+============
+Requirements
+------------
+To run this framework, you need a web server (Apache) with PHP version of 5.3 or higher. Database used in this CMF, is sqLite. 
+
+Instructions
+------------
+1 Download framework from git hub: [https://github.com/vanjaanderson/Zelda](https://github.com/vanjaanderson/Zelda).
 Or clone it with command: <code>git clone git://github.com/vanjaanderson/Zelda.git</code> from your terminal. 
 
-2) Put files in desired folder on your web server (Apache), and make sure the site/data folder is writable. In your terminal, write command: <code>cd zelda; chmod 777 site/data</code>
+2 Put files in desired folder on your web server, and make sure the site/data folder is writable. In your terminal, write command: <code>cd zelda; chmod 777 site/data</code>.
+
+3 
 
 
 
