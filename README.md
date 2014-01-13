@@ -2,25 +2,39 @@ Zelda, a PHP-based, MVC-inspired Content Management Framework
 =============================================================
 This is a Content Managemant Framework created in the course "php mvc" on Blekinge Tekniska Högskola (Blekinge Institute of Technology), Sweden.
 
-Installation
-============
 Requirements
 ------------
-To run this framework, you need a web server (Apache) with PHP version of 5.3 or higher. Database used in this CMF, is sqLite. 
+To run this framework, you need a web server (Apache) with PHP version of 5.3 or higher. Database used, is sqLite.
 
-Instructions
-------------
-1 Download framework from git hub: [https://github.com/vanjaanderson/Zelda](https://github.com/vanjaanderson/Zelda).
-Or clone it with command: <code>git clone git://github.com/vanjaanderson/Zelda.git</code> from your terminal. 
+Instructions for installation
+-----------------------------
+1) Download framework from git hub: [https://github.com/vanjaanderson/Zelda](https://github.com/vanjaanderson/Zelda).
+Or clone it with command: <code>git clone git://github.com/vanjaanderson/Zelda.git</code> from your terminal. This step is certainly done.
 
-2 Put files in desired folder on your web server, and make sure the site/data folder is writable. In your terminal, write command: <code>cd zelda; chmod 777 site/data</code>.
+2) Put files in desired folder on your web server, and make sure the <code>site/data</code> folder is writable. In your terminal, write command: <code>cd zelda; chmod 777 site/data</code>.
 
-3 
+3) Open website in a web-browser and read in-built instructions on how to init database and required tables. Modules are setup with this link (from within Zelda): [/modules/install/](modules/install). Predefined user root/root is created. For security reasons, change username and password, see **Create Read Update Delete**.
+
+Configuration (advanced)
+------------------------
+In <code>site/config.php</code>, you can enable/disable debug info and controller settings, and other advanced preferences. You can configure navbars, urls , custom theme, stylesheet settings and a lot more...
+
+Customize your theme
+--------------------
+In <code>site/themes/mytheme</code>, you find files to customize your website. 
 
 
+
+
+To-Do
+-----
+* Implement MySql database.
+* Module for image insertion.
+* Customization directly to database. 
+* More to come...
 
 Revision history
-================
+----------------
 * v1.0    - 13 januari 2014 - Examination of project Zelda CMF
 * v0.2.24 - 09 december 2013 - Dokumentera koden med phpdoc och modulhanteraren 
 * v0.2.23 - 08 december 2013 - Skapa en webbplats med Zelda 
