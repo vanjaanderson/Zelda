@@ -26,7 +26,8 @@ class CCUser extends CObject implements IController {
                   'is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,
                 ), 'primary')
-                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
 
   /**
@@ -47,7 +48,8 @@ class CCUser extends CObject implements IController {
                   'user'=>$this->user,
                   'profile_form'=>$form->GetHTML(),
                 ), 'primary')
-                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
 
   /**
@@ -94,7 +96,8 @@ class CCUser extends CObject implements IController {
                   'allow_create_user' => CZelda::Instance()->config['create_new_users'],
                   'create_user_url' => $this->CreateUrl(null, 'create'),
                 ), 'primary')
-                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
   
   /**
@@ -131,7 +134,8 @@ class CCUser extends CObject implements IController {
     $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Skapa användare')
                 ->AddInclude(__DIR__ . '/create.tpl.php', array('form' => $form->GetHTML()), 'primary')
-                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
   
   /**
@@ -159,11 +163,12 @@ class CCUser extends CObject implements IController {
  
   /**
    * Init the user database.
-   */
-  public function Init() {
-    $this->user->Init();
+   */ 
+  /*public function Manage() {
+    $content = new CMUser();
+    $content->Manage('install');
     $this->RedirectToController();
-  }
+  }*/
 }
 
 ?>

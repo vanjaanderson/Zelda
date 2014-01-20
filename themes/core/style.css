@@ -28,6 +28,7 @@ body {
   font: 1em/1.5em Georgia, "Times New Roman", sans-serif !important;
   width: 100%;
   *zoom: 1;
+  overflow-y: scroll;
 }
 body:before,
 body:after {
@@ -156,6 +157,12 @@ ul {
 ol {
   list-style-type: decimal;
 }
+ol li {
+   margin-bottom:10px;
+}
+ol li + blockquote {
+  margin-top:-6px;
+}
 /*
 * Headings
 */
@@ -268,6 +275,9 @@ blockquote:before {
 }
 blockquote p {
   display: inline;
+}
+pre {
+  background-color:rgba(0,0,0,0.1)
 }
 /*
 * Forms
@@ -389,6 +399,7 @@ nav#admin ul.menu {
 }
 nav#admin ul.menu li {
   display:inline;
+  margin-left:4px;
 }
 nav#admin ul.menu li a.selected {
   color: orange;
@@ -751,4 +762,8 @@ td .error, td .alert, td .success, td .notice {
   position:relative;
   top:-0.6em;
   margin-bottom:1.5em;
+}
+ul.validation-message li {
+  margin-top: -24px;
+  font-style: italic;
 }

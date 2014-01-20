@@ -58,6 +58,7 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess, IModule {
 
   /**
    * Implementing interface IModule. Manage install/update/deinstall and equal actions.
+   * Filters to use: htmlpurify, bbcode, plain, make_clickable, markdownextra or smartypants.
    */
   public function Manage($action=null) {
     switch($action) {
@@ -65,10 +66,10 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess, IModule {
         try {
           $this->db->ExecuteQuery(self::SQL('drop table content'));
           $this->db->ExecuteQuery(self::SQL('create table content'));   
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world',             'post', 'plain',          'Hej världen',                      "Detta är ett demoinlägg.", $this->user['id']));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-again',       'post', 'plain',          'Hej igen, världen',                "Detta är ett annat demoinlägg.", $this->user['id']));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-once-more',   'post', 'plain',          'Hej världen, återigen',            "Ytterligare ett demoinlägg.", $this->user['id']));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('Filter test',             'page', 'plain',          'Testsida CTextFilter',             'Här kan du testa olika filter genom att redigera sidan, se längst ner ovanför foten.
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('welcome-to-zelda',                 'page', 'markdownextra',   'Välkommen till Zelda', "Denna sida är förinställd att visas i menyn.\n\nÄndra innehållet till det du vill, eller skapa en ny sida som du sedan bestämmer ska vara defaultsida (i filen <code>site/themes/mytheme/my_config.php</code>).", $this->user['id']));
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('ett-rykande-farskt-inlagg',       'post', 'markdownextra',  'Ett rykande färskt inlägg',     "Detta är ett demoinlägg för att se hur ett sådant ser ut.\n\nDu skapar nya inlägg, raderar eller redigerar de som finns.\n\nAnvänder du markdownextra som filter, kan du skriva rubriker, fet text, kursiv text etc, på ett enkelt sätt. Se sidan med [CTextFilter](/Zelda-master/page/view/4/).\n\nEtt stort lycka till!", $this->user['id']));
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-once-more',   'post', 'plain',          'Hej världen, återigen', "Ytterligare ett demoinlägg.", $this->user['id']));
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('Filter test',             'page', 'plain',          'Testsida CTextFilter',  'Här kan du testa olika filter genom att redigera sidan, se längst ner ovanför foten.
 
 Med filtret "Plain", som är default, konverteras ingen kod i texten. Men generellt görs en tom rad vid radbrytning med enter. Detta sköter funktionen nl2p() om.
 
@@ -110,7 +111,7 @@ Med filtret "Markdown Extra" kan man formattera **fet text**, *kursiv text* elle
 | Iggy                 | Devon Rex       | Svart smoke        |
 | Sixten               | Huskatt         | Svart/Grå          |
 | Baloo                | Huskatt         | Grå                | ', $this->user['id']));
-      return array('notice', 'Databastabeller och inlägg "Hej världen" skapades, med dig som författare.');
+      return array('notice', 'Databastabeller och inlägg skapades, med dig som författare.');
     } catch(Exception$e) {
       die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
         }
@@ -211,7 +212,7 @@ Med filtret "Markdown Extra" kan man formattera **fet text**, *kursiv text* elle
     if(in_array($filter,$accepted_filters)) {
       $data = CTextFilter::filter($data,$filter);
     } else {
-      $data = CTextFilter::filter($data,"plain");
+      $data = CTextFilter::filter($data,'plain');
     }
       return $data;
   }

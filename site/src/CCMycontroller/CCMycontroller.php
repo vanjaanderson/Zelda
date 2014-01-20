@@ -26,10 +26,17 @@ class CCMycontroller extends CObject implements IController {
   }
 
   /**
-   * The page about me
+   * Default page
    */
   public function Page() {
-    $content = new CMContent(1);
+    include('site/themes/mytheme/my_config.php');
+    //echo $p_number;
+    // If predefined page is specified in my_config.php, display that page. Else display default.
+    if(isset($p_number) && !empty($p_number)) {
+      $content = new CMContent($p_number);
+    } else {
+      $content = new CMContent(1);
+    }
     $modules = new CMModules();
     $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Exempelsida')
@@ -102,7 +109,7 @@ class CFormMyGuestbook extends CForm {
    */
   public function __construct($object) {
     parent::__construct();
-    $this->objecyt = $object;
+    $this->object = $object;
     $this->AddElement(new CFormElementTextarea('data', array('label'=>'Nytt meddelande:')))
          ->AddElement(new CFormElementSubmit('Spara', array('callback'=>array($this, 'DoAdd'), 'callback-args'=>array($object))));
   }

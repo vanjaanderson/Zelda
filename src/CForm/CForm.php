@@ -90,6 +90,7 @@ class CFormElement implements ArrayAccess {
     $type = isset($this['type']) ? " type='{$this['type']}'" : null;
     $description = isset($this['description']) ? $this['description'] : null;
     $onlyValue = isset($this['value']) ? htmlentities($this['value'], ENT_QUOTES, $this->characterEncoding) : null;
+    $selectedValue = isset($this['value']) ? htmlentities($this['value'], ENT_QUOTES, $this->characterEncoding) : 'Plain';
     $value = isset($this['value']) ? " value='{$onlyValue}'" : null;
 
     $messages = null;
@@ -109,9 +110,9 @@ class CFormElement implements ArrayAccess {
         return "<input id='$id'{$type}{$class}{$name}{$value} />\n";
     } else if($type && $this['type'] == 'select') {
         return "<p><label for='$id'>$label</label><br><select id='$id'{$type}{$class}{$name}{$value}>
-          <option value='{$type}{$class}{$name}{$value} selected'>{$onlyValue}</option>
+          <option value='{$type}{$class}{$name}{$value} selected'>{$selectedValue}</option>
           <option value='plain'>Plain</option>
-          <option value='htmlpurify'>HTML Purify</option>
+          <option value='htmlurify'>HTML Purify</option>
           <option value='bbcode'>BB Code</option>
           <option value='make_clickable'>Make Clickable</option>
           <option value='markdownextra'>Markdown</option>
@@ -133,14 +134,15 @@ class CFormElement implements ArrayAccess {
   public function Validate($rules, $form) {
     $regExpEmailAddress = '/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i';
     $tests = array(
-      'fail' =>         array('message' => 'Will always fail.', 'test' => 'return false;'),
-      'pass' =>         array('message' => 'Will always pass.', 'test' => 'return true;'),
-      'not_empty' =>    array('message' => 'Can not be empty.', 'test' => 'return $value != "";'),
-      'not_equal' =>    array('message' => 'Value not valid.', 'test' => 'return $value != $arg;'),
-      'numeric' =>      array('message' => 'Must be numeric.', 'test' => 'return is_numeric($value);'),
-      'email_adress' => array('message' => 'Must be an email adress.', 'test' => function($value) { return preg_match('/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i', $value) === 1; } ),
-      'match' =>        array('message' => 'The field does not match.', 'test' => 'return $value == $form[$arg]["value"] ;'),
-      'must_accept' =>  array('message' => 'You must accept this.', 'test' => 'return $checked;'),
+      'fail' =>         array('message' => 'Kommer alltid att misslyckas.', 'test' => 'return false;'),
+      'pass' =>         array('message' => 'Kommer alltid att godkännas.', 'test' => 'return true;'),
+      'not_empty' =>    array('message' => 'Får inte vara tomt.', 'test' => 'return $value != "";'),
+      'not_equal' =>    array('message' => 'Inmatningen är felaktig.', 'test' => 'return $value != $arg;'),
+      'numeric' =>      array('message' => 'Måste vara numeriskk.', 'test' => 'return is_numeric($value);'),
+      'email_adress' => array('message' => 'Måste vara en e-postadress.', 'test' => function($value) { return preg_match('/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i', $value) === 1; } ),
+      'match' =>        array('message' => 'Inmatniongen matchar inte.', 'test' => 'return $value == $form[$arg]["value"] ;'),
+      'must_accept' =>  array('message' => 'Du måste godkänna detta.', 'test' => 'return $checked;'),
+      'post_or_page' => array('message' => 'Måste innehålla post eller page.', 'test' => 'return $value != "";'),
       'custom_test' =>  true,
     );
 

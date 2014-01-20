@@ -24,7 +24,8 @@ class CCContent extends CObject implements IController {
                   'pages' => $content->ListAll(array('type'=>'page', 'order-by'=>'title', 'order-order'=>'DESC')),
                   'posts' => $content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),
                 ), 'primary')
-                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
   
   /**
@@ -34,6 +35,8 @@ class CCContent extends CObject implements IController {
    */
   public function Edit($id=null) {
     $content = new CMContent($id);
+    $page = new CMContent($id, $type='page');
+    $post = new CMContent($id, $type='post');
     $modules = new CMModules();
     $controllers = $modules->AvailableControllers();
     $form = new CFormContent($content);
@@ -50,9 +53,12 @@ class CCContent extends CObject implements IController {
                 ->AddInclude(__DIR__ . '/edit.tpl.php', array(
                   'user'=>$this->user, 
                   'content'=>$content, 
+                  'page'=>$page,
+                  'post'=>$post,
                   'form'=>$form,
                 ), 'primary')
-                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
   
   /**
@@ -64,13 +70,7 @@ class CCContent extends CObject implements IController {
 
   /**
    * Init the content database.
-   */
-  /*public function Init() {
-    $content = new CMContent();
-    $content->Init();
-    $this->RedirectToController();
-  }*/
-  
+   */ 
   public function Manage() {
     $content = new CMContent();
     $content->Manage('install');

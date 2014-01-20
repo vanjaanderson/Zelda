@@ -1,7 +1,7 @@
-<h1>Sidor<span class='headerlink'><!--<a href='<?=create_url('content', 'create')?>'>skapa ny sida</a></span>--></h1>
+<h1>Inlägg<!--<span class='headerlink'><a href='<?=create_url('content', 'create')?>'>skapa nytt inlägg</a></span>--></h1>
 <p>Skapa, redigera och visa innehåll.</p>
 
-<h2>Alla sidor</h2>
+<h2>Alla inlägg</h2>
 <?php if($content != null):?>
   <ul>
   <?php foreach($content as $val):?>

@@ -1,5 +1,5 @@
 <?php if($content['id']):?>
-  <h1><?=esc($content['title'])?></h1>
+  <h1><?=esc($content['title'])?><?php if($is_authenticated): ?><span class='headerlink'><a href='<?=create_url('content', 'create')?>'>skapa ny sida</a></span><?php endif;?></h1>
   <?=$content->GetFilteredData()?>
   <p class='smaller-text silent'>
   	<?php if($is_authenticated): ?>
@@ -9,4 +9,3 @@
 <?php else:?>
   <p>404: Sidan finns inte.</p>
 <?php endif;?>
-

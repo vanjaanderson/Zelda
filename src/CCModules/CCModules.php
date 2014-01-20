@@ -21,7 +21,8 @@ class CCModules extends CObject implements IController {
     $allModules = $modules->ReadAndAnalyse();
     $this->views->SetTitle('Hantera moduler')
                 ->AddInclude(__DIR__ . '/index.tpl.php', array('controllers'=>$controllers), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('modules'=>$allModules), 'sidebar');
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'modules'=>$allModules), 'sidebar');
   }
 
   /**
@@ -33,7 +34,8 @@ class CCModules extends CObject implements IController {
     $allModules = $modules->ReadAndAnalyse();
     $this->views->SetTitle('Installera moduler')
                 ->AddInclude(__DIR__ . '/install.tpl.php', array('modules'=>$results), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('modules'=>$allModules), 'sidebar');
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'modules'=>$allModules), 'sidebar');
   }
 
   /**
@@ -46,7 +48,8 @@ class CCModules extends CObject implements IController {
     $allModules = $modules->ReadAndAnalyse();
     $aModule = $modules->ReadAndAnalyseModule($module);
     $this->views->SetTitle('Hantera moduler')
-                ->AddInclude(__DIR__ . '/view.tpl.php', array('module'=>$aModule), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('modules'=>$allModules), 'sidebar');
+                ->AddInclude(__DIR__ . '/view.tpl.php', array('modules'=>$aModule), 'primary')
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'modules'=>$allModules), 'sidebar');
   }
 }

@@ -3,7 +3,7 @@
   <p>Du kan redigera och spara detta innehåll.</p>
 <?php else: ?>
   <h1>Skapa innehåll</h1>
-  <p>Här kan du skapa nytt innehåll.</p>
+  <p>Här skapar du blogginlägg <em>(post)</em> eller sida <em>(page)</em>. Fält markerade med &lowast; är obligatoriska.</p>
 <?php endif; ?>
 
 
@@ -21,8 +21,8 @@
 <?php endif; ?>
 </em></p>
 
-<p class="smaller-text">
+<!--<p class="smaller-text">
 	<a href='<?=create_url('content', 'create')?>'>skapa nytt</a> |
 	<a href='<?=create_url('page', 'view', $content['id'])?>'>visa</a> |
 	<a href='<?=create_url("content")?>'>visa allt</a>
-</p>
+</p>-->

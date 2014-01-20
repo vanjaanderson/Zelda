@@ -1,4 +1,4 @@
-<h1>Användarkontrollerindex</h1>
+<h1>Skapa användare</h1>
 <p>
 	En kontroller för för att styra användaraktiviteter, i huvudsak inloggning, utloggning, visa och ändra 
 	användarprofil. Använd menyn längst upp till höger för att använda dessa funktioner.

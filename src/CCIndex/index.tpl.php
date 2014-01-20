@@ -1,10 +1,12 @@
 <?php
-/**
-* Checking environments before installing Zelda.
-*
-* @package ZeldaCore
-*/
-?>
-<h1>Välkommen till Zelda</h1>
+// Check if database file has content (is initialized) and re-direct.
+if(file_exists('site/data/.ht.sqlite')) {
+  $size = filesize("site/data/.ht.sqlite");
+  if ($size > 0) {
+    header("Location: my/page/");
+  } else {
+    header("Location: setup/");
+  }
+}
 
-<p></p>
+?>

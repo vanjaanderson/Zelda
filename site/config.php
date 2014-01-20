@@ -20,7 +20,7 @@ $ze->config['debug']['db-num-queries'] = true;
 $ze->config['debug']['db-queries'] = true;
 
 /**
-* Set database(s).
+* Set database.
 */
 $ze->config['database'][0]['dsn'] = 'sqlite:' . ZELDA_SITE_PATH . '/data/.ht.sqlite';
 
@@ -90,6 +90,7 @@ $ze->config['controllers'] = array(
   'theme'     => array('enabled' => true,'class' => 'CCTheme'),
   'module'    => array('enabled' => true,'class' => 'CCModules'),
   'my'        => array('enabled' => true,'class' => 'CCMycontroller'),
+  'setup'     => array('enabled' => true,'class' => 'CCSetup'),
 );
 
 /**
@@ -116,10 +117,11 @@ $ze->config['menus'] = array(
     'akp'       => array('label' => 'Admin', 'url'    => 'akp'),
   ),
   'admin' => array(
-    'modules'   => array('label' => 'Modulhanterare', 'url' => 'module'),
+    'install'      => array('label' => 'Installera',  'url' => 'setup'),
+    'modules'   => array('label' => 'Moduler', 'url' => 'module'),
+    'create'    => array('label' => 'Skapa innehåll', 'url' => 'content/create'),
   ),
   'my-navbar' => array(
-    'home'      => array('label' => $home, 'url'      => 'my'),
     'page'      => array('label' => $page, 'url'      => 'my/page'),
     'blog'      => array('label' => $blog, 'url'      => 'my/blog'),
     'guestbook' => array('label' => $guestbook, 'url' => 'my/guestbook'),
@@ -132,7 +134,7 @@ $ze->config['menus'] = array(
  * When a parent theme is used the parent's functions.php will be included before the current
  * theme's functions.php. The parent stylesheet can be included in the current stylesheet
  * by an @import clause. See site/themes/mytheme for an example of a child/parent theme.
- * Template files can reside in the parent or current theme, the CLydia::ThemeEngineRender()
+ * Template files can reside in the parent or current theme, the CZelda::ThemeEngineRender()
  * looks for the template-file in the current theme first, then it looks in the parent theme.
  *
  * There are two useful theme helpers defined in themes/functions.php.
@@ -154,9 +156,9 @@ $ze->config['theme'] = array(
   // The name of the theme in the themes directory
   'path'            => 'site/themes/mytheme',
   //'path'          => 'themes/core',
-  //'path'            => 'themes/grid',
+  //'path'          => 'themes/grid',
   'parent'          => 'themes/core',
-  'stylesheet'      => 'style.css',
+  'stylesheet'      => 'my_style.css',
   'template_file'   => 'index.tpl.php',   // Default template file, else use default.tpl.php
   // A list of valid theme regions
   'regions' => array('navbar', 'flash','featured-first','featured-middle','featured-last',
@@ -170,7 +172,7 @@ $ze->config['theme'] = array(
     'header'          => $header,
     'slogan'          => $slogan,
     'favicon'         => 'favicon.png',
-    'logo'            => 'logo.png',
+    'logo'            => $logo_name,
     'logo_width'      => $logo_width,
     'logo_height'     => $logo_height,
     'footer'          => '<p>Copyright &copy; '.date('Y').' <span class="darker">|</span> '.$name.' <span class="darker">|</span> <a href="http://'.$linkurl.'" target="_blank">'.$linktext.'</a> <span class="darker">|</span> <a href="mailto:'.$email.'">'.$emailtext.'</a> <span class="darker">|</span> '.$footertext.'</p>',

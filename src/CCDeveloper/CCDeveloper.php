@@ -22,7 +22,8 @@ class CCDeveloper extends CObject implements IController {
     $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Utvecklarkontroller')
                 //->AddInclude(__DIR__ . '/index.tpl.php', array(), 'primary')
-                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
 
   /**
@@ -34,7 +35,8 @@ class CCDeveloper extends CObject implements IController {
     $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Utvecklarkontroller')
                 //->AddInclude(__DIR__ . '/index.tpl.php', array(), 'primary')
-                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
       
     $this->data['main'] .= <<<EOD
 <h2>Dumpning av innehåll i CDeveloper</h2>
@@ -52,7 +54,8 @@ EOD;
     $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Utvecklarkontroller')
                 //->AddInclude(__DIR__ . '/index.tpl.php', array(), 'primary')
-                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
     
     $url = 'developer/links';
     $current      = $this->request->CreateUrl($url);
@@ -90,7 +93,8 @@ EOD;
     $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Utvecklarkontroller')
                 //->AddInclude(__DIR__ . '/index.tpl.php', array(), 'primary')
-                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
     
     $html = null;
     foreach($menu as $val) {

@@ -24,7 +24,8 @@ class CCPage extends CObject implements IController {
                 ->AddInclude(__DIR__ . '/index.tpl.php', array(
                   'content' => null,
                 ), 'primary')
-                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
 
   /**
@@ -40,11 +41,12 @@ class CCPage extends CObject implements IController {
                 ->AddInclude(__DIR__ . '/index.tpl.php', array(
                   'content' => $content,
                 ), 'primary')
-                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
 
   /**
-   * Display a page.
+   * Display all pages.
    *
    * @param $id integer the id of the page.
    */
@@ -56,7 +58,8 @@ class CCPage extends CObject implements IController {
                 ->AddInclude(__DIR__ . '/view.tpl.php', array(
                   'content' => $content->ListAll(array('type'=>'page', 'order-by'=>'title', 'order-order'=>'DESC')),
                 ), 'primary')
-                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
 }
 

@@ -65,37 +65,6 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
   /**
    * Init the database and create appropriate tables.
    */
-  /*public function Init() {
-    try {
-      $this->db->ExecuteQuery(self::SQL('drop table user2group'));
-      $this->db->ExecuteQuery(self::SQL('drop table group'));
-      $this->db->ExecuteQuery(self::SQL('drop table user'));
-      $this->db->ExecuteQuery(self::SQL('create table user'));
-      $this->db->ExecuteQuery(self::SQL('create table group'));
-      $this->db->ExecuteQuery(self::SQL('create table user2group'));
-      $this->db->ExecuteQuery(self::SQL('insert into user'), array('Anonym', 'Anonym användare, inte autentiserad', null, 'plain', null, null));
-      $password = $this->CreatePassword('root');
-      $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'Administrator', 'root@dbwebb.se', $password['algorithm'], $password['salt'], $password['password']));
-      $idRootUser = $this->db->LastInsertId();
-      $password = $this->CreatePassword('doe');
-      $this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John/Jane Doe', 'doe@dbwebb.se', $password['algorithm'], $password['salt'], $password['password']));
-      $idDoeUser = $this->db->LastInsertId();
-      $this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'Administratorgruppen'));
-      $idAdminGroup = $this->db->LastInsertId();
-      $this->db->ExecuteQuery(self::SQL('insert into group'), array('user', 'Användargruppen'));
-      $idUserGroup = $this->db->LastInsertId();
-      $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idAdminGroup));
-      $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idUserGroup));
-      $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idDoeUser, $idUserGroup));
-      return array('success', 'Databastabell skapades med användare root, lösenord root, och användare doe, lösenord doe.');
-    } catch(Exception$e) {
-      die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
-    }
-  }*/
-
-  /**
-   * Init the database and create appropriate tables.
-   */
   public function Manage($action=null) {
     switch($action) {
       case 'install': 
@@ -110,17 +79,17 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
           $password = $this->CreatePassword('root');
           $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'Administrator', 'root@dbwebb.se', $password['algorithm'], $password['salt'], $password['password']));
           $idRootUser = $this->db->LastInsertId();
-          $password = $this->CreatePassword('doe');
-          $this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John/Jane Doe', 'doe@dbwebb.se', $password['algorithm'], $password['salt'], $password['password']));
-          $idDoeUser = $this->db->LastInsertId();
+          //$password = $this->CreatePassword('doe');
+          //$this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John/Jane Doe', 'doe@dbwebb.se', $password['algorithm'], $password['salt'], $password['password']));
+          //$idDoeUser = $this->db->LastInsertId();
           $this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'Administratorgruppen'));
           $idAdminGroup = $this->db->LastInsertId();
           $this->db->ExecuteQuery(self::SQL('insert into group'), array('user', 'Användargruppen'));
           $idUserGroup = $this->db->LastInsertId();
           $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idAdminGroup));
           $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idUserGroup));
-          $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idDoeUser, $idUserGroup));
-          return array('notice', 'Databastabell skapades med användare root, lösenord root, och användare doe, lösenord doe.');
+          //$this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idDoeUser, $idUserGroup));
+          return array('notice', 'Databastabell skapades med användare root, lösenord root.');
         } catch(Exception$e) {
           die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
         }

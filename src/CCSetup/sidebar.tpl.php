@@ -1,4 +1,4 @@
-<div id="sidebarbox">
+<div id="sidebarbox" class="box">
 
   <?php if($is_authenticated): ?> 
   <h3>Controllers och metoder</h3>
