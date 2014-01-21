@@ -1,6 +1,6 @@
 <?php if(!is_array($module)): ?>
 
-	<p>404. So such module.</p>
+	<p>404. No such module.</p>
 
 	<?php else: ?>
 

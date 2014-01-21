@@ -56,23 +56,23 @@ else {
 <li>Put files in desired directory on your web server, and make sure the <code>site/data</code> directory is writable. In your terminal, write command:</li>
 
 <blockquote>
-	<code>cd Zelda-master; chmod 777 site/data</code>
+	<code>cd Zelda; chmod 777 site/data</code>
 </blockquote>
 
 <?=$check2?>
 
-<li>Uncomment row <code style="color:gray">#RewriteBase /Zelda-master/</code> to <code style="color:gray">RewriteBase /Zelda-master/</code> in file .htaccess, if needed.</li>
+<li>Uncomment row <code style="color:gray">#RewriteBase /Zelda/</code> to <code style="color:gray">RewriteBase /Zelda/</code> in file .htaccess, if needed.</li>
 <pre>
 &lt;IfModule mod_rewrite.c>
   RewriteEngine on
-  <span style="color:teal">#RewriteBase /Zelda-master/</span>
+  <span style="color:teal">#RewriteBase /Zelda/</span>
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule (.*) index.php/$1 [NC,L]
 &lt;/IfModule>
 </pre>
 
-<li>Open website in a browser and read built-in instructions on how to init database and required tables. Modules are setup with this link (from within Zelda):</li>
+<li>Open website in a browser, log in with root/root and install modules. Modules are setup with this link (from within Zelda):</li>
 
 <blockquote>
 	<code> <a href="<?=create_url('module/install/')?>">install modules</a><br />Predefined user root/root is created</code>

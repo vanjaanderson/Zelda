@@ -41,15 +41,16 @@ class CCModules extends CObject implements IController {
   /**
    * Show a module and its parts.
    */
-  public function View($module) {
-    if(!preg_match('/^C[a-zA-Z]+$/', $module)) {throw new Exception('Ogiltiga tecken i modulnamnet.');}
+  public function View($module=null) {
     $modules = new CMModules();
     $controllers = $modules->AvailableControllers();
     $allModules = $modules->ReadAndAnalyse();
-    $aModule = $modules->ReadAndAnalyseModule($module);
     $this->views->SetTitle('Hantera moduler')
-                ->AddInclude(__DIR__ . '/view.tpl.php', array('modules'=>$aModule), 'primary')
                 ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,'modules'=>$allModules), 'sidebar');
+
+    if(!preg_match('/^C[a-zA-Z]+$/', $module)) {throw new Exception('Ogiltiga tecken i modulnamnet.');}
+    $aModule = $modules->ReadAndAnalyseModule($module);
+    $this->views->AddInclude(__DIR__ . '/view.tpl.php', array('modules'=>$aModule), 'primary');
   }
 }

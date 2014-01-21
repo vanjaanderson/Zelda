@@ -10,20 +10,20 @@ Instructions for installation
 -----------------------------
 1. Download framework from git hub: [https://github.com/vanjaanderson/Zelda](https://github.com/vanjaanderson/Zelda). Or clone it with command: `git clone git://github.com/vanjaanderson/Zelda.git` from your terminal.
 
-2. Put files in desired directory on your web server, and make sure the `site/data` directory is writable. In your terminal, write command: `cd Zelda-master; chmod 777 site/data`.
+2. Put files in desired directory on your web server, and make sure the `site/data` directory is writable. In your terminal, write command: `cd Zelda; chmod 777 site/data`.
 
-3. Uncomment row `#RewriteBase /Zelda-master/` to `RewriteBase /Zelda-master/` in file .htaccess, if needed.
+3. Uncomment row `#RewriteBase /Zelda/` to `RewriteBase /Zelda/` in file .htaccess, if needed.
 <pre>
 &lt;IfModule mod_rewrite.c>
 &nbsp;RewriteEngine on
-&nbsp;<span style="color:teal">#RewriteBase /Zelda-master/</span>
+&nbsp;<span style="color:teal">#RewriteBase /Zelda/</span>
 &nbsp;RewriteCond %{REQUEST_FILENAME} !-f
 &nbsp;RewriteCond %{REQUEST_FILENAME} !-d
 &nbsp;RewriteRule (.*) index.php/$1 [NC,L]
 &lt;/IfModule>
 </pre>
 
-4. Open website in a browser and read built-in instructions on how to init database and required tables. Modules are setup with this link (from within Zelda): [modules/install](/Zelda-master/modules/install/). Predefined user root/root is created.
+4. Open website in a browser, log in with root/root and install modules. Modules are setup with this link (from within Zelda): [modules/install](/Zelda-master/modules/install/). Predefined user root/root is created.
 
 Configuration (advanced)
 ------------------------
