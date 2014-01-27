@@ -52,7 +52,7 @@ else {
 <h3>Requirements</h3>
 <p>To run this framework, you need a web server (Apache) with PHP version of 5.3 or higher. Database used, is sqlite, and is automatically installed in the framework.</p>
 <?=$check1?>
-<?=$check3?>
+<?=$check4?>
 
 <h3>Instructions for installation</h3>
 <ol>
