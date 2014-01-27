@@ -13,13 +13,13 @@ public static $purify = null;
 
 public static function filter($data,$filter) {
     switch($filter) {
-        case 'htmlpurify': $data     = nl2p(self::purify($data)); break;
-        case 'make_clickable': $data = nl2p(make_clickable(htmlEnt($data))); break;
-        case 'bbcode': $data         = nl2p(bbcode2html(htmlEnt($data))); break;
+        case 'htmlpurify': $data     = nl2br(self::purify($data)); break;
+        case 'make_clickable': $data = nl2br(make_clickable(htmlEnt($data))); break;
+        case 'bbcode': $data         = nl2br(bbcode2html(htmlEnt($data))); break;
         case 'markdownextra': $data  = self::markdownExtra($data); break;
-        case 'smartypants': $data    = nl2p(self::smartyPantsTypographer($data)); break;
+        case 'smartypants': $data    = nl2br(self::smartyPantsTypographer($data)); break;
         case 'plain':
-        default: $data = nl2p(htmlEnt($data)); break;
+        default: $data = nl2br(htmlEnt($data)); break;
     }
     //$data = preg_replace('~\s?<p>(\s|&nbsp;)+</p>\s?~', '', $data);
     $data = preg_replace('|<p>(.*?)<p>|', '', $data);
