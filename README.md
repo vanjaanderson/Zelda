@@ -10,7 +10,7 @@ Instructions for installation
 -----------------------------
 1. Download framework from git hub: [https://github.com/vanjaanderson/Zelda](https://github.com/vanjaanderson/Zelda). Or clone it with command: `git clone git://github.com/vanjaanderson/Zelda.git` from your terminal.
 
-2. Put files in desired directory on your web server, and make sure the `site/data` directory is writable. In your terminal, write command: `cd Zelda; chmod 777 site/data`.
+2. Put files in desired directory on your web server, and make sure the `site/data` directory, and database in it, are writable. In your terminal, write command: `cd Zelda; chmod -R 777 site/data`.
 
 3. Uncomment row `#RewriteBase /Zelda/` to `RewriteBase /Zelda/` in file .htaccess, if needed.
 <pre>

@@ -26,12 +26,21 @@ else {
 	$check2 = '<p class="success">Directory site/data is writable. <span style="float:right;font-style:italic;font-weight:bold;color:green;">OK</span></p>';
 }
 
-// Check 3: Check if you can use database att all.
-if (!defined('PDO::ATTR_DRIVER_NAME')) {
-	$check3 = '<p class="error">Sorry, you can not run sqlite on this environment! <span style="float:right;font-style:italic;font-weight:bold;color:red;">&mdash;</span>';
+// Check 3: Check if database is writable.
+if (!is_writable('site/data/.ht.sqlite')) {
+	$check3 = '<p class="error">Database site/data/.ht.sqlite must be writable. <span style="float:right;font-style:italic;font-weight:bold;color:red;">&mdash;</span><br />
+	<a href=' . $_SERVER['PHP_SELF'] . '>Load page to check again</a></p>';
 }
 else {
-	$check3 = '<p class="success">You may run sqlite on this web server. <span style="float:right;font-style:italic;font-weight:bold;color:green;">OK</span></p>';
+	$check3 = '<p class="success">Database (.ht.sqlite) is writable. <span style="float:right;font-style:italic;font-weight:bold;color:green;">OK</span></p>';
+}
+
+// Check 4: Check if you can use database att all.
+if (!defined('PDO::ATTR_DRIVER_NAME')) {
+	$check4 = '<p class="error">Sorry, you can not run sqlite on this environment! <span style="float:right;font-style:italic;font-weight:bold;color:red;">&mdash;</span>';
+}
+else {
+	$check4 = '<p class="success">You may run sqlite on this web server. <span style="float:right;font-style:italic;font-weight:bold;color:green;">OK</span></p>';
 }
 
 ?>
@@ -53,13 +62,14 @@ else {
 	<code>git clone git://github.com/vanjaanderson/Zelda.git</code>
 </blockquote>
 
-<li>Put files in desired directory on your web server, and make sure the <code>site/data</code> directory is writable. In your terminal, write command:</li>
+<li>Put files in desired directory on your web server, and make sure the <code>site/data</code> directory, and database in it, are writable. In your terminal, write command:</li>
 
 <blockquote>
-	<code>cd Zelda; chmod 777 site/data</code>
+	<code>cd Zelda; chmod -R 777 site/data</code>
 </blockquote>
 
 <?=$check2?>
+<?=$check3?>
 
 <li>Uncomment row <code style="color:gray">#RewriteBase /Zelda/</code> to <code style="color:gray">RewriteBase /Zelda/</code> in file .htaccess, if needed.</li>
 <pre>

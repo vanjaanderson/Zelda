@@ -1,8 +1,7 @@
 <IfModule mod_rewrite.c>
   RewriteEngine on
   #RewriteBase /change/this/to/site/base/url/if/needed/
-  #RewriteBase /~vaan12/Zelda/
-  RewriteBase /Zelda/
+  #RewriteBase /Zelda/
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule (.*) index.php/$1 [NC,L]
