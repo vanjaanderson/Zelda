@@ -10,7 +10,7 @@ Instructions for installation
 -----------------------------
 1. Download framework from git hub: [https://github.com/vanjaanderson/Zelda](https://github.com/vanjaanderson/Zelda). Or clone it with command: `git clone git://github.com/vanjaanderson/Zelda.git` from your terminal.
 
-2. Put files in desired directory on your web server, and make sure the `site/data` directory, and database in it, are writable. In your terminal, write command: `cd Zelda; chmod -R 777 site/data`.
+2. Put files in desired directory on your web server, and make sure the `site/data` directory is writable. In your terminal, write command: `cd Zelda; chmod 777 site/data`.
 
 3. Uncomment row `#RewriteBase /Zelda/` to `RewriteBase /Zelda/` in file .htaccess, if needed.
 <pre>
@@ -23,8 +23,10 @@ Instructions for installation
 &lt;/IfModule>
 </pre>
 
-4. Open website in a browser, log in with root/root and install modules. Modules are setup with this link (from within Zelda): [modules/install](/Zelda-master/modules/install/). Predefined user root/root is created.
+4. Open website in a browser and instructions start automatically. Some modules have to be setup and you do it with this link (from within Zelda): [modules/install](/Zelda-master/modules/install/).
 
+5. Now you can log in with `root/root`.
+ 
 Configuration (advanced)
 ------------------------
 In `site/config.php`, you can enable/disable debug info and controller settings, and other advanced preferences. You can configure navbars, urls , custom theme, stylesheet settings and a lot more...
@@ -151,7 +153,7 @@ To-Do
 
 Change Log
 ----------------
-* v1.0    - 20 januari 2014 - Examination of project Zelda CMF
+* v1.0    - 29 januari 2014 - Examination of project Zelda CMF
 * v0.2.24 - 09 december 2013 - Dokumentera koden med phpdoc och modulhanteraren 
 * v0.2.23 - 08 december 2013 - Skapa en webbplats med Zelda 
 * v0.2.22 - 08 december 2013 - Installationsfasen 
