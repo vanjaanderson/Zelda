@@ -2,6 +2,10 @@ Zelda, a PHP-based, MVC-inspired Content Management Framework
 =============================================================
 This is a Content Managemant Framework created in the course "php mvc" on Blekinge Tekniska Högskola (Blekinge Institute of Technology), Sweden.
 
+Working Demo
+------------
+Visit my page with a working demo: [Zelda](http://cmsystem.biz/Zelda).
+
 Requirements
 ------------
 To run this framework, you need a web server (Apache) with PHP version of 5.3 or higher. Database used, is sqlite, and is automatically installed in the framework.
