@@ -28,7 +28,7 @@ class CCGuestbook extends CObject implements IController {
       'entries'=>$this->guestbookModel->ReadAll(), 
       'formAction'=>$this->request->CreateUrl('', 'handler')
     ), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                ->AddInclude(__DIR__ . '/../adminsidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
   

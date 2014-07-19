@@ -9,13 +9,16 @@
   </head>
   <body>
     <div id="login-outer-div">
-      <div id="login-inner-div">
-        <?php if($ze->user['isAuthenticated']): ?>
+      <?php if($ze->user['isAuthenticated']): ?>
+        <div id="login-inner-div">        
           <?php if(region_has_content('adminmenu')): ?>
             <nav id='admin'><?=render_views('adminmenu')?></nav>
+            <nav id='login-menu'><?=login_menu()?></nav>
+            <!-- If logged in : change background color of login-outer-div -->
+            <script>document.getElementById('login-outer-div').style.backgroundColor = '#333';</script>
+            <!-- End Javascript -->
           <?php endif; ?>
         <?php endif; ?>
-        <nav id='login-menu'><?=login_menu()?></nav>
       </div>
     </div>
     <div id='outer-wrap-header'>

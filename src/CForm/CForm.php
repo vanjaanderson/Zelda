@@ -21,6 +21,7 @@ class CFormElement implements ArrayAccess {
   public function __construct($name, $attributes=array()) {
     $this->attributes = $attributes;    
     $this['name'] = $name;
+    
     if(is_callable('CZelda::Instance()')) {
       $this->characterEncoding = CZelda::Instance()->config['character_encoding'];
     } else {
@@ -45,16 +46,16 @@ class CFormElement implements ArrayAccess {
   */
   public static function Create($name, $attributes) {
     $types = array(
-      'text'      => 'CFormElementText',
-      'textarea'  => 'CFormElementTextArea',
-      'password'  => 'CFormElementPassword',
-      'hidden'    => 'CFormElementHidden',
-      'checkbox'  => 'CFormElementCheckbox',
+      'text'              => 'CFormElementText',
+      'textarea'          => 'CFormElementTextArea',
+      'password'          => 'CFormElementPassword',
+      'hidden'            => 'CFormElementHidden',
+      'checkbox'          => 'CFormElementCheckbox',
       'checkbox-multiple' => 'CFormElementCheckboxMultiple',
-      'select'    => 'CFormElementSelect',
-      'file'      => 'CFormElementFile',
-      'search'    => 'CFormElementSearch',
-      'submit'    => 'CFormElementSubmit',
+      'select'            => 'CFormElementSelect',
+      'file'              => 'CFormElementFile',
+      'search'            => 'CFormElementSearch',
+      'submit'            => 'CFormElementSubmit',
     );
 
     $type = isset($attributes['type']) ? $attributes['type'] : null;
@@ -134,16 +135,16 @@ class CFormElement implements ArrayAccess {
   public function Validate($rules, $form) {
     $regExpEmailAddress = '/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i';
     $tests = array(
-      'fail' =>         array('message' => 'Kommer alltid att misslyckas.', 'test' => 'return false;'),
-      'pass' =>         array('message' => 'Kommer alltid att godkännas.', 'test' => 'return true;'),
-      'not_empty' =>    array('message' => 'Får inte vara tomt.', 'test' => 'return $value != "";'),
-      'not_equal' =>    array('message' => 'Inmatningen är felaktig.', 'test' => 'return $value != $arg;'),
-      'numeric' =>      array('message' => 'Måste vara numeriskk.', 'test' => 'return is_numeric($value);'),
-      'email_adress' => array('message' => 'Måste vara en e-postadress.', 'test' => function($value) { return preg_match('/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i', $value) === 1; } ),
-      'match' =>        array('message' => 'Inmatniongen matchar inte.', 'test' => 'return $value == $form[$arg]["value"] ;'),
-      'must_accept' =>  array('message' => 'Du måste godkänna detta.', 'test' => 'return $checked;'),
-      'post_or_page' => array('message' => 'Måste innehålla post eller page.', 'test' => 'return $value != "";'),
-      'custom_test' =>  true,
+      'fail'          => array('message' => 'Kommer alltid att misslyckas.', 'test'     => 'return false;'),
+      'pass'          => array('message' => 'Kommer alltid att godkännas.', 'test'      => 'return true;'),
+      'not_empty'     => array('message' => 'Får inte vara tomt.', 'test'               => 'return $value != "";'),
+      'not_equal'     => array('message' => 'Inmatningen är felaktig.', 'test'          => 'return $value != $arg;'),
+      'numeric'       => array('message' => 'Måste vara numeriskk.', 'test'             => 'return is_numeric($value);'),
+      'email_adress'  => array('message' => 'Måste vara en e-postadress.', 'test'       => function($value) { return preg_match('/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i', $value) === 1; } ),
+      'match'         => array('message' => 'Inmatniongen matchar inte.', 'test'        => 'return $value == $form[$arg]["value"] ;'),
+      'must_accept'   => array('message' => 'Du måste godkänna detta.', 'test'          => 'return $checked;'),
+      'post_or_page'  => array('message' => 'Måste innehålla post eller page.', 'test'  => 'return $value != "";'),
+      'custom_test'   => true,
     );
 
     $pass = true;
@@ -360,7 +361,7 @@ class CForm implements ArrayAccess {
    */
   public $form;     // array with settings for the form
   public $elements; // array with all form elements
-  public $output; // array with messages to display together with the form
+  public $output;   // array with messages to display together with the form
   
   /**
    * Constructor
@@ -676,13 +677,6 @@ EOD;
     $request = null;
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
       $request = $_POST;
-    /*} else if($_SERVER['REQUEST_METHOD'] == 'GET' && ) {
-echo "GET";
-echo $_SERVER['QUERY_STRING'];
-$request = $_GET;
-}
-
-if($request) {*/
       unset($_SESSION['form-failed']);
       $validates = true;
 
@@ -731,7 +725,7 @@ if($request) {*/
         else {
 
           // Set element to null, then we know it was not set.
-          //$element['value'] = null;
+          $element['value'] = null;
 
           // If the element is a checkbox, clear its value of checked.
           if($element['type'] === 'checkbox' || $element['type'] === 'checkbox-multiple') {
@@ -753,13 +747,6 @@ if($request) {*/
     // Read form data from session if the previous post failed during validation.
     elseif(isset($_SESSION['form-failed'])) {
       $this->InitElements($_SESSION['form-failed']);
-      /*foreach($_SESSION['form-failed'] as $key => $val) {
-$this[$key]['value'] = $val['value'];
-if(isset($val['validation-messages'])) {
-$this[$key]['validation-messages'] = $val['validation-messages'];
-$this[$key]['validation-pass'] = false;
-}
-}*/
       unset($_SESSION['form-failed']);
     }
 

@@ -96,12 +96,13 @@ function get_messages_from_session() {
 function login_menu() {
   $ze = CZelda::Instance();
   if($ze->user['isAuthenticated']) {
-    $items = " <span class='grey'>Välkommen</span> <img class='gravatar' src='" . get_gravatar(20) . "' alt=''> <a href='" . create_url('user/profile') . "'> " . $ze->user['acronym'] . "</a> ";
-    $items .= " <span class='grey'>|</span> <a href='" . create_url('user/logout') . "'>logga ut</a> ";
+    $items = " <span class='grey login'>Välkommen</span> <img class='gravatar' src='" . get_gravatar(20) . "' alt=''> <a class='login' href='" . create_url('user/profile') . "'> " . $ze->user['acronym'] . "</a> ";
+    $items .= " <span class='grey login'>|</span> <a class='login' href='" . create_url('user/logout') . "'>logga ut</a> ";
   } else {
-    $items = "<a href='" . create_url('user/login') . "'>logga in</a> ";
+    //$items = "<a href='" . create_url('user/login') . "'>logga in</a> ";
+    $items = "";
   }
-  return "$items";
+  return $items;
 }
 
 /**

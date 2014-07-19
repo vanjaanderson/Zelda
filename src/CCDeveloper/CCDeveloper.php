@@ -22,7 +22,7 @@ class CCDeveloper extends CObject implements IController {
     $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Utvecklarkontroller')
                 //->AddInclude(__DIR__ . '/index.tpl.php', array(), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                ->AddInclude(__DIR__ . '/../adminsidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
 
@@ -35,7 +35,7 @@ class CCDeveloper extends CObject implements IController {
     $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Utvecklarkontroller')
                 //->AddInclude(__DIR__ . '/index.tpl.php', array(), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                ->AddInclude(__DIR__ . '/../adminsidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
       
     $this->data['main'] .= <<<EOD
@@ -54,7 +54,7 @@ EOD;
     $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Utvecklarkontroller')
                 //->AddInclude(__DIR__ . '/index.tpl.php', array(), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                ->AddInclude(__DIR__ . '/../adminsidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
     
     $url = 'developer/links';
@@ -91,10 +91,10 @@ EOD;
     $menu = array('developer', 'developer/index', 'developer/links', 'developer/display-object');
     $modules = new CMModules();
     $controllers = $modules->AvailableControllers();
-    $this->views->SetTitle('Utvecklarkontroller')
+    $this->views->SetTitle('Utvecklarkontroller');
                 //->AddInclude(__DIR__ . '/index.tpl.php', array(), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
-                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
+                //->AddInclude(__DIR__ . '/../adminsidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  //'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
     
     $html = null;
     foreach($menu as $val) {

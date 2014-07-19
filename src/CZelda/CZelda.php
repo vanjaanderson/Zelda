@@ -45,9 +45,13 @@ class CZelda implements ISingleton {
     date_default_timezone_set('UTC');
 
     // Create a database object.
-    if(isset($this->config['database'][0]['dsn'])) {
-      $this->db = new CDatabase($this->config['database'][0]['dsn']);
+    // if(isset($this->config['database'][0]['dsn'])) {
+    //   $this->db = new CDatabase($this->config['database'][0]['dsn']);
+    // }
+    if(isset($this->config['database']['dsn']) && isset($ze->config['database']['username']) && isset($ze->config['database']['password']) && isset($ze->config['database']['driver_options'])) {
+      $this->db = new CDatabase($this->config['database']['dsn'], $ze->config['database']['username'], $ze->config['database']['password'], $ze->config['database']['driver_options']);
     }
+
 
     // Create a container for all views and theme data
     $this->views = new CViewContainer();

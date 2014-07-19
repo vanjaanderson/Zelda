@@ -16,7 +16,7 @@ $logo_width 	= '';							// Width of logo (optional)
 $logo_height 	= '300';						// Height of logo (optional)
 
 // Text in footer
-$footertext 	= 'Detta är min examinationsuppgift i kursen phpmvc';
+$footertext 	= 'Detta är min examinationsuppgift i kurserna phpmvc och javascript, <abbr title="Blekinge Tekniska Högskola">BTH</abbr> 2013&mdash;2014';
 
 $name 			= 'Vanja Anderson';			// Your name (as shown in copyright text in footer)
 

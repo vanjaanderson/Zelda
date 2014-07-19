@@ -17,7 +17,9 @@ class CDatabase {
   /**
   * Constructor
   */
-  public function __construct($dsn, $username = null, $password = null, $driver_options = null) {
+  // First row sqlite options
+  // public function __construct($dsn, $username = null, $password = null, $driver_options = null) {
+  public function __construct($dsn, $username, $password, $driver_options) {
     $this->db = new PDO($dsn, $username, $password, $driver_options);
     $this->db->SetAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
   }
@@ -46,10 +48,21 @@ class CDatabase {
     return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
+   /**
+    * Execute a select-query with arguments and return the first result.
+    */
+  public function ExecuteSelectQuery($query, $params=array()){
+    $this->stmt = $this->db->prepare($query);
+    self::$queries[] = $query; 
+    self::$numQueries++;
+    $this->stmt->execute($params);
+    return $this->stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
   /**
   * Execute a SQL-query and ignore the resultset.
   */
-  public function ExecuteQuery($query, $params = array()) {
+  public function ExecuteQuery($query, $params=array()) {
     $this->stmt = $this->db->prepare($query);
     self::$queries[] = $query; 
     self::$numQueries++;

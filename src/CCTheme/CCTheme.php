@@ -37,7 +37,7 @@ class CCTheme extends CObject implements IController {
                   //'theme_name' => $this->config['theme'],
                   'methods' => $items,
                 ), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                ->AddInclude(__DIR__ . '/../adminsidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
 
@@ -49,7 +49,7 @@ class CCTheme extends CObject implements IController {
     $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Visa innehåll i några regioner')
                 ->AddString('This is the primary region', array(), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
                 
     if(func_num_args()) {
@@ -86,7 +86,7 @@ class CCTheme extends CObject implements IController {
     $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Theme testing headers and paragraphs')
                 ->AddInclude(__DIR__ . '/h1h6.tpl.php', array(), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
 }

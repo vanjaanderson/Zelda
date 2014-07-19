@@ -37,17 +37,17 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess, IModule {
    * @param string $key the string that is the key of the wanted SQL-entry in the array.
    */
   public static function SQL($key=null, $args=null) {
-    $order_order  = isset($args['order-order']) ? $args['order-order'] : 'ASC';
+    $order_order  = isset($args['order-order']) ? $args['order-order'] : 'DESC';
     $order_by     = isset($args['order-by'])    ? $args['order-by'] : 'id';    
     $queries = array(
       'drop table content'      => "DROP TABLE IF EXISTS Content;",
-      'create table content'    => "CREATE TABLE IF NOT EXISTS Content (id INTEGER PRIMARY KEY, key TEXT KEY, type TEXT, filter TEXT, title TEXT, data TEXT, idUser INT, created DATETIME default (datetime('now')), updated DATETIME default NULL, deleted DATETIME default NULL, FOREIGN KEY(idUser) REFERENCES User(id));",
-      'insert content'          => 'INSERT INTO Content (key,type,filter,title,data,idUser) VALUES (?,?,?,?,?,?);',
+      'create table content'    => "CREATE TABLE IF NOT EXISTS Content (id INTEGER PRIMARY KEY, slug TEXT KEY, type TEXT, filter TEXT, title TEXT, data TEXT, idUser INT, created DATETIME default (datetime('now')), updated DATETIME default NULL, deleted DATETIME default NULL, FOREIGN KEY(idUser) REFERENCES User(id));",
+      'insert content'          => 'INSERT INTO Content (slug,type,filter,title,data,idUser,created) VALUES (?,?,?,?,?,?,?);',
       'select * by id'          => 'SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.id=?;',
-      'select * by key'         => 'SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.key=?;',
+      'select * by slug'        => 'SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.slug=?;',
       'select * by type'        => "SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE type=? ORDER BY {$order_by} {$order_order};",
       'select *'                => 'SELECT c.*, u.acronym as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id;',
-      'update content'          => "UPDATE Content SET key=?, type=?, filter=?, title=?, data=?, updated=datetime('now') WHERE id=?;",
+      'update content'          => "UPDATE Content SET slug=?, type=?, filter=?, title=?, data=?, updated=? WHERE id=?;",
       'update content as deleted' => "UPDATE Content SET deleted=datetime('now') WHERE id=?;",
      );
     if(!isset($queries[$key])) {
@@ -66,10 +66,10 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess, IModule {
         try {
           $this->db->ExecuteQuery(self::SQL('drop table content'));
           $this->db->ExecuteQuery(self::SQL('create table content'));   
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('welcome-to-zelda',                 'page', 'markdownextra',   'Välkommen till Zelda', "Denna sida är förinställd att visas i menyn.\n\nÄndra innehållet till det du vill, eller skapa en ny sida som du sedan bestämmer ska vara defaultsida (i filen <code>site/themes/mytheme/my_config.php</code>).", $this->user['id']));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('ett-rykande-farskt-inlagg',       'post', 'markdownextra',  'Ett rykande färskt inlägg',     "Detta är ett demoinlägg för att se hur ett sådant ser ut.\n\nDu skapar nya inlägg, raderar eller redigerar de som finns.\n\nAnvänder du markdownextra som filter, kan du skriva rubriker, fet text, kursiv text etc, på ett enkelt sätt. Se sidan med [CTextFilter](/Zelda-master/page/view/4/).\n\nEtt stort lycka till!", $this->user['id']));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-once-more',   'post', 'plain',          'Hej världen, återigen', "Ytterligare ett demoinlägg.", $this->user['id']));
-          $this->db->ExecuteQuery(self::SQL('insert content'), array('Filter test',             'page', 'plain',          'Testsida CTextFilter',  'Här kan du testa olika filter genom att redigera sidan, se längst ner ovanför foten.
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('welcome-to-zelda',          'page', 'markdownextra',  'Välkommen till Zelda', "Denna sida är förinställd att visas i menyn.\n\nÄndra innehållet till det du vill, eller skapa en ny sida som du sedan bestämmer ska vara defaultsida (i filen <code>site/themes/mytheme/my_config.php</code>).", $this->user['id']));
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('ett-rykande-farskt-inlagg', 'post', 'markdownextra',  'Ett rykande färskt inlägg', "Detta är ett demoinlägg för att se hur ett sådant ser ut.\n\nDu skapar nya inlägg, raderar eller redigerar de som finns.\n\nAnvänder du markdownextra som filter, kan du skriva rubriker, fet text, kursiv text etc, på ett enkelt sätt. Se sidan med [CTextFilter](/Zelda/page/view/4/).\n\nEtt stort lycka till!", $this->user['id']));
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('hello-world-once-more',     'post', 'plain',          'Hej världen, återigen', "Ytterligare ett demoinlägg.\n\n", $this->user['id']));
+          $this->db->ExecuteQuery(self::SQL('insert content'), array('Filter-test',               'page', 'plain',          'Testsida CTextFilter',  'Här kan du testa olika filter genom att redigera sidan, se längst ner ovanför foten.
 
 Med filtret "Plain", som är default, konverteras ingen kod i texten. Men generellt görs en tom rad vid radbrytning med enter. Detta sköter funktionen nl2p() om.
 
@@ -113,7 +113,7 @@ Med filtret "Markdown Extra" kan man formattera **fet text**, *kursiv text* elle
 | Baloo                | Huskatt         | Grå                | ', $this->user['id']));
       return array('notice', 'Databastabeller och inlägg skapades, med dig som författare.');
     } catch(Exception$e) {
-      die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][0]['dsn']);
+      die("$e<br/>Databaskopplingen misslyckades: " . $this->config['database'][$this->config['database']['type']]['dsn']);
         }
       break;
       
@@ -131,18 +131,18 @@ Med filtret "Markdown Extra" kan man formattera **fet text**, *kursiv text* elle
   public function Save() {
     $msg = null;
     if($this['id']) {
-      $this->db->ExecuteQuery(self::SQL('update content'), array($this['key'], $this['type'], $this['filter'], $this['title'], $this['data'], $this['id']));
+      $this->db->ExecuteQuery(self::SQL('update content'), array($this['slug'], $this['type'], $this['filter'], $this['title'], $this['data'], date('Y-m-d H:i:s'), $this['id']));
       $msg = 'uppdaterat';
     } else {
-      $this->db->ExecuteQuery(self::SQL('insert content'), array($this['key'], $this['type'], $this['filter'], $this['title'], $this['data'], $this->user['id']));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array($this['slug'], $this['type'], $this['filter'], $this['title'], $this['data'], $this->user['id'], date('Y-m-d H:i:s')));
       $this['id'] = $this->db->LastInsertId();
       $msg = 'skapat';
     }
     $rowcount = $this->db->RowCount();
     if($rowcount) {
-      $this->AddMessage('success', "Innehåll {$msg} '" . htmlEnt($this['key']) . "'.");
+      $this->AddMessage('success', "Innehåll {$msg} '" . htmlEnt($this['slug']) . "'.");
     } else {
-      $this->AddMessage('error', "Misslyckades att {$msg} innehåll '" . htmlEnt($this['key']) . "'.");
+      $this->AddMessage('error', "Misslyckades att {$msg} innehåll '" . htmlEnt($this['slug']) . "'.");
     }
     return $rowcount === 1;
   }
@@ -160,7 +160,7 @@ Med filtret "Markdown Extra" kan man formattera **fet text**, *kursiv text* elle
     if($rowcount) {
       $this->AddMessage('success', "Innehåll '" . htmlEnt($this['key']) . "' är satt som borttaget.");
     } else {
-      $this->AddMessage('error', "Misslyckades med att sätta innehåll '" . htmlEnt($this['key']) . "' som borttaget.");
+      $this->AddMessage('error', "Misslyckades med att sätta innehåll '" . htmlEnt($this['slug']) . "' som borttaget.");
     }
     return $rowcount === 1;
   }

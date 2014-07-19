@@ -19,6 +19,7 @@ class CCUser extends CObject implements IController {
    * Show profile information of the user.
    */
   public function Index() {
+    $content = new CMContent();
     $modules = new CMModules();
     $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Användarkontroller')
@@ -26,14 +27,15 @@ class CCUser extends CObject implements IController {
                   'is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,
                 ), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
-                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/../adminsidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers,'contents'=>$content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),), 'sidebar');
   }
 
   /**
    * View and edit user profile.
    */
-  public function Profile() {    
+  public function Profile() {
+    $content = new CMContent();   
     $form = new CFormUserProfile($this, $this->user);
     if($form->Check() === false) {
       $this->AddMessage('notice', 'Formuläret kunde inte skickas, eftersom vissa fält ej är ifyllda.');
@@ -48,8 +50,8 @@ class CCUser extends CObject implements IController {
                   'user'=>$this->user,
                   'profile_form'=>$form->GetHTML(),
                 ), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
-                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers,'contents'=>$content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),), 'sidebar');
   }
 
   /**
@@ -79,15 +81,13 @@ class CCUser extends CObject implements IController {
   /**
    * Authenticate and login a user.
    */
-    /**
-   * Authenticate and login a user.
-   */
   public function Login() {
     $form = new CFormUserLogin($this);
     if($form->Check() === false) {
       $this->AddMessage('notice', 'Du måste fylla i användarnamn och lösenord.');
       $this->RedirectToController('login');
     }
+    $content = new CMContent();
     $modules = new CMModules();
     $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Logga in')
@@ -96,8 +96,8 @@ class CCUser extends CObject implements IController {
                   'allow_create_user' => CZelda::Instance()->config['create_new_users'],
                   'create_user_url' => $this->CreateUrl(null, 'create'),
                 ), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
-                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers,'contents'=>$content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),), 'sidebar');
   }
   
   /**
@@ -130,12 +130,13 @@ class CCUser extends CObject implements IController {
       $this->AddMessage('notice', 'Du måste fylla i alla fält.');
       $this->RedirectToController('Create');
     }
+    $content = new CMContent();
     $modules = new CMModules();
     $controllers = $modules->AvailableControllers();
     $this->views->SetTitle('Skapa användare')
                 ->AddInclude(__DIR__ . '/create.tpl.php', array('form' => $form->GetHTML()), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
-                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers,'contents'=>$content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),), 'sidebar');
   }
   
   /**

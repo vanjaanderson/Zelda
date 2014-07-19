@@ -24,8 +24,8 @@ class CCBlog extends CObject implements IController {
                 ->AddInclude(__DIR__ . '/index.tpl.php', array(
                   'contents' => $content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),
                 ), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
-                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/../adminsidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers,'contents'=>$content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),), 'sidebar');
    }
 
   /**
@@ -42,7 +42,7 @@ class CCBlog extends CObject implements IController {
                   'contents' => $content,
                 ), 'primary')
                 ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
-                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
+                  'user'=>$this->user,'controllers'=>$controllers,'contents'=>$content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),), 'sidebar');
   }*/
 
   /**
@@ -58,8 +58,8 @@ class CCBlog extends CObject implements IController {
                 ->AddInclude(__DIR__ . '/view.tpl.php', array(
                   'content' => $content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),
                 ), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
-                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/../sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers,'contents'=>$content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),), 'sidebar');
   }
 }
 

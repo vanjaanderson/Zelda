@@ -21,8 +21,8 @@ class CCModules extends CObject implements IController {
     $allModules = $modules->ReadAndAnalyse();
     $this->views->SetTitle('Hantera moduler')
                 ->AddInclude(__DIR__ . '/index.tpl.php', array('controllers'=>$controllers), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
-                  'user'=>$this->user,'modules'=>$allModules), 'sidebar');
+                ->AddInclude(__DIR__ . '/../adminsidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'modules'=>$allModules,'controllers'=>$controllers), 'sidebar');
   }
 
   /**
@@ -30,12 +30,13 @@ class CCModules extends CObject implements IController {
    */
   public function Install() {
     $modules = new CMModules();
+    $controllers = $modules->AvailableControllers();
     $results = $modules->Install();
     $allModules = $modules->ReadAndAnalyse();
     $this->views->SetTitle('Installera moduler')
                 ->AddInclude(__DIR__ . '/install.tpl.php', array('modules'=>$results), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
-                  'user'=>$this->user,'modules'=>$allModules), 'sidebar');
+                ->AddInclude(__DIR__ . '/../adminsidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'modules'=>$allModules,'controllers'=>$controllers), 'sidebar');
   }
 
   /**
@@ -46,8 +47,8 @@ class CCModules extends CObject implements IController {
     $controllers = $modules->AvailableControllers();
     $allModules = $modules->ReadAndAnalyse();
     $this->views->SetTitle('Hantera moduler')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
-                  'user'=>$this->user,'modules'=>$allModules), 'sidebar');
+                ->AddInclude(__DIR__ . '/../adminsidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'modules'=>$allModules,'controllers'=>$controllers), 'sidebar');
 
     if(!preg_match('/^C[a-zA-Z]+$/', $module)) {throw new Exception('Ogiltiga tecken i modulnamnet.');}
     $aModule = $modules->ReadAndAnalyseModule($module);

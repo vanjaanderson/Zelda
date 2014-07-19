@@ -22,9 +22,14 @@
     <?php endif; ?> 
   <?php endforeach; ?>
 <?php else: ?>
-  <h3>Om Zelda</h3>
-  <p>Här syns administrationspanel när du är inloggad.</p>
-  <p>Om det inte finns särskild sidovy, så visas alla controllers och metoder.</p>
-<?php endif; ?>
+   
+  <?php foreach($contents as $val):?>
+    <h1><?=esc($val['title'])?></h1>
+    <p class='smaller-text' style="margin:-1em 0 2em 0;"><em>Publicerad <?=$val['created']?>, av <?=$val['owner']?></em></p>
+    <?=filter_data($val['data'], $val['filter'])?>
+    <p class='smaller-text silent'><a href='<?=create_url("content/edit/{$val['id']}")?>'>redigera</a> | <a href='<?=create_url("content/{$content['page']}")?>'>visa alla</a></p>
+  <?php endforeach; ?>
+
+<?php endif; ?> 
 
 </div>

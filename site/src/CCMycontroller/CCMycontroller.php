@@ -21,7 +21,7 @@ class CCMycontroller extends CObject implements IController {
                   'is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,
                 ), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                ->AddInclude(__DIR__ . '/mysidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
   }
 
@@ -45,8 +45,8 @@ class CCMycontroller extends CObject implements IController {
                   'user'=>$this->user,
                   'content' => $content,
                 ), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
-                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/mysidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers,'contents'=>$content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),), 'sidebar');
   }
 
   /**
@@ -60,16 +60,18 @@ class CCMycontroller extends CObject implements IController {
                 ->AddInclude(__DIR__ . '/blog.tpl.php', array(
                   'is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,
-                  'contents' => $content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'ASC')),
+                  'contents' => $content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),
                   ), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
-                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/mysidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  //'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
+                  'user'=>$this->user,'controllers'=>$controllers,'contents'=>$content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),), 'sidebar');
   }
 
   /**
    * The guestbook.
    */
   public function Guestbook() {
+    $content = new CMContent();
     $guestbook = new CMGuestbook();
     $form = new CFormMyGuestbook($guestbook);
     $status = $form->Check();
@@ -89,8 +91,8 @@ class CCMycontroller extends CObject implements IController {
             'entries'=>$guestbook->ReadAll(), 
             'form'=>$form,
          ), 'primary')
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
-                  'user'=>$this->user,'controllers'=>$controllers), 'sidebar');
+                ->AddInclude(__DIR__ . '/mysidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,'controllers'=>$controllers,'contents'=>$content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),), 'sidebar');
   }
 } 
 
