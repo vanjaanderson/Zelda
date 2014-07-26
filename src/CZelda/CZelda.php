@@ -145,6 +145,9 @@ class CZelda implements ISingleton {
     
     // Add stylesheet name to the $ze->data array
     $this->data['stylesheet'] = $this->config['theme']['stylesheet'];
+
+    // Add script name to the $ze->data array
+    $this->data['script'] = $this->config['theme']['script'];
     
     // Make the theme urls available as part of $ze
     $this->themeUrl = $themeUrl;

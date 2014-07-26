@@ -139,7 +139,7 @@ $ze->config['controllers'] = array(
  *  theme_url($url): Prepends the current theme url to $url to make an absolute url. 
  *  theme_parent_url($url): Prepends the parent theme url to $url to make an absolute url. 
  *
- * path: Path to current theme, relativly LYDIA_INSTALL_PATH, for example themes/grid or site/themes/mytheme.
+ * path: Path to current theme, relativly ZELDA_INSTALL_PATH, for example themes/grid or site/themes/mytheme.
  * parent: Path to parent theme, same structure as 'path'. Can be left out or set to null.
  * stylesheet: The stylesheet to include, always part of the current theme, use @import to include the parent stylesheet.
  * template_file: Set the default template file, defaults to default.tpl.php.
@@ -155,10 +155,12 @@ $ze->config['theme'] = array(
   'path'            => 'site/themes/mytheme',
   //'path'          => 'themes/core',
   //'path'          => 'themes/grid',
-  'parent'        => 'themes/core',
-  //'parent'          => 'themes/bootstrap'
-  //'name'    => 'bootstrap', 
-  'stylesheet'      => 'my_style.css',
+  //'parent'          => 'themes/core',
+  'parent'          => 'themes/bootstrap',
+  // Theme "name"
+  'name'            => 'bootstrap', 
+  'stylesheet'      => 'my_style.css', //'../../../themes/bootstrap/css/bootstrap-responsive.min.css'
+  'script'          => 'main.js',
   'template_file'   => 'index.tpl.php',   // Default template file, else use default.tpl.php
   // A list of valid theme regions
   'regions' => array('navbar', 'flash','featured-first','featured-middle','featured-last',
@@ -175,7 +177,7 @@ $ze->config['theme'] = array(
     'logo'            => $logo_name,
     'logo_width'      => $logo_width,
     'logo_height'     => $logo_height,
-    'footer'          => '<p>Copyright &copy; '.date('Y').' <span class="darker">|</span> '.$name.' <span class="darker">|</span> <a href="http://'.$linkurl.'" target="_blank">'.$linktext.'</a> <span class="darker">|</span> <a href="mailto:'.$email.'">'.$emailtext.'</a> <span class="darker">|</span> '.$footertext.'</p>',
+    'footer'          => '<p>Copyright &copy; '.date('Y').' <span class="darker">|</span> '.$name.' <span class="darker">|</span> <a class="links" href="http://'.$linkurl.'" target="_blank">'.$linktext.'</a> <span class="darker">|</span> <a class="links" href="mailto:'.$email.'">'.$emailtext.'</a> <span class="darker">|</span> <span class="footertext">'.$footertext.'</span></p>',
   ),
 );
 

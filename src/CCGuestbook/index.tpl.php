@@ -3,8 +3,8 @@
 
 <form action="<?=$formAction?>" method='POST'>
   <p>
-    <label>Meddelande: <br/>
-    <textarea name='newEntry' rows="10" cols="46"></textarea></label>
+    <label>Meddelande:</label>
+    <textarea name='newEntry' rows="10" cols="46"></textarea>
   </p>
   <p>
     <input type='hidden' name='email' />

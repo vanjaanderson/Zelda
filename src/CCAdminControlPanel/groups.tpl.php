@@ -4,7 +4,7 @@
 <?php if($is_authenticated && $user['hasRoleAdmin']): ?>
   <ul>
   <?php foreach($allgroups as $group): ?>
-    <li><a href="<?=create_url('akp/groups/'.$group['id'])?>"><?=$group['name']?></a> (<?=$group['acronym']?>)
+    <li><a href="<?=create_url('akp/groups/'.$group['id'])?>"><?=$group['name']?></a> (<?=$group['acronym']?>)</li>
   <?php endforeach; ?>
   </ul>
 <?php else: ?>

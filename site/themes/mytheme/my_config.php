@@ -10,10 +10,10 @@ $p_number		= '';				// Change page (number) to view. View all page numbers with 
 
 // Text in header
 $header     	= 'Zelda';						// Title text
-$slogan     	= 'Välkommen till mitt CMF!'; 	// Slogan text
+$slogan     	= 'Ett Content Management Framework i PHP och MySQL'; 	// Slogan text
 $logo_name      = 'logo.png';                    // Change if you change name on the logo image
 $logo_width 	= '';							// Width of logo (optional)
-$logo_height 	= '300';						// Height of logo (optional)
+$logo_height 	= '';						// Height of logo (optional)
 
 // Text in footer
 $footertext 	= 'Detta är min examinationsuppgift i kurserna phpmvc och javascript, <abbr title="Blekinge Tekniska Högskola">BTH</abbr> 2013&mdash;2014';

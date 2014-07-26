@@ -21,8 +21,8 @@
 <?php endif; ?>
 </em></p>
 
-<!--<p class="smaller-text">
-	<a href='<?=create_url('content', 'create')?>'>skapa nytt</a> |
-	<a href='<?=create_url('page', 'view', $content['id'])?>'>visa</a> |
+<p class="smaller-text">
+	<a href='<?=create_url('content', 'create')?>'>skapa nytt innehåll</a> |
+	<a href='<?=create_url('page', 'view', $content['id'])?>'>visa detta innehåll</a> |
 	<a href='<?=create_url("content")?>'>visa allt</a>
-</p>-->
+</p>

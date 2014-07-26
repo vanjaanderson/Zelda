@@ -1,7 +1,7 @@
 <div id="sidebarbox">
 
   <?php if($is_authenticated): ?>
-  <h3>Controllers och metoder</h3>
+  <h3>Con&shy;troll&shy;ers och metod&shy;er</h3>
 
     <p>
     	Följande controller finns. Du aktiverar och/eller avaktiverar dem i  

@@ -3,7 +3,11 @@
  * In bottom the selected themes style. Uncomment to use core-theme without changes.
  */
 
-@import url(../../../themes/core/style.css);
+/* Additional stylesheets */
+@import url(../../../themes/bootstrap/css/bootstrap-responsive.min.css);
+@import url(../../../themes/bootstrap/css/bootstrap.min.css);
+@import url(../../../themes/bootstrap/css/style.css);
+@import url(../../../themes/bootstrap/css/media-queries.css);
 
 /**
 * User styles in MyTheme

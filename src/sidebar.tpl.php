@@ -1,7 +1,7 @@
 <div id="sidebarbox">
 
   <?php if($is_authenticated): ?>
-    <h2 class="sidebarheader">Administrationspanel</h2>
+    <h2 class="sidebarheader">Adminis&shy;tra&shy;tions&shy;panel</h2>
     <ul class='adminul'>
       <li><a href='<?=create_url('akp/create')?>'>Skapa användare</a></li>
       <li><a href='<?=create_url('akp/users')?>'>Hantera användare</a></li>

@@ -82,7 +82,7 @@ class CFormElement implements ArrayAccess {
     $validates = (isset($this['validation-pass']) && $this['validation-pass'] === false) ? ' validation-failed' : null;
     $class = (isset($class) || isset($validates)) ? " class='{$class}{$validates}'" : null;
     $name = " name='{$this['name']}'";
-    $label = isset($this['label']) ? ($this['label'] . (isset($this['required']) && $this['required'] ? "<span class='form-element-required'>*</span>" : null)) : null;
+    $label = isset($this['label']) ? ($this['label'] . (isset($this['required']) && $this['required'] ? "<sup class='form-element-required'>*</sup>" : null)) : null;
     $autofocus = isset($this['autofocus']) && $this['autofocus'] ? " autofocus='autofocus'" : null;
     $required = isset($this['required']) && $this['required'] ? " required='required'" : null;
     $readonly = isset($this['readonly']) && $this['readonly'] ? " readonly='readonly'" : null;
@@ -106,21 +106,21 @@ class CFormElement implements ArrayAccess {
     if($type && $this['type'] == 'submit') {
         return "<input id='$id'{$type}{$class}{$name}{$value}{$autofocus}{$readonly} />\n";
     } else if($type && $this['type'] == 'textarea') {
-        return "<p><label for='$id'>$label</label><br><textarea id='$id'{$type}{$class}{$name}{$autofocus}{$readonly}>{$onlyValue}</textarea></p>\n"; 
+        return "<p><label for='$id'>$label</label><textarea id='$id'{$type}{$class}{$name}{$autofocus}{$readonly}>{$onlyValue}</textarea></p>\n"; 
     } else if($type && $this['type'] == 'hidden') {
         return "<input id='$id'{$type}{$class}{$name}{$value} />\n";
     } else if($type && $this['type'] == 'select') {
-        return "<p><label for='$id'>$label</label><br><select id='$id'{$type}{$class}{$name}{$value}>
-          <option value='{$type}{$class}{$name}{$value} selected'>{$selectedValue}</option>
+        return "<p><label for='$id'>$label</label><select id='$id'{$type}{$class}{$name}{$value}>
+          <option value=\"{$type}{$class}{$name}{$value} selected\">{$selectedValue}</option>
           <option value='plain'>Plain</option>
-          <option value='htmlurify'>HTML Purify</option>
+          <option value='htmlpurify'>HTML Purify</option>
           <option value='bbcode'>BB Code</option>
           <option value='make_clickable'>Make Clickable</option>
           <option value='markdownextra'>Markdown</option>
           <option value='smartypants'>Smarty Pants</option>
         </select></p>\n"; 
     } else {
-      return "<p><label for='$id'>$label</label><br><input id='$id'{$type}{$class}{$name}{$value}{$autofocus}{$readonly} />{$messages}</p>\n";        
+      return "<p><label for='$id'>$label</label><input id='$id'{$type}{$class}{$name}{$value}{$autofocus}{$readonly} />{$messages}</p>\n";        
     }
   }
 
