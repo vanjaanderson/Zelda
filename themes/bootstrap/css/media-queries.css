@@ -46,6 +46,7 @@ between 767 and 701
 @media screen and (max-width: 767px) {
 	#primary {
 		/*background: fuchsia;*/
+		min-height: 100px !important;
 	}
 	#sidebar {
 		scroll: no-scroll; !important;

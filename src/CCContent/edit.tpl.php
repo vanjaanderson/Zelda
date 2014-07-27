@@ -22,7 +22,7 @@
 </em></p>
 
 <p class="smaller-text">
-	<a href='<?=create_url('content', 'create')?>'>skapa nytt innehåll</a> |
-	<a href='<?=create_url('page', 'view', $content['id'])?>'>visa detta innehåll</a> |
-	<a href='<?=create_url("content")?>'>visa allt</a>
+	<a href='<?=create_url('content', 'create')?>'>Skapa nytt innehåll</a> |
+	<a href='<?=create_url('page', 'view', $content['id'])?>'>Visa detta innehåll</a> |
+	<a href='<?=create_url("content")?>'>Visa allt</a>
 </p>

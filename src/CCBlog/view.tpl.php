@@ -1,4 +1,4 @@
-<h1>Inlägg<!--<span class='headerlink'><a href='<?=create_url('content', 'create')?>'>skapa nytt inlägg</a></span>--></h1>
+<h1>Inlägg</h1>
 <p>Skapa, redigera och visa innehåll.</p>
 
 <h2>Alla inlägg</h2>
@@ -6,7 +6,7 @@
   <ul>
   <?php foreach($content as $val):?>
     <li>
-    	(<?=esc($val['id'])?>) <?=esc($val['title'])?>, av <?=$val['owner']?> | <a class="smaller-text" href='<?=create_url("content/edit/{$val['id']}")?>'>redigera</a> | <a class="smaller-text" href='<?=create_url("page/view/{$val['id']}")?>'>visa</a>
+    	(<?=esc($val['id'])?>) <?=esc($val['title'])?>, av <?=$val['owner']?> | <a class='smaller-text' href='<?=create_url('content', 'create')?>'>Skapa ny sida</a> | <a class='smaller-text' href='<?=create_url("content/edit/{$content['id']}")?>'>Redigera denna sida</a> | <a class='smaller-text' href='<?=create_url("content/{$content['page']}")?>'>Visa alla sidor</a>
     </li>
   <?php endforeach; ?>
   </ul>

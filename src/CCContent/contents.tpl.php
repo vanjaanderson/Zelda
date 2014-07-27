@@ -6,7 +6,7 @@
   <ul>
   <?php foreach($pages as $val):?>
     <li>
-    	(<?=esc($val['id'])?>) <?=esc($val['title'])?>, av <?=$val['owner']?> | <a class="smaller-text" href='<?=create_url("content/edit/{$val['id']}")?>'>redigera</a> | <a class="smaller-text" href='<?=create_url("page/view/{$val['id']}")?>'>visa</a>
+    	(<?=esc($val['id'])?>) <?=esc($val['title'])?>, av <?=$val['owner']?> | <a class="smaller-text" href='<?=create_url("content/edit/{$val['id']}")?>'>Redigera</a> | <a class="smaller-text" href='<?=create_url("page/view/{$val['id']}")?>'>Visa</a>
     </li>
   <?php endforeach; ?>
   </ul>
@@ -19,7 +19,7 @@
   <ul>
   <?php foreach($posts as $val):?>
     <li>
-      (<?=esc($val['id'])?>) <?=esc($val['title'])?>, av <?=$val['owner']?> | <a class="smaller-text" href='<?=create_url("content/edit/{$val['id']}")?>'>redigera</a> | <a class="smaller-text" href='<?=create_url("page/view/{$val['id']}")?>'>visa</a>
+      (<?=esc($val['id'])?>) <?=esc($val['title'])?>, av <?=$val['owner']?> | <a class="smaller-text" href='<?=create_url("content/edit/{$val['id']}")?>'>Redigera</a> | <a class="smaller-text" href='<?=create_url("page/view/{$val['id']}")?>'>Visa</a>
     </li>
   <?php endforeach; ?>
   </ul>

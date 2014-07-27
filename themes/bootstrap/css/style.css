@@ -103,6 +103,7 @@ nav#login-menu {
 	/*display: table-cell !important;*/
 	float: left;
 	width:60%;
+	min-height: 500px;
 	border-right: 1px solid #CCC;
 	margin-right: -1px !important;
 }
@@ -126,6 +127,24 @@ input[type=submit] {
 }
 textarea {
 	height: 300px !important;
+}
+input[readonly] {
+  color: #666;
+}
+.validation-failed {
+  border: 2px solid red;
+}
+.validation-message {
+  color: red;
+  font-size: smaller;
+  list-style-type: none;
+  margin-left: 0px;
+}
+.form-action-link {
+  font-size: smaller;
+}
+.content-edit input[type=text] {
+  width: 48%;
 }
 
 /*
@@ -189,6 +208,106 @@ textarea {
 .clear {
 	clear:both !important;
 }
+.silent {
+  color: #999;
+}
 .grey {
-	color: #999;
+  color: #aaa;
+}
+.darker {
+  color: rgba(255,255,255,0.3);
+}
+.white {
+  color: rgba(255,255,255, 0.5);
+}
+.infobox {
+  background-color:#fff;
+  border:1px solid #ccc;
+  margin-bottom:1em;
+  padding:1em;
+}
+.headerlink {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  float:right;
+  position:relative;
+  margin-top:22px;
+  font-weight:normal;
+}
+.sidebarheader {
+  border-bottom: 1px dotted;
+}
+/*.excerpt::after {
+  content:"...";
+}*/
+.form-action-link {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 0.85;
+  position:relative;
+  margin-top:1em;
+  font-weight:normal;
+}
+.error,
+.alert,
+.warning,
+.notice,
+.success,
+.info {
+  padding: 0.8em;
+  margin-bottom: 1em;
+  border: 2px solid #ddd;
+}
+.error,
+.alert {
+  background: #fbe3e4;
+  color: #8a1f11;
+  border-color: #fbc2c4;
+}
+.notice,
+.warning {
+  background: #fff6bf;
+  color: #514721;
+  border-color: #ffd324;
+}
+.success {
+  background: #e6efc2;
+  color: #264409;
+  border-color: #c6d880;
+}
+.info {
+  background: #d5edf8;
+  color: #205791;
+  border-color: #92cae4;
+}
+td .error, td .alert, td .success, td .notice {
+  margin-bottom:0px;
+  margin-right:-8px;
+}
+.error a,
+.alert a {
+  color: #8a1f11;
+}
+.notice a,
+.warning a {
+  color: #514721;
+}
+.success a {
+  color: #264409;
+}
+.info a {
+  color: #205791;
+}
+.smaller-text {
+  font-size: 0.85em;
+}
+.inline-link {
+  display: inline-block;
+  position:relative;
+  top:-0.6em;
+  margin-bottom:1.5em;
+}
+ul.validation-message li {
+  margin-top: -20px;
+  margin-bottom: -6px;
+  font-style: italic;
 }

@@ -21,8 +21,8 @@ class CMGuestbook extends CObject implements IHasSQL, IModule {
   public static function SQL($key=null) {
     $queries = array(
       'create table guestbook'  => "CREATE TABLE IF NOT EXISTS Guestbook (id INTEGER PRIMARY KEY, entry TEXT, created DATETIME default (datetime('now')));",
-      'insert into guestbook'   => 'INSERT INTO Guestbook (entry) VALUES (?);',
-      'select * from guestbook' => 'SELECT * FROM Guestbook ORDER BY id ASC;',
+      'insert into guestbook'   => 'INSERT INTO Guestbook (entry,created) VALUES (?,?);',
+      'select * from guestbook' => 'SELECT * FROM Guestbook ORDER BY id DESC;',
       'delete from guestbook'   => 'DELETE FROM Guestbook;',
      );
     if(!isset($queries[$key])) {
@@ -67,7 +67,7 @@ class CMGuestbook extends CObject implements IHasSQL, IModule {
    * Add a new entry to the guestbook and save to database.
    */
   public function Add($entry) {
-    $this->db->ExecuteQuery(self::SQL('insert into guestbook'), array($entry));
+    $this->db->ExecuteQuery(self::SQL('insert into guestbook'), array($entry, date('Y-m-d H:i:s')));
     $this->session->AddMessage('success', 'Meddelande sparat.');
     if($this->db->rowCount() != 1) {
       die('Det gick inte att spara meddelandet i databasen.');
