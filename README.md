@@ -150,13 +150,14 @@ In the field *(Typ av innehåll (post eller page):&lowast;)*, you simply type po
 
 To-Do
 -----
-* Implement MySql database.
+* Implement MySql database - done in v1.1
 * Module for image insertion.
 * Customization directly to database. 
 * More to come...
 
 Change Log
 ----------------
+* v1.1    - 19 juli 2014 - Updated Zelda to implement MySQL database (To-Do-item #1)
 * v1.0    - 29 januari 2014 - Examination of project Zelda CMF
 * v0.2.24 - 09 december 2013 - Dokumentera koden med phpdoc och modulhanteraren 
 * v0.2.23 - 08 december 2013 - Skapa en webbplats med Zelda 
